@@ -9,6 +9,7 @@ namespace YouTune.Models
     {
         public long RoleId { get; set; }
         public string Name { get; set; }
-        public ICollection<User> User { get; set; }
+
+        public User user { get; set; }
     }
 }

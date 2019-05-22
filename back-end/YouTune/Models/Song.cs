@@ -9,8 +9,12 @@ namespace YouTune.Models
     {
         public long SongId { get; set; }
         public string Title { get; set; }
-        public long YoutubeID { get; set; }
+        public string YoutubeID { get; set; }
+
+        public long ArtistId { get; set; }
         public Artist Artist { get; set; }
+
+        public long GenreId { get; set; }
         public Genre Genre { get; set; }
         
         public Report Report { get; set; }

@@ -10,6 +10,9 @@ namespace YouTune.Models
         public long PlaylistId { get; set; }
         public string Title { get; set; }
 
+        public long UserId { get; set; }
+        public User User { get; set; }
+
         public ICollection<PlaylistSong> PlaylistSongs { get; set; }
     }
 }
