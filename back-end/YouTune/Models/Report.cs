@@ -12,5 +12,10 @@ namespace YouTune.Models
 
         public long SongId { get; set; }
         public Song Song { get; set; }
+
+        public long UserId { get; set; }
+        public User User { get; set; }
+
+        public DateTime Timestamp { get; set; }
     }
 }

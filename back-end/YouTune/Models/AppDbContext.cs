@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using YouTune.Models;
 
 namespace YouTune.Models
 {
@@ -36,5 +37,7 @@ namespace YouTune.Models
                 .WithMany(p => p.PlaylistSongs)
                 .HasForeignKey(ps => ps.PlaylistId);
         }
+
+        public DbSet<YouTune.Models.PlaylistSong> PlaylistSong { get; set; }
     }
 }

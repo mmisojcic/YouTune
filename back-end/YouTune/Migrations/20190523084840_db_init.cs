@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace YouTune.Migrations
@@ -53,7 +54,7 @@ namespace YouTune.Migrations
                     SongId = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(nullable: true),
-                    YoutubeID = table.Column<long>(nullable: false),
+                    YoutubeID = table.Column<string>(nullable: true),
                     ArtistId = table.Column<long>(nullable: false),
                     GenreId = table.Column<long>(nullable: false)
                 },
@@ -97,26 +98,6 @@ namespace YouTune.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reports",
-                columns: table => new
-                {
-                    ReportId = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Status = table.Column<byte>(nullable: false),
-                    SongId = table.Column<long>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reports", x => x.ReportId);
-                    table.ForeignKey(
-                        name: "FK_Reports_Songs_SongId",
-                        column: x => x.SongId,
-                        principalTable: "Songs",
-                        principalColumn: "SongId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Playlists",
                 columns: table => new
                 {
@@ -130,6 +111,34 @@ namespace YouTune.Migrations
                     table.PrimaryKey("PK_Playlists", x => x.PlaylistId);
                     table.ForeignKey(
                         name: "FK_Playlists_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    ReportId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Status = table.Column<byte>(nullable: false),
+                    SongId = table.Column<long>(nullable: false),
+                    UserId = table.Column<long>(nullable: false),
+                    DateTime = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.ReportId);
+                    table.ForeignKey(
+                        name: "FK_Reports_Songs_SongId",
+                        column: x => x.SongId,
+                        principalTable: "Songs",
+                        principalColumn: "SongId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reports_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
@@ -174,6 +183,12 @@ namespace YouTune.Migrations
                 name: "IX_Reports_SongId",
                 table: "Reports",
                 column: "SongId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_UserId",
+                table: "Reports",
+                column: "UserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(

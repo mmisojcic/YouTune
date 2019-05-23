@@ -16,5 +16,7 @@ namespace YouTune.Models
         public Role Role { get; set; }
 
         public ICollection<Playlist> Playlists { get; set; }
+
+        public ICollection<Report> Reports { get; set; }
     }
 }
