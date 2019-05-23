@@ -8,7 +8,6 @@ namespace YouTune.Models
     public class Report
     {
         public long ReportId { get; set; }
-        public byte Status { get; set; }
 
         public long SongId { get; set; }
         public Song Song { get; set; }
@@ -17,5 +16,8 @@ namespace YouTune.Models
         public User User { get; set; }
 
         public DateTime Timestamp { get; set; }
+
+        public long StatusId { get; set; }
+        public Status Status { get; set; }
     }
 }

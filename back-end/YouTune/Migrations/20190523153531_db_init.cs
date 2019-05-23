@@ -48,6 +48,19 @@ namespace YouTune.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Statuses",
+                columns: table => new
+                {
+                    StatusId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Statuses", x => x.StatusId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Songs",
                 columns: table => new
                 {
@@ -123,10 +136,10 @@ namespace YouTune.Migrations
                 {
                     ReportId = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Status = table.Column<byte>(nullable: false),
                     SongId = table.Column<long>(nullable: false),
                     UserId = table.Column<long>(nullable: false),
-                    DateTime = table.Column<DateTime>(nullable: false)
+                    Timestamp = table.Column<DateTime>(nullable: false),
+                    StatusId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -136,6 +149,12 @@ namespace YouTune.Migrations
                         column: x => x.SongId,
                         principalTable: "Songs",
                         principalColumn: "SongId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reports_Statuses_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "Statuses",
+                        principalColumn: "StatusId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reports_Users_UserId",
@@ -186,10 +205,15 @@ namespace YouTune.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reports_StatusId",
+                table: "Reports",
+                column: "StatusId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reports_UserId",
                 table: "Reports",
-                column: "UserId",
-                unique: true);
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Songs_ArtistId",
@@ -221,6 +245,9 @@ namespace YouTune.Migrations
 
             migrationBuilder.DropTable(
                 name: "Songs");
+
+            migrationBuilder.DropTable(
+                name: "Statuses");
 
             migrationBuilder.DropTable(
                 name: "Users");

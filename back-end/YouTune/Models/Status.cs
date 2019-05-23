@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace YouTune.Models
 {
-    public class Artist
+    public class Status
     {
-        public long ArtistId { get; set; }
+        public long StatusId { get; set; }
         public string Name { get; set; }
 
-        public ICollection<Song> Songs { get; set; }
+        public Report Report { get; set; }
     }
 }

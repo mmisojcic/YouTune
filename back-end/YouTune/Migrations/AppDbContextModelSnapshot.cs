@@ -83,7 +83,7 @@ namespace YouTune.Migrations
 
                     b.Property<long>("SongId");
 
-                    b.Property<byte>("Status");
+                    b.Property<long>("StatusId");
 
                     b.Property<DateTime>("Timestamp");
 
@@ -92,6 +92,9 @@ namespace YouTune.Migrations
                     b.HasKey("ReportId");
 
                     b.HasIndex("SongId")
+                        .IsUnique();
+
+                    b.HasIndex("StatusId")
                         .IsUnique();
 
                     b.HasIndex("UserId");
@@ -133,6 +136,19 @@ namespace YouTune.Migrations
                     b.HasIndex("GenreId");
 
                     b.ToTable("Songs");
+                });
+
+            modelBuilder.Entity("YouTune.Models.Status", b =>
+                {
+                    b.Property<long>("StatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("StatusId");
+
+                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("YouTune.Models.User", b =>
@@ -185,6 +201,11 @@ namespace YouTune.Migrations
                         .HasForeignKey("YouTune.Models.Report", "SongId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("YouTune.Models.Status", "Status")
+                        .WithOne("Report")
+                        .HasForeignKey("YouTune.Models.Report", "StatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("YouTune.Models.User", "User")
                         .WithMany("Reports")
                         .HasForeignKey("UserId")
@@ -207,7 +228,7 @@ namespace YouTune.Migrations
             modelBuilder.Entity("YouTune.Models.User", b =>
                 {
                     b.HasOne("YouTune.Models.Role", "Role")
-                        .WithOne("user")
+                        .WithOne("User")
                         .HasForeignKey("YouTune.Models.User", "RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
