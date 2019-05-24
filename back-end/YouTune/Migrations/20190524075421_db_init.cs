@@ -68,8 +68,8 @@ namespace YouTune.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(nullable: true),
                     YoutubeID = table.Column<string>(nullable: true),
-                    ArtistId = table.Column<long>(nullable: false),
-                    GenreId = table.Column<long>(nullable: false)
+                    GenreId = table.Column<long>(nullable: false),
+                    ArtistId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,7 +79,7 @@ namespace YouTune.Migrations
                         column: x => x.ArtistId,
                         principalTable: "Artists",
                         principalColumn: "ArtistId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Songs_Genres_GenreId",
                         column: x => x.GenreId,
@@ -107,6 +107,30 @@ namespace YouTune.Migrations
                         column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "RoleId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ArtistSong",
+                columns: table => new
+                {
+                    SongId = table.Column<long>(nullable: false),
+                    ArtistId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArtistSong", x => new { x.SongId, x.ArtistId });
+                    table.ForeignKey(
+                        name: "FK_ArtistSong_Artists_ArtistId",
+                        column: x => x.ArtistId,
+                        principalTable: "Artists",
+                        principalColumn: "ArtistId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArtistSong_Songs_SongId",
+                        column: x => x.SongId,
+                        principalTable: "Songs",
+                        principalColumn: "SongId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -189,6 +213,11 @@ namespace YouTune.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ArtistSong_ArtistId",
+                table: "ArtistSong",
+                column: "ArtistId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Playlists_UserId",
                 table: "Playlists",
                 column: "UserId");
@@ -234,6 +263,9 @@ namespace YouTune.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ArtistSong");
+
             migrationBuilder.DropTable(
                 name: "PlaylistSong");
 

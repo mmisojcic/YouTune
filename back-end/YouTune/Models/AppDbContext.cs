@@ -18,6 +18,8 @@ namespace YouTune.Models
         public DbSet<Report> Reports { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<PlaylistSong> PlaylistSong { get; set; }
+        public DbSet<PlaylistSong> ArtistSong { get; set; }
+
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -39,7 +41,21 @@ namespace YouTune.Models
                 .HasOne(ps => ps.Playlist)
                 .WithMany(p => p.PlaylistSongs)
                 .HasForeignKey(ps => ps.PlaylistId);
-            
+
+
+            // songs - artis many to many mapping mapping
+            modelBuilder.Entity<ArtistSong>()
+                .HasKey(ars => new { ars.SongId, ars.ArtistId });
+
+            modelBuilder.Entity<ArtistSong>()
+                .HasOne(ars => ars.Song)
+                .WithMany(s => s.ArtistSongs)
+                .HasForeignKey(ars => ars.SongId);
+
+            modelBuilder.Entity<ArtistSong>()
+                .HasOne(ars => ars.Artist)
+                .WithMany(a => a.ArtistSongs)
+                .HasForeignKey(ars => ars.ArtistId);
         }
         
     }

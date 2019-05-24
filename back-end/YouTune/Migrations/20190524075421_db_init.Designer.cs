@@ -10,7 +10,7 @@ using YouTune.Models;
 namespace YouTune.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190523153531_db_init")]
+    [Migration("20190524075421_db_init")]
     partial class db_init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,19 @@ namespace YouTune.Migrations
                     b.HasKey("ArtistId");
 
                     b.ToTable("Artists");
+                });
+
+            modelBuilder.Entity("YouTune.Models.ArtistSong", b =>
+                {
+                    b.Property<long>("SongId");
+
+                    b.Property<long>("ArtistId");
+
+                    b.HasKey("SongId", "ArtistId");
+
+                    b.HasIndex("ArtistId");
+
+                    b.ToTable("ArtistSong");
                 });
 
             modelBuilder.Entity("YouTune.Models.Genre", b =>
@@ -123,7 +136,7 @@ namespace YouTune.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("ArtistId");
+                    b.Property<long?>("ArtistId");
 
                     b.Property<long>("GenreId");
 
@@ -175,6 +188,19 @@ namespace YouTune.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("YouTune.Models.ArtistSong", b =>
+                {
+                    b.HasOne("YouTune.Models.Artist", "Artist")
+                        .WithMany("ArtistSongs")
+                        .HasForeignKey("ArtistId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("YouTune.Models.Song", "Song")
+                        .WithMany("ArtistSongs")
+                        .HasForeignKey("SongId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("YouTune.Models.Playlist", b =>
                 {
                     b.HasOne("YouTune.Models.User", "User")
@@ -216,10 +242,9 @@ namespace YouTune.Migrations
 
             modelBuilder.Entity("YouTune.Models.Song", b =>
                 {
-                    b.HasOne("YouTune.Models.Artist", "Artist")
+                    b.HasOne("YouTune.Models.Artist")
                         .WithMany("Songs")
-                        .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ArtistId");
 
                     b.HasOne("YouTune.Models.Genre", "Genre")
                         .WithMany("Songs")
