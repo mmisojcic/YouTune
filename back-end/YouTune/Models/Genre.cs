@@ -9,6 +9,7 @@ namespace YouTune.Models
     {
         public long GenreId { get; set; }
         public string Name { get; set; }
+
         public ICollection<Song> Songs{ get; set; }
     }
 }

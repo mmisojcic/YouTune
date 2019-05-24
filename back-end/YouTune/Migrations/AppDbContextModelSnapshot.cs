@@ -107,8 +107,7 @@ namespace YouTune.Migrations
                     b.HasIndex("SongId")
                         .IsUnique();
 
-                    b.HasIndex("StatusId")
-                        .IsUnique();
+                    b.HasIndex("StatusId");
 
                     b.HasIndex("UserId");
 
@@ -176,8 +175,7 @@ namespace YouTune.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("RoleId")
-                        .IsUnique();
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -224,8 +222,8 @@ namespace YouTune.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("YouTune.Models.Status", "Status")
-                        .WithOne("Report")
-                        .HasForeignKey("YouTune.Models.Report", "StatusId")
+                        .WithMany("Reports")
+                        .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("YouTune.Models.User", "User")
@@ -245,8 +243,8 @@ namespace YouTune.Migrations
             modelBuilder.Entity("YouTune.Models.User", b =>
                 {
                     b.HasOne("YouTune.Models.Role", "Role")
-                        .WithOne("User")
-                        .HasForeignKey("YouTune.Models.User", "RoleId")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

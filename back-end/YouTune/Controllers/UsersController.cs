@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using YouTune.DTOs;
 using YouTune.Models;
+using YouTune.Services;
 
 namespace YouTune.Controllers
 {
@@ -14,17 +16,19 @@ namespace YouTune.Controllers
     public class UsersController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly UserService _userService;
 
-        public UsersController(AppDbContext context)
+        public UsersController(AppDbContext context, UserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         // GET: api/Users
         [HttpGet]
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<UserDTO> GetUsers()
         {
-            return _context.Users;
+            return _userService.GetAll();
         }
 
         // GET: api/Users/5
@@ -36,7 +40,7 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = await _context.Users.FindAsync(id);
+            var user = await _userService.GetOne(id);
 
             if (user == null)
             {
@@ -55,30 +59,9 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != user.UserId)
-            {
-                return BadRequest();
-            }
+           var userDTO = await _userService.Update(user, id);
 
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+           return Ok(userDTO);
         }
 
         // POST: api/Users
@@ -90,10 +73,9 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            var userDTO = await _userService.Save(user);
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            return Ok(userDTO);
         }
 
         // DELETE: api/Users/5
@@ -105,16 +87,17 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = await _context.Users.FindAsync(id);
+            var user = await _userService.Delete(id);
+            
             if (user == null)
             {
                 return NotFound();
             }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return Ok(user);
+            else
+            {
+                return Ok();
+            }
+            
         }
 
         private bool UserExists(long id)

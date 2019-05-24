@@ -68,18 +68,11 @@ namespace YouTune.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(nullable: true),
                     YoutubeID = table.Column<string>(nullable: true),
-                    GenreId = table.Column<long>(nullable: false),
-                    ArtistId = table.Column<long>(nullable: true)
+                    GenreId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Songs", x => x.SongId);
-                    table.ForeignKey(
-                        name: "FK_Songs_Artists_ArtistId",
-                        column: x => x.ArtistId,
-                        principalTable: "Artists",
-                        principalColumn: "ArtistId",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Songs_Genres_GenreId",
                         column: x => x.GenreId,
@@ -236,18 +229,12 @@ namespace YouTune.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Reports_StatusId",
                 table: "Reports",
-                column: "StatusId",
-                unique: true);
+                column: "StatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reports_UserId",
                 table: "Reports",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Songs_ArtistId",
-                table: "Songs",
-                column: "ArtistId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Songs_GenreId",
@@ -257,8 +244,7 @@ namespace YouTune.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
                 table: "Users",
-                column: "RoleId",
-                unique: true);
+                column: "RoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -273,6 +259,9 @@ namespace YouTune.Migrations
                 name: "Reports");
 
             migrationBuilder.DropTable(
+                name: "Artists");
+
+            migrationBuilder.DropTable(
                 name: "Playlists");
 
             migrationBuilder.DropTable(
@@ -283,9 +272,6 @@ namespace YouTune.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Artists");
 
             migrationBuilder.DropTable(
                 name: "Genres");
