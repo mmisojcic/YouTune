@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using YouTune.DTOs;
 using YouTune.Models;
+using YouTune.Services;
 
 namespace YouTune.Controllers
 {
@@ -14,17 +16,19 @@ namespace YouTune.Controllers
     public class ArtistsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly ArtistService _artistService;
 
-        public ArtistsController(AppDbContext context)
+        public ArtistsController(AppDbContext context, ArtistService artistService)
         {
             _context = context;
+            _artistService = artistService;
         }
 
         // GET: api/Artists
         [HttpGet]
-        public IEnumerable<Artist> GetArtists()
+        public IEnumerable<ArtistDTO> GetArtists()
         {
-            return _context.Artists;
+            return _artistService.GetAll();
         }
 
         // GET: api/Artists/5
@@ -36,7 +40,7 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var artist = await _context.Artists.FindAsync(id);
+            var artist = await _artistService.GetOne(id);
 
             if (artist == null)
             {
@@ -55,30 +59,9 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != artist.ArtistId)
-            {
-                return BadRequest();
-            }
+            var artistDTO = await _artistService.Update(artist, id);
 
-            _context.Entry(artist).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ArtistExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(artistDTO);
         }
 
         // POST: api/Artists
@@ -90,10 +73,9 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Artists.Add(artist);
-            await _context.SaveChangesAsync();
+            var artistDTO = await _artistService.Save(artist);
 
-            return CreatedAtAction("GetArtist", new { id = artist.ArtistId }, artist);
+            return Ok(artistDTO);
         }
 
         // DELETE: api/Artists/5
@@ -105,16 +87,16 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var artist = await _context.Artists.FindAsync(id);
+            var artist = await _artistService.Delete(id);
+
             if (artist == null)
             {
                 return NotFound();
             }
-
-            _context.Artists.Remove(artist);
-            await _context.SaveChangesAsync();
-
-            return Ok(artist);
+            else {
+                return Ok(artist);
+            }
+            
         }
 
         private bool ArtistExists(long id)

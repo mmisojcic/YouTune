@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using YouTune.DTOs;
 using YouTune.Models;
+using YouTune.Services;
 
 namespace YouTune.Controllers
 {
@@ -14,17 +16,19 @@ namespace YouTune.Controllers
     public class SongsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly SongService _songService;
 
-        public SongsController(AppDbContext context)
+        public SongsController(AppDbContext context, SongService songService)
         {
             _context = context;
+            _songService = songService;
         }
 
         // GET: api/Songs
         [HttpGet]
-        public IEnumerable<Song> GetSongs()
+        public IEnumerable<SongDTO> GetSongs()
         {
-            return _context.Songs;
+            return _songService.GetAll();
         }
 
         // GET: api/Songs/5
@@ -36,14 +40,14 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var song = await _context.Songs.FindAsync(id);
+            var songDTO = await _songService.GetOne(id);
 
-            if (song == null)
+            if (songDTO == null)
             {
                 return NotFound();
             }
 
-            return Ok(song);
+            return Ok(songDTO);
         }
 
         // PUT: api/Songs/5
@@ -55,30 +59,9 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != song.SongId)
-            {
-                return BadRequest();
-            }
+            var songDTO = await _songService.Update(song, id);
 
-            _context.Entry(song).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SongExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(songDTO);
         }
 
         // POST: api/Songs
@@ -90,10 +73,9 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Songs.Add(song);
-            await _context.SaveChangesAsync();
+            var songDTO = await _songService.Save(song);
 
-            return CreatedAtAction("GetSong", new { id = song.SongId }, song);
+            return Ok(songDTO);
         }
 
         // DELETE: api/Songs/5
@@ -105,16 +87,16 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var song = await _context.Songs.FindAsync(id);
+            var song = await _songService.Delete(id);
+
             if (song == null)
             {
                 return NotFound();
             }
-
-            _context.Songs.Remove(song);
-            await _context.SaveChangesAsync();
-
-            return Ok(song);
+            else
+            {
+                return Ok();
+            }
         }
 
         private bool SongExists(long id)

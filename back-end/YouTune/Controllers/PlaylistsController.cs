@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using YouTune.DTOs;
 using YouTune.Models;
+using YouTune.Services;
 
 namespace YouTune.Controllers
 {
@@ -14,17 +16,19 @@ namespace YouTune.Controllers
     public class PlaylistsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly PlaylistService _playlistService;
 
-        public PlaylistsController(AppDbContext context)
+        public PlaylistsController(AppDbContext context, PlaylistService playlistService)
         {
             _context = context;
+            _playlistService = playlistService;
         }
 
         // GET: api/Playlists
         [HttpGet]
-        public IEnumerable<Playlist> GetPlaylist()
+        public IEnumerable<PlaylistDTO> GetPlaylist()
         {
-            return _context.Playlists;
+            return _playlistService.GetAll();
         }
 
         // GET: api/Playlists/5
@@ -55,30 +59,10 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != playlist.PlaylistId)
-            {
-                return BadRequest();
-            }
+            var playlistDTO = await _playlistService.Update(playlist, id);
 
-            _context.Entry(playlist).State = EntityState.Modified;
+            return Ok(playlistDTO);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PlaylistExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         // POST: api/Playlists
@@ -90,10 +74,9 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Playlists.Add(playlist);
-            await _context.SaveChangesAsync();
+            var playlistDTO = await _playlistService.Save(playlist);
 
-            return CreatedAtAction("GetPlaylist", new { id = playlist.PlaylistId }, playlist);
+            return Ok(playlistDTO);
         }
 
         // DELETE: api/Playlists/5
@@ -105,16 +88,16 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var playlist = await _context.Playlists.FindAsync(id);
+            var playlist = await _playlistService.Delete(id);
+
             if (playlist == null)
             {
                 return NotFound();
             }
-
-            _context.Playlists.Remove(playlist);
-            await _context.SaveChangesAsync();
-
-            return Ok(playlist);
+            else
+            {
+                return Ok(playlist);
+            }
         }
 
         private bool PlaylistExists(long id)

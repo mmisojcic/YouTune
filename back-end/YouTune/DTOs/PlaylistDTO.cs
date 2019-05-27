@@ -9,5 +9,7 @@ namespace YouTune.DTOs
     {
         public long PlaylistId { get; set; }
         public string Title { get; set; }
+
+        public ICollection<SongDTO> Songs { get; set; }
     }
 }

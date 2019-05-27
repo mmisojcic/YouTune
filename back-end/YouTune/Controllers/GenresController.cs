@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using YouTune.DTOs;
 using YouTune.Models;
+using YouTune.Services;
 
 namespace YouTune.Controllers
 {
@@ -14,17 +16,19 @@ namespace YouTune.Controllers
     public class GenresController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly GenreService _genreService;
 
-        public GenresController(AppDbContext context)
+        public GenresController(AppDbContext context, GenreService genreService)
         {
             _context = context;
+            _genreService = genreService;
         }
 
         // GET: api/Genres
         [HttpGet]
-        public IEnumerable<Genre> GetGenres()
+        public IEnumerable<GenreDTO> GetGenres()
         {
-            return _context.Genres;
+            return _genreService.GetAll();
         }
 
         // GET: api/Genres/5
@@ -36,14 +40,14 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var genre = await _context.Genres.FindAsync(id);
+            var genreDTO = await _genreService.GetOne(id);
 
-            if (genre == null)
+            if (genreDTO == null)
             {
                 return NotFound();
             }
 
-            return Ok(genre);
+            return Ok(genreDTO);
         }
 
         // PUT: api/Genres/5
@@ -55,30 +59,9 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != genre.GenreId)
-            {
-                return BadRequest();
-            }
+            var genreDTO = await _genreService.Update(genre, id);
 
-            _context.Entry(genre).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GenreExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(genreDTO);
         }
 
         // POST: api/Genres
@@ -90,10 +73,9 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Genres.Add(genre);
-            await _context.SaveChangesAsync();
+            var genreDTO = await _genreService.Save(genre);
 
-            return CreatedAtAction("GetGenre", new { id = genre.GenreId }, genre);
+            return Ok(genreDTO);
         }
 
         // DELETE: api/Genres/5
@@ -105,16 +87,16 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var genre = await _context.Genres.FindAsync(id);
+            var genre = await _genreService.Delete(id);
+
             if (genre == null)
             {
                 return NotFound();
             }
-
-            _context.Genres.Remove(genre);
-            await _context.SaveChangesAsync();
-
-            return Ok(genre);
+            else
+            {
+                return Ok();
+            }
         }
 
         private bool GenreExists(long id)

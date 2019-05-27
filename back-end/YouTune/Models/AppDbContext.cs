@@ -18,7 +18,7 @@ namespace YouTune.Models
         public DbSet<Report> Reports { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<PlaylistSong> PlaylistSong { get; set; }
-        public DbSet<PlaylistSong> ArtistSong { get; set; }
+        public DbSet<ArtistSong> ArtistSong { get; set; }
 
 
         public AppDbContext(DbContextOptions<AppDbContext> options)

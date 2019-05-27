@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using YouTune.DTOs;
 using YouTune.Models;
+using YouTune.Services;
 
 namespace YouTune.Controllers
 {
@@ -14,17 +16,19 @@ namespace YouTune.Controllers
     public class ReportsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly ReportService _reportService;
 
-        public ReportsController(AppDbContext context)
+        public ReportsController(AppDbContext context, ReportService reportService)
         {
             _context = context;
+            _reportService = reportService;
         }
 
         // GET: api/Reports
         [HttpGet]
-        public IEnumerable<Report> GetReports()
+        public IEnumerable<ReportDTO> GetReports()
         {
-            return _context.Reports;
+            return _reportService.GetAll();
         }
 
         // GET: api/Reports/5
@@ -36,14 +40,14 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var report = await _context.Reports.FindAsync(id);
+            var reportDTO = await _reportService.GetOne(id);
 
-            if (report == null)
+            if (reportDTO == null)
             {
                 return NotFound();
             }
 
-            return Ok(report);
+            return Ok(reportDTO);
         }
 
         // PUT: api/Reports/5
@@ -55,30 +59,9 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != report.ReportId)
-            {
-                return BadRequest();
-            }
+            var reportDTO = await _reportService.Update(report, id);
 
-            _context.Entry(report).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ReportExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(reportDTO);
         }
 
         // POST: api/Reports
@@ -90,10 +73,9 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Reports.Add(report);
-            await _context.SaveChangesAsync();
+            var reportDTO = await _reportService.Save(report);
 
-            return CreatedAtAction("GetReport", new { id = report.ReportId }, report);
+            return Ok(reportDTO);
         }
 
         // DELETE: api/Reports/5
@@ -105,16 +87,16 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var report = await _context.Reports.FindAsync(id);
-            if (report == null)
+            var userDTO = await _reportService.Delete(id);
+
+            if (userDTO == null)
             {
                 return NotFound();
             }
-
-            _context.Reports.Remove(report);
-            await _context.SaveChangesAsync();
-
-            return Ok(report);
+            else
+            {
+                return Ok();
+            }
         }
 
         private bool ReportExists(long id)
