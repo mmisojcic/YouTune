@@ -1,0 +1,48 @@
+@import '../../../assets/scss/imports';
+
+.login {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  &_blue {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    background-color: $color-primary;
+
+    &-you {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-weight: 700;
+      font-size: 4rem;
+      color: $color-secondary;
+      text-shadow: $text-shadow-lg;
+    }
+  }
+
+  &_grey {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    background-color: $color-secondary;
+
+    &-tune {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-weight: 700;
+      font-size: 4rem;
+      color: $color-primary;
+      text-shadow: $text-shadow-lg;
+    }
+  }
+
+  &_form {
+    background-color: $color-tertiary;
+    padding: 1rem;
+    box-shadow: $box-shadow-lg;
+  }
+}

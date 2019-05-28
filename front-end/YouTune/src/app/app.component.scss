@@ -1,0 +1,12 @@
+@import '../assets/scss/imports';
+
+h1 {
+  color: $color-primary;
+}
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+  width: 100vw;
+  height: 100vh;
+}
