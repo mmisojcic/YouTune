@@ -6,16 +6,17 @@ using YouTune.Models;
 
 namespace YouTune.DTOs
 {
-    public class GenrelessSongDTO
+    public class SongForPlaylistDTO
     {
         public long SongId { get; set; }
         public string Title { get; set; }
         public string YoutubeID { get; set; }
-        
 
-        //public Report Report { get; set; }
+        public long GenreId { get; set; }
+        public SonglessGenreDTO Genre { get; set; }
 
-        //public ICollection<PlaylistSong> PlaylistSongs { get; set; }
-        public ICollection<Models.ArtistSong> ArtistSongs { get; set; }
+        public ICollection<Artist> Artists { get; set; }
+
+        public ReportInSongDTO Report { get; set; }
     }
 }

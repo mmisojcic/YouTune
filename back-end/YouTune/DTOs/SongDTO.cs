@@ -12,7 +12,7 @@ namespace YouTune.DTOs
         public string Title { get; set; }
         public string YoutubeID { get; set; }
 
-        public long GenreId { get; set; }
+        //public long GenreId { get; set; }
         public SonglessGenreDTO Genre { get; set; }
 
         public ICollection<ArtistDTO> Artists { get; set; }

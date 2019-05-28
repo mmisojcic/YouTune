@@ -40,14 +40,14 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var playlist = await _context.Playlists.FindAsync(id);
+            var playlistDTO = await _playlistService.GetOne(id);
 
-            if (playlist == null)
+            if (playlistDTO == null)
             {
                 return NotFound();
             }
 
-            return Ok(playlist);
+            return Ok(playlistDTO);
         }
 
         // PUT: api/Playlists/5

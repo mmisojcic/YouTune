@@ -43,14 +43,17 @@ namespace YouTune.Services
         //GET ALL
         public IEnumerable<SongDTO> GetAll()
         {
-            var songsData = _context.Songs.ToList();
+            var songsData = _context.Songs
+                .Include(s => s.Genre)
+                .Include(s => s.Report)
+                .ToList();
             var songsDTO = new List<SongDTO>();
 
             foreach (Song s in songsData)
             {
-               
+                var artistsSong = _context.ArtistSong.Where(ars => ars.SongId == s.SongId).Select(ars => _mapper.Map<Artist, ArtistDTO>(ars.Artist)).ToList();
                 var songDTO = _mapper.Map<Song, SongDTO>(s);
-
+                songDTO.Artists = artistsSong;
                 songsDTO.Add(songDTO);
             }
 
@@ -71,10 +74,12 @@ namespace YouTune.Services
                 var genreData = await _context.Genres.FindAsync(songData.GenreId);
                 var reportData = await _context.Reports.Where(r => r.SongId == songData.SongId).FirstOrDefaultAsync();
                 
-                var artistsSong = _context.ArtistSong.Where(ars => ars.SongId == songData.SongId).Select(ars => _mapper.Map<Artist,ArtistDTO>(ars.Artist)).ToList();
-                
+                var artistsData = _context.ArtistSong.Where(ars => ars.SongId == songData.SongId).Select(ars => _mapper.Map<Artist,ArtistDTO>(ars.Artist)).ToList();
+
+                songData.Genre = genreData;
+
                 var songDTO = _mapper.Map<Song, SongDTO>(songData);
-                songDTO.Artists = artistsSong;
+                songDTO.Artists = artistsData;
                 songDTO.Report = _mapper.Map<Report, ReportInSongDTO>(reportData);
 
                 return songDTO;

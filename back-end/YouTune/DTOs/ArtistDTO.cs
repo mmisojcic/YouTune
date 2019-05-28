@@ -11,6 +11,6 @@ namespace YouTune.DTOs
         public long ArtistId { get; set; }
         public string Name { get; set; }
 
-        //public ICollection<ArtistSong> ArtistSongs { get; set; }
+        public ICollection<SongForArtistDTO> Songs { get; set; }
     }
 }

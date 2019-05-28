@@ -49,8 +49,11 @@ namespace YouTune.Services
 
             foreach (Artist a in artistsData)
             {
-
+                
+                var songsDTO = _context.ArtistSong.Where(ars => ars.ArtistId == a.ArtistId).Select(ars => _mapper.Map<Song, SongForArtistDTO>(ars.Song)).ToList();
                 var artistDTO = _mapper.Map<Artist, ArtistDTO>(a);
+
+                artistDTO.Songs = songsDTO;
 
                 artistsDTO.Add(artistDTO);
             }
@@ -70,7 +73,16 @@ namespace YouTune.Services
             else
             {
                 
-                return _mapper.Map<Artist, ArtistDTO>(artistData);
+                var songsDTO = _context.ArtistSong
+                    .Where(ars => ars.ArtistId == artistData.ArtistId)
+                    .Select(ars => _mapper.Map<Song, SongForArtistDTO>(ars.Song)
+                        ).ToList();
+
+                var artistDTO = _mapper.Map<Artist, ArtistDTO>(artistData);
+
+                artistDTO.Songs = songsDTO;
+
+                return artistDTO;
             }
         }
 
