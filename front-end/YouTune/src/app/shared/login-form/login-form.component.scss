@@ -1,0 +1,22 @@
+@import '../../../assets/scss/imports';
+
+.form {
+  background-color: $color-tertiary;
+  padding: 1rem;
+  box-shadow: $box-shadow-lg;
+}
+
+.info {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: $color-tertiary;
+  font-size: 1.5rem;
+  text-shadow: $text-shadow-sm;
+
+  &_register {
+    font-weight: 700;
+    letter-spacing: .3rem;
+  }
+}
