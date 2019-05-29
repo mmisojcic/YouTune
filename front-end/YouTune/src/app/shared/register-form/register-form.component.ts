@@ -11,23 +11,9 @@ import { User } from 'src/app/core/models/user.model';
   styleUrls: ['./register-form.component.scss']
 })
 export class RegisterFormComponent implements OnInit {
-  user: User = new User();
+  user: User;
 
-  constructor(private restApi: RestApiService) {}
+  constructor() {}
 
   ngOnInit() {}
-
-  test() {
-    const reg: Register = new Register('marko', 'marko1234', 'mm@mm.com');
-
-    this.restApi.save<Register, RegisterDTO>(reg, 'Users/10').subscribe(
-      res => {
-        this.user = res;
-        console.log(this.user);
-      },
-      err => {
-        console.log('http error on login by id ' + err.status);
-      }
-    );
-  }
 }
