@@ -13,7 +13,7 @@ html {
 
 // OVERRIDING BOOTSTRAP STYLES
 .form-control {
-  transition: all .4s !important;
+  transition: all 0.3s !important;
 
   &:focus {
     border-color: $color-primary !important;
@@ -48,6 +48,7 @@ a:active,
 a:visited {
   color: $color-tertiary !important;
   text-decoration: none !important;
+  transition: all 0.3s !important;
 }
 
 a:hover {

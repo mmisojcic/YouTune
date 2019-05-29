@@ -20,7 +20,7 @@ export const routingAnimation = trigger('routingAnimation', [
       // here we apply a style and use the animate function to apply the style over 0.3 seconds
       [
         style({ opacity: '1' }),
-        animate('400ms ease-out', style({ opacity: '0' }))
+        animate('300ms ease-out', style({ opacity: '0' }))
       ],
       { optional: true }
     ),
@@ -28,7 +28,7 @@ export const routingAnimation = trigger('routingAnimation', [
       ':enter',
       [
         style({ opacity: '0' }),
-        animate('400ms ease-out', style({ opacity: '1' }))
+        animate('300ms ease-out', style({ opacity: '1' }))
       ],
       { optional: true }
     )

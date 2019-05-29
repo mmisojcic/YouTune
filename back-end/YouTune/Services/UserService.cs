@@ -87,6 +87,7 @@ namespace YouTune.Services
         // SAVE
         public async Task<UserDTO> Save(User _object)
         {
+            _object.RoleId = 2;
             _context.Users.Add(_object);
             await _context.SaveChangesAsync();
             
