@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { routingAnimation } from './shared/animations/router.animation';
+import { routingAnimation } from '../shared/animations/router.animation';
 
 @Component({
   selector: 'yt-root',

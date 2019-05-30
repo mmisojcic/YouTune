@@ -1,8 +1,8 @@
-import { LoginFormComponent } from './shared/login-form/login-form.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { WelcomeComponent } from './shared/welcome/welcome.component';
-import { RegisterFormComponent } from './shared/register-form/register-form.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
 
 const routes: Routes = [
   {

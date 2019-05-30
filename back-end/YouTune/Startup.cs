@@ -37,6 +37,7 @@ namespace YouTune
             services.AddTransient<SongService>();
             services.AddTransient<ReportService>();
             services.AddTransient<PlaylistService>();
+            services.AddTransient<LoginService>();
 
             var mappingConfig = new MapperConfiguration(mc =>
             {

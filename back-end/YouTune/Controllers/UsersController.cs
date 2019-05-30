@@ -17,11 +17,13 @@ namespace YouTune.Controllers
     {
         private readonly AppDbContext _context;
         private readonly UserService _userService;
+        private readonly LoginService _loginService;
 
-        public UsersController(AppDbContext context, UserService userService)
+        public UsersController(AppDbContext context, UserService userService, LoginService loginService)
         {
             _context = context;
             _userService = userService;
+            _loginService = loginService;
         }
 
         // GET: api/Users
@@ -64,18 +66,41 @@ namespace YouTune.Controllers
            return Ok(userDTO);
         }
 
-        // POST: api/Users
-        [HttpPost]
-        public async Task<IActionResult> PostUser([FromBody] User user)
+        // Register
+        // POST: api/Users/register
+        [HttpPost("register")]
+        public async Task<IActionResult> SaveUser([FromBody] User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var userDTO = await _userService.Save(user);
+            var userDTO = await _loginService.Register(user);
 
             return Ok(userDTO);
+        }
+
+        // Login
+        // POST: api/Users/login
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginUser([FromBody] LoginDTO loginInfo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userDTO = await _loginService.Login(loginInfo);
+
+            if (userDTO == null)
+            {
+                return NotFound("Error on login");
+            }
+            else
+            {
+                return Ok(userDTO);
+            }
         }
 
         // DELETE: api/Users/5

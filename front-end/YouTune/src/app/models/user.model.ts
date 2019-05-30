@@ -1,3 +1,4 @@
+import { Playlist } from './playlists.model';
 import { Role } from './role.model';
 
 export class User {
@@ -6,6 +7,6 @@ export class User {
     public username?: string,
     public email?: string,
     public role?: Role,
-    public playlists?: any[]
+    public playlists?: Playlist[]
   ) {}
 }
