@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import './assets/scss/imports';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 body,
 html {
@@ -17,7 +18,7 @@ html {
 
   &:focus {
     border-color: $color-primary !important;
-    box-shadow: 0px 0.2rem 0.2rem rgba(0, 0, 0, 0.075) inset,
+    box-shadow: 0px -0.2rem 0.2rem rgba(0, 0, 0, 0.075) inset,
       0px 0px 0.4rem rgba($color-primary, 0.9) !important;
   }
 }
@@ -55,3 +56,6 @@ a:hover {
   color: $color-primary !important;
   text-decoration: none !important;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

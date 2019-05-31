@@ -1,7 +1,7 @@
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { Register } from 'src/app/models/register.model';
-import { api } from 'src/shared/config/api.config';
+import { api } from '../../shared/config/api.config';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -29,10 +29,7 @@ export class RegisterFormComponent implements OnInit {
 
     // sending request
     this.loginService
-      .register(
-        api.fullUrl(api.users.base + api.users.register),
-        this.registerInfo
-      )
+      .register(api.fullUrl(api.users.register()), this.registerInfo)
       .subscribe(res => {
         console.log(res);
       });

@@ -13,6 +13,11 @@ const routes: Routes = [
       { path: 'register', component: RegisterFormComponent }
     ]
   },
+  {
+    path: 'admin',
+    loadChildren: './admin/admin.module#AdminModule'
+  },
+
   { path: '**', redirectTo: '/welcome/login' }
 ];
 

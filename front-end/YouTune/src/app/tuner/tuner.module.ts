@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { TunerRoutingModule } from './tuner-routing.module';
+
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    TunerRoutingModule
   ]
 })
-export class AdminModule { }
+export class TunerModule { }

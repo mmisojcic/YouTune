@@ -7,9 +7,16 @@
   align-items: center;
 
   &_form {
+    width: fit-content;
     background-color: $color-tertiary;
     padding: 1rem;
     box-shadow: $box-shadow-lg;
+    transition: all 0.3s;
+
+    &-input-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   &_info {

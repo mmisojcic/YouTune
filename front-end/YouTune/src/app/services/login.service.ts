@@ -2,7 +2,7 @@ import { LoginConverter } from './../converters/login.converter';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Register } from '../models/register.model';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { RegisterConverter } from '../converters/register.converter';
@@ -24,14 +24,13 @@ export class LoginService {
   public register(apiUrl: string, model: Register): Observable<User> {
     const dto = this.registerConverter.modelToDTO(model);
     return this.http.post(apiUrl, dto).pipe(
-      map(
-        (res: UserDTO) => {
-          return this.userConverter.DTOtoModel(res);
-        },
-        err => {
-          console.log('Something went wrong' + err);
-        }
-      )
+      map((res: UserDTO) => {
+        return this.userConverter.DTOtoModel(res);
+      }),
+      catchError(err => {
+        console.log('Error ocurred: ', err);
+        return throwError(err);
+      })
     );
   }
 
@@ -39,14 +38,13 @@ export class LoginService {
   public login(apiUrl: string, model: Login): Observable<User> {
     const dto = this.loginConverter.modelToDTO(model);
     return this.http.post(apiUrl, dto).pipe(
-      map(
-        (res: UserDTO) => {
-          return this.userConverter.DTOtoModel(res);
-        },
-        err => {
-          console.log('Something went wrong' + err);
-        }
-      )
+      map((res: UserDTO) => {
+        return this.userConverter.DTOtoModel(res);
+      }),
+      catchError(err => {
+        console.log('Error ocurred: ', err);
+        return throwError(err);
+      })
     );
   }
 }

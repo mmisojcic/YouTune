@@ -1,22 +1,20 @@
 // COLORS
 
-$color-primary: #8a2be2;
+$color-primary: #673ab7;
 $color-secondary: #505050;
 $color-tertiary: #ffffff;
 
 // SHADOWS
 
-$box-shadow-lg: 0 0.4rem 2.6rem rgba(0, 0, 0, 0.8);
-$box-shadow-md: 0 0.2rem 1.4rem rgba(0, 0, 0, 0.8);
-$box-shadow-sm: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.8);
-$box-shadow-vsm: 0 0.15rem 0.4rem rgba(0, 0, 0, 0.8);
+$box-shadow-lg: 0 0.4rem 1.5rem rgba(0, 0, 0, 0.7);
+$box-shadow-md: 0 0.2rem 1.1rem rgba(0, 0, 0, 0.7);
+$box-shadow-sm: 0 0.2rem 0.7rem rgba(0, 0, 0, 0.7);
+$box-shadow-vsm: 0 0.2rem 0.25rem rgba(0, 0, 0, 0.7);
 
-$text-shadow-lg: -0.2rem 0.2rem 0.7rem rgba(0, 0, 0, 0.8);
-$text-shadow-md: -0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.8);
-$text-shadow-sm: -0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.8);
-
+$text-shadow-lg: -0.2rem 0.2rem 0.7rem rgba(0, 0, 0, 0.7);
+$text-shadow-md: -0.2rem 0.2rem 0.4rem rgba(0, 0, 0, 0.7);
+$text-shadow-sm: -0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.7);
 
 // FONTS
 
-$font-primary: 'Titillium Web',
-sans-serif !important;
+$font-primary: 'Titillium Web', sans-serif !important;

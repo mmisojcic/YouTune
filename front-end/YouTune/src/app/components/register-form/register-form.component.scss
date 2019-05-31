@@ -10,6 +10,7 @@
     background-color: $color-tertiary;
     padding: 1rem;
     box-shadow: $box-shadow-lg;
+    transition: all 0.3s;
   }
 
   &_info {

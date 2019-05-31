@@ -4,30 +4,20 @@
     [formGroup]="loginFrom"
     (ngSubmit)="onLogin()"
   >
-    <div class="form-group">
-      <label for="exampleInputEmail1">Username</label>
-      <input
-        type="email"
-        class="form-control"
-        id="Username"
-        aria-describedby="emailHelp"
-        placeholder="Enter username"
-        formControlName="username"
-      />
+    <div class="login_form-input-wrapper">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Username" formControlName="username" />
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Password" formControlName="password" />
+      </mat-form-field>
+      <small id="emailHelp" class="form-text text-muted"
+        >Use numbers and mixed case letters for strong password.</small
+      >
     </div>
-    <div class="form-group">
-      <label for="exampleInputPassword1">Password</label>
-      <input
-        type="password"
-        class="form-control"
-        id="exampleInputPassword1"
-        placeholder="Password"
-        formControlName="password"
-      />
-    </div>
-    <button type="submit" class="btn btn-primary">
-      Login
-    </button>
+
+    <button type="submit" mat-raised-button color="primary">Login</button>
   </form>
   <p class="login_info">
     If you don't have an account click
