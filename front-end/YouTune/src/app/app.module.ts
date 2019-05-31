@@ -9,13 +9,15 @@ import { RegisterFormComponent } from './components/register-form/register-form.
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { SpinnerToggleDirective } from './shared/directives/spinner-toggle.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginFormComponent,
     RegisterFormComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    SpinnerToggleDirective
   ],
   imports: [
     BrowserModule,

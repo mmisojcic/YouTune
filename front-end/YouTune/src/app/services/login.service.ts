@@ -3,22 +3,27 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Register } from '../models/register.model';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, finalize } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { RegisterConverter } from '../converters/register.converter';
 import { UserConverter } from '../converters/user.converter';
 import { UserDTO } from '../DTOs/user.dto';
 import { Login } from '../models/login.model';
+import { SpinnerService } from './spinner.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
+  spinning = false;
   registerConverter = new RegisterConverter();
   loginConverter = new LoginConverter();
   userConverter = new UserConverter();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private spinerService: SpinnerService
+  ) {}
 
   // Registers new user
   public register(apiUrl: string, model: Register): Observable<User> {
@@ -30,6 +35,11 @@ export class LoginService {
       catchError(err => {
         console.log('Error ocurred: ', err);
         return throwError(err);
+      }),
+      finalize(() => {
+        // hide spinner
+        this.spinerService.spinnerToogle();
+        console.log('kraj');
       })
     );
   }
@@ -44,6 +54,11 @@ export class LoginService {
       catchError(err => {
         console.log('Error ocurred: ', err);
         return throwError(err);
+      }),
+      finalize(() => {
+        // hide spinner
+        this.spinerService.spinnerToogle();
+        console.log('kraj');
       })
     );
   }

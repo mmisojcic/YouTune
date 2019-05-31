@@ -1,8 +1,10 @@
+import { SpinnerService } from './../../services/spinner.service';
 import { Login } from './../../models/login.model';
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { api } from '../../shared/config/api.config';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'yt-login-form',
@@ -15,7 +17,8 @@ export class LoginFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private spinnerService: SpinnerService
   ) {}
 
   onLogin() {
@@ -24,6 +27,9 @@ export class LoginFormComponent implements OnInit {
       this.loginFrom.controls['username'].value,
       this.loginFrom.controls['password'].value
     );
+
+    // trigger spinner
+    this.spinnerService.spinnerToogle();
 
     // sending request
     this.loginService

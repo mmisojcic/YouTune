@@ -1,3 +1,4 @@
+import { SpinnerService } from './../../services/spinner.service';
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { Register } from 'src/app/models/register.model';
@@ -16,7 +17,8 @@ export class RegisterFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private spinnerService: SpinnerService
   ) {}
 
   onRegister() {
@@ -26,6 +28,9 @@ export class RegisterFormComponent implements OnInit {
       this.registerFrom.controls['password'].value,
       this.registerFrom.controls['email'].value
     );
+
+    // show spinner
+    this.spinnerService.spinnerToogle();
 
     // sending request
     this.loginService

@@ -1,10 +1,14 @@
 // COLORS
 
-$color-primary: #673ab7;
+$color-primary: #3F51B5;
 $color-secondary: #505050;
 $color-tertiary: #ffffff;
 
 // SHADOWS
+$google-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2),
+0 6px 10px 0 rgba(0, 0, 0, .14),
+0 1px 18px 0 rgba(0, 0, 0, .12);
+
 
 $box-shadow-lg: 0 0.4rem 1.5rem rgba(0, 0, 0, 0.7);
 $box-shadow-md: 0 0.2rem 1.1rem rgba(0, 0, 0, 0.7);
@@ -17,4 +21,5 @@ $text-shadow-sm: -0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.7);
 
 // FONTS
 
-$font-primary: 'Titillium Web', sans-serif !important;
+$font-primary: 'Titillium Web',
+sans-serif !important;
