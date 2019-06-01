@@ -38,7 +38,7 @@ export class LoginService {
       }),
       finalize(() => {
         // hide spinner
-        this.spinerService.spinnerToogle();
+        this.spinerService.spinnerHide();
         console.log('kraj');
       })
     );
@@ -57,7 +57,7 @@ export class LoginService {
       }),
       finalize(() => {
         // hide spinner
-        this.spinerService.spinnerToogle();
+        // this.spinerService.spinnerHide();
         console.log('kraj');
       })
     );

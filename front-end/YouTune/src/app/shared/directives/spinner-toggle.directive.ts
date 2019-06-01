@@ -5,11 +5,15 @@ import {
   TemplateRef,
   ViewContainerRef,
   OnDestroy,
-  OnInit
+  OnInit,
+  Input,
+  ElementRef,
+  HostBinding
 } from '@angular/core';
 import { NgIfContext } from '@angular/common';
 
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[ytSpinnerToggle]'
 })
 export class SpinnerToggleDirective implements OnInit, OnDestroy {
@@ -42,6 +46,7 @@ export class SpinnerToggleDirective implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    // avoid memory leaks, unsubscribe when element and directive is removed from the DOM
     this.spinnerTriggerSub.unsubscribe();
   }
 }

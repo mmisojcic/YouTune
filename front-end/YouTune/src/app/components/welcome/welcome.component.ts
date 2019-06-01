@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { routingAnimation } from '../../shared/animations/router.animation';
+import { domFaderAnimation } from '../../shared/animations/dom-fader.animation';
 
 @Component({
   selector: 'yt-welcome',
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss'],
-  animations: [routingAnimation]
+  animations: [domFaderAnimation]
 })
 export class WelcomeComponent implements OnInit {
   constructor() {}

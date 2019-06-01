@@ -30,7 +30,7 @@ export class RegisterFormComponent implements OnInit {
     );
 
     // show spinner
-    this.spinnerService.spinnerToogle();
+    this.spinnerService.spinnerShow();
 
     // sending request
     this.loginService

@@ -8,16 +8,14 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material/material.module';
-import { SpinnerToggleDirective } from './shared/directives/spinner-toggle.directive';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginFormComponent,
     RegisterFormComponent,
-    WelcomeComponent,
-    SpinnerToggleDirective
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +24,7 @@ import { SpinnerToggleDirective } from './shared/directives/spinner-toggle.direc
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

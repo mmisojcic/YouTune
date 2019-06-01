@@ -14,9 +14,10 @@
 
     <button type="submit" mat-raised-button color="primary"
       matTooltip="Click the button to submit the form">Login</button>
-    <div class="spinner absolute-center" *ytSpinnerToggle>
+    <div #s class="spinner absolute-center" [@domFader]="s" *ytSpinnerToggle>
       <mat-spinner aria-label="loading content"></mat-spinner>
     </div>
+
   </form>
   <p class="login_info">
     If you don't have an account click

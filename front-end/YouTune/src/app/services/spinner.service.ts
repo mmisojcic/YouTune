@@ -5,18 +5,24 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class SpinnerService {
-  spinnerShow = false;
+  spinning = false;
   trigger: Subject<boolean> = new Subject();
 
   constructor() {}
 
-  spinnerToogle() {
-    // set value opposite of current value
-    this.spinnerShow === false
-      ? (this.spinnerShow = true)
-      : (this.spinnerShow = false);
+  // shows spinner component
+  spinnerShow() {
+    if (!this.spinning) {
+      // emit value using subject
+      this.trigger.next(true);
+      this.spinning = true;
+    }
+  }
 
+  // hides spinner component
+  spinnerHide() {
     // emit value using subject
-    this.trigger.next(this.spinnerShow);
+    this.trigger.next(false);
+    this.spinning = false;
   }
 }

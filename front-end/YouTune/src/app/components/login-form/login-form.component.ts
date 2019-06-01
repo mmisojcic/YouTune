@@ -4,12 +4,13 @@ import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { api } from '../../shared/config/api.config';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 
 @Component({
   selector: 'yt-login-form',
   templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss']
+  styleUrls: ['./login-form.component.scss'],
+  animations: [domFaderAnimation]
 })
 export class LoginFormComponent implements OnInit {
   loginFrom: FormGroup;
@@ -29,7 +30,7 @@ export class LoginFormComponent implements OnInit {
     );
 
     // trigger spinner
-    this.spinnerService.spinnerToogle();
+    this.spinnerService.spinnerShow();
 
     // sending request
     this.loginService

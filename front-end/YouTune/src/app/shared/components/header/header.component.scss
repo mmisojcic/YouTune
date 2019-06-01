@@ -1,0 +1,36 @@
+@import '../../../../assets/scss/imports';
+
+.header {
+  box-shadow: $google-shadow;
+
+  &_toolbar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &_brand {
+    &-title {
+      font-weight: 700;
+      font-size: 2.5rem;
+      text-shadow: $text-shadow-md;
+
+      &--you {
+        color: $color-secondary;
+      }
+
+      &--tune {
+        color: $color-primary;
+      }
+    }
+  }
+
+  &_user {
+    font-size: 1rem;
+
+    &-name {
+      margin-left: 0.5rem;
+      margin-right: 1rem;
+      font-size: 1rem;
+    }
+  }
+}

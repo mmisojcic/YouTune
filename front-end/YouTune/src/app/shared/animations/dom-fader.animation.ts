@@ -6,7 +6,7 @@ import {
   query
 } from '@angular/animations';
 
-export const routingAnimation = trigger('routingAnimation', [
+export const domFaderAnimation = trigger('domFader', [
   // The '* => *' will trigger the animation to change between any two states
   transition('* => *', [
     // The query function has three params.
