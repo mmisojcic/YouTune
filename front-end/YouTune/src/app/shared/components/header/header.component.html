@@ -1,20 +1,22 @@
 <div class="header">
   <mat-toolbar color="primary" class="header_toolbar">
     <div class="header_brand">
+      <div class="header_brand-logo">
+        <img src="../../../../assets/images/logo.png" alt="logo" class="header_brand-logo--img">
+      </div>
       <h1 class="header_brand-title">
         <span class="header_brand-title--you">You</span>
         <span class="header_brand-title--tune">Tune</span>
       </h1>
     </div>
     <mat-menu #beforeMenu="matMenu" xPosition="before">
-      <button mat-menu-item>Item 1</button>
-      <button mat-menu-item>Item 2</button>
+      <button mat-menu-item>Settings</button>
+      <button mat-menu-item>Logout</button>
     </mat-menu>
     <button mat-button [matMenuTriggerFor]="beforeMenu" class="header_user">
       <i class="fas fa-user fa-lg"></i>
-      <span class="header_user-name">Marko</span>
+      <span class="header_user-name">{{ username }}</span>
       <i class="fas fa-caret-down fa-lg"></i>
     </button>
-
   </mat-toolbar>
 </div>

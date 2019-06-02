@@ -13,13 +13,23 @@
     background-color: $color-primary;
 
     &-you {
+      display: flex;
       position: absolute;
       top: 0;
       right: 0;
       font-weight: 700;
-      font-size: 5rem;
+      font-size: 4rem;
       color: $color-secondary;
       text-shadow: $text-shadow-lg;
+
+      &--logo {
+        margin-left: auto;
+        width: 4rem;
+
+        &--img {
+          width: 100%;
+        }
+      }
     }
   }
 
@@ -34,7 +44,7 @@
       top: 0;
       left: 0;
       font-weight: 700;
-      font-size: 5rem;
+      font-size: 4rem;
       color: $color-primary;
       text-shadow: $text-shadow-lg;
     }
