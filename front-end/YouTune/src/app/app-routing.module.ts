@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
-import { TstComponent } from './components/tst/tst.component';
 
 const routes: Routes = [
   {
@@ -18,7 +17,10 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: './admin/admin.module#AdminModule'
   },
-  { path: 'tst', component: TstComponent },
+  {
+    path: 'tuner',
+    loadChildren: './tuner/tuner.module#TunerModule'
+  },
   { path: '**', redirectTo: '/welcome/login' }
 ];
 

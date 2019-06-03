@@ -1,11 +1,14 @@
 @import '../../../../assets/scss/imports';
 
 .header {
+  position: relative;
+  z-index: 100;
   box-shadow: $google-shadow;
 
   &_toolbar {
     display: flex;
     justify-content: space-between;
+    height: $header-height;
   }
 
   &_brand {
@@ -24,8 +27,6 @@
       font-weight: 700;
       font-size: 2.5rem;
       text-shadow: $text-shadow-md;
-
-
 
       &--you {
         color: $color-secondary;

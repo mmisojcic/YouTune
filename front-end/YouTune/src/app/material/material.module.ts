@@ -4,7 +4,8 @@ import {
   MatButtonModule,
   MatCheckboxModule,
   MatInputModule,
-  MatCardModule
+  MatCardModule,
+  MatRippleModule
 } from '@angular/material';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -28,7 +29,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatTabsModule,
     MatMenuModule,
     MatProgressBarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatRippleModule
   ],
   exports: [
     MatButtonModule,
@@ -41,7 +43,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatTabsModule,
     MatMenuModule,
     MatProgressBarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatRippleModule
   ]
 })
 export class MaterialModule {}

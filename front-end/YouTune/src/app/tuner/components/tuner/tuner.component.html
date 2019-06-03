@@ -1,0 +1,37 @@
+<div class="tuner">
+  <yt-header></yt-header>
+  <mat-drawer-container class="tuner_content" [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="over" class="tuner_content-side"
+      >I'm a drawer</mat-drawer
+    >
+    <mat-drawer-content class="tuner_content-main">
+      <!-- drawer toggle -->
+      <button mat-raised-button (click)="drawer.toggle()">
+        Toggle drawer
+      </button>
+      <!-- drawer toggle -->
+      <div class="tuner_content-main--player">player</div>
+      <div class="tuner_content-main--songs">
+        <div class="mat-elevation-z4 song" matRipple>
+          <div class="song_img">
+            <img
+              mat-card-image
+              src="https://img.youtube.com/vi/hLB0x8Qj9Ho/0.jpg"
+              alt="thumbnail"
+            />
+          </div>
+          <div class="song_info">
+            <div class="song_info-top">
+              <span class="song_info-top--artist">Artist</span>
+              -
+              <span class="song_info-top--title">Title</span>
+            </div>
+            <div class="song_info-bottom">
+              <span class="song_info-bottom--genre">Genre</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

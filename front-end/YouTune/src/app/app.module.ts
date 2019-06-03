@@ -9,15 +9,13 @@ import { RegisterFormComponent } from './components/register-form/register-form.
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
-import { TstComponent } from './components/tst/tst.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginFormComponent,
     RegisterFormComponent,
-    WelcomeComponent,
-    TstComponent
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

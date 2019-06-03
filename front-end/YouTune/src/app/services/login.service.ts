@@ -57,7 +57,7 @@ export class LoginService {
       }),
       finalize(() => {
         // hide spinner
-        // this.spinerService.spinnerHide();
+        this.spinerService.spinnerHide();
         console.log('kraj');
       })
     );

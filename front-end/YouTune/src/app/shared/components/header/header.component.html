@@ -2,7 +2,11 @@
   <mat-toolbar color="primary" class="header_toolbar">
     <div class="header_brand">
       <div class="header_brand-logo">
-        <img src="../../../../assets/images/logo.png" alt="logo" class="header_brand-logo--img">
+        <img
+          src="../../../../assets/images/logo.png"
+          alt="logo"
+          class="header_brand-logo--img"
+        />
       </div>
       <h1 class="header_brand-title">
         <span class="header_brand-title--you">You</span>
@@ -14,9 +18,9 @@
       <button mat-menu-item>Logout</button>
     </mat-menu>
     <button mat-button [matMenuTriggerFor]="beforeMenu" class="header_user">
-      <i class="fas fa-user fa-lg"></i>
+      <i class="fas fa-user fa-md"></i>
       <span class="header_user-name">{{ username }}</span>
-      <i class="fas fa-caret-down fa-lg"></i>
+      <i class="fas fa-caret-down fa-md"></i>
     </button>
   </mat-toolbar>
 </div>
