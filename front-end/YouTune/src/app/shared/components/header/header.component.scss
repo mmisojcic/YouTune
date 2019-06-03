@@ -38,8 +38,16 @@
     }
   }
 
+  &_menu {
+
+    &-item {
+      outline: none;
+    }
+  }
+
   &_user {
     font-size: 1rem;
+    outline: none;
 
     &-name {
       margin-left: 0.5rem;
