@@ -1,7 +1,16 @@
 <div class="tuner">
   <yt-header></yt-header>
   <mat-drawer-container class="tuner_content" [hasBackdrop]="true">
-    <mat-drawer #drawer [mode]="over" class="tuner_content-side">I'm a drawer</mat-drawer>
+    <mat-drawer #drawer [mode]="over" class="tuner_content-side">
+      <button
+        mat-raised-button
+        (click)="drawer.toggle()"
+        class="color-secondary text-color-white"
+      >
+        <i class="fas fa-chevron-left"></i>
+        &nbsp;Playlists
+      </button>
+    </mat-drawer>
     <mat-drawer-content class="tuner_content-main">
       <!-- <div class="tuner_background">
         <img src="https://img.youtube.com/vi/8c0t1lpB1-Y/0.jpg" alt="thumbnail" />
@@ -12,39 +21,73 @@
       </button> -->
       <!-- drawer toggle -->
 
-      <div class="tuner_content-main--songs">
-        <div class="mat-elevation-z4 song" matRipple (click)="drawer.toggle()">
-          <div class="song_img">
-            <img mat-card-image src="https://img.youtube.com/vi/8c0t1lpB1-Y/0.jpg" alt="thumbnail" />
-          </div>
-          <div class="song_info">
-            <div class="song_info-top">
-              <span class="song_info-top--artist">Artist</span>
-              -
-              <span class="song_info-top--title">Title</span>
+      <mat-toolbar class="tuner_content-main--search">
+        <button
+          mat-raised-button
+          (click)="drawer.toggle()"
+          class="color-secondary text-color-white"
+        >
+          Playlists&nbsp;<i class="fas fa-chevron-right"></i>
+        </button>
+        <form class="tuner_content-main--search--form">
+          <input placeholder="Search YouTune" class="rounded" />
+          <button mat-raised-button class="color-secondary text-color-white">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </mat-toolbar>
+      <mat-divider></mat-divider>
+      <div class="tuner_content-main--wrapper">
+        <div class="tuner_content-main--songs">
+          <div class="mat-elevation-z4 song" matRipple>
+            <div class="song_img">
+              <i
+                class="fas fa-play fa-lg absolute-center text-color-white opacity-50"
+              ></i>
+              <img
+                mat-card-image
+                src="https://img.youtube.com/vi/8c0t1lpB1-Y/0.jpg"
+                alt="thumbnail"
+              />
             </div>
-            <div class="song_info-bottom">
-              <span class="song_info-bottom--genre">Genre</span>
+            <div class="song_info">
+              <div class="song_info-top">
+                <span class="song_info-top--artist">Artist</span>
+                -
+                <span class="song_info-top--title">Title</span>
+              </div>
+              <div class="song_info-bottom">
+                <span class="song_info-bottom--genre">Genre</span>
+              </div>
+            </div>
+          </div>
+          <div class="mat-elevation-z4 song" matRipple>
+            <div class="song_img">
+              <i
+                class="fas fa-play fa-lg absolute-center text-color-white opacity-50"
+              ></i>
+              <img
+                mat-card-image
+                src="https://img.youtube.com/vi/eYRC14UicI0/2.jpg"
+                alt="thumbnail"
+              />
+            </div>
+            <div class="song_info">
+              <div class="song_info-top">
+                <span class="song_info-top--artist">Artist</span>
+                <span>&nbsp;-&nbsp;</span>
+                <span class="song_info-top--title">TitleTitle</span>
+              </div>
+              <div class="song_info-bottom">
+                <span class="song_info-bottom--genre">Genre</span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="mat-elevation-z4 song" matRipple>
-          <div class="song_img">
-            <img mat-card-image src="https://img.youtube.com/vi/eYRC14UicI0/2.jpg" alt="thumbnail" />
-          </div>
-          <div class="song_info">
-            <div class="song_info-top">
-              <span class="song_info-top--artist">Artist</span>
-              <span>&nbsp;-&nbsp;</span>
-              <span class="song_info-top--title">TitleTitleTitleTitleTitleTitle</span>
-            </div>
-            <div class="song_info-bottom">
-              <span class="song_info-bottom--genre">Genre</span>
-            </div>
-          </div>
+        <div class="tuner_content-main--player">
+          <yt-player></yt-player>
         </div>
       </div>
-      <div class="tuner_content-main--player">playerkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</div>
     </mat-drawer-content>
   </mat-drawer-container>
 </div>

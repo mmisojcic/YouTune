@@ -14,6 +14,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [],
@@ -30,7 +32,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatMenuModule,
     MatProgressBarModule,
     MatSidenavModule,
-    MatRippleModule
+    MatRippleModule,
+    MatDividerModule,
+    MatSliderModule
   ],
   exports: [
     MatButtonModule,
@@ -44,7 +48,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatMenuModule,
     MatProgressBarModule,
     MatSidenavModule,
-    MatRippleModule
+    MatRippleModule,
+    MatDividerModule,
+    MatSliderModule
   ]
 })
 export class MaterialModule {}

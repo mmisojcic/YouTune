@@ -1,0 +1,19 @@
+<div class="player">
+  <div class="player_video embed-responsive embed-responsive-16by9">
+    <iframe
+      class="embed-responsive-item"
+      [src]="safeUrl"
+      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+    ></iframe>
+  </div>
+  <div class="player_controls">
+    <div class="player_controls-seeker">
+      <mat-slider class="full-width" color="primary"></mat-slider>
+    </div>
+    <div class="player_controls-panel">
+      <i class="fas fa-play"></i>
+      <i class="fas fa-pause"></i>
+      <i class="fas fa-stop"></i>
+    </div>
+  </div>
+</div>
