@@ -69,6 +69,10 @@ export class PlayerComponent implements OnInit {
     console.log('onPlayerStateChange');
     console.log(event.data);
     this.playerState = event.data;
+
+    if (event.data === 1) {
+      this.videoDurationCount();
+    }
   }
 
   // The API will call this function when the video player is ready
@@ -76,7 +80,7 @@ export class PlayerComponent implements OnInit {
     console.log(event);
     this.videoDuration = this.player.getDuration();
     console.log(this.videoDuration);
-    this.videoDurationCount();
+
     // event.target.cueVideoById({
     //   videoId: this.videoId
     // });
