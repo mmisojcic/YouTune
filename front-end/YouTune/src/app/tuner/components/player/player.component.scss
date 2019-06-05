@@ -1,3 +1,4 @@
+@import '../../../../assets/scss/imports';
 .player {
   display: flex;
   flex-direction: column;
@@ -24,7 +25,20 @@
       display: flex;
       justify-content: space-evenly;
       align-items: center;
-      padding: 0.5rem;
+      padding: 0.2rem;
+
+      &--time {
+        display: flex;
+        justify-content: center;
+        font-weight: 600;
+        color: $color-secondary;
+      }
     }
+  }
+
+  button {
+    outline: none;
+    color: $color-primary;
+    margin: 0 0.2rem;
   }
 }

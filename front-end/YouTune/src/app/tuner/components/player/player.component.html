@@ -1,19 +1,45 @@
 <div class="player">
   <div class="player_video embed-responsive embed-responsive-16by9">
-    <iframe
-      class="embed-responsive-item"
-      [src]="safeUrl"
-      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
-    ></iframe>
+    <div id="player"></div>
   </div>
   <div class="player_controls">
     <div class="player_controls-seeker">
-      <mat-slider class="full-width" color="primary"></mat-slider>
+      <mat-slider
+        class="full-width"
+        color="primary"
+        min="0"
+        [max]="videoDuration"
+        step="1"
+        #durationSlider
+        (input)="seek(durationSlider)"
+      ></mat-slider>
     </div>
+    <mat-divider></mat-divider>
     <div class="player_controls-panel">
-      <i class="fas fa-play"></i>
-      <i class="fas fa-pause"></i>
-      <i class="fas fa-stop"></i>
+      <button mat-raised-button (click)="playToggle()">
+        <i class="fas fa-play" *ngIf="paused"></i>
+        <i class="fas fa-pause" *ngIf="!paused"></i>
+      </button>
+
+      <button mat-raised-button (click)="mute(volumeSlider)">
+        <i class="fas fa-volume-up" *ngIf="!muted"></i>
+        <i class="fas fa-volume-mute" *ngIf="muted"></i>
+      </button>
+      <mat-slider
+        color="primary"
+        min="0"
+        max="100"
+        step="1"
+        value="40"
+        #volumeSlider
+        (input)="volume(volumeSlider)"
+      ></mat-slider>
+
+      <div class="player_controls-panel--time full-width">
+        <span>{{ videoCurrentTime }}</span>
+        <span>&nbsp;/&nbsp;</span>
+        <span>{{ videoDuration }}</span>
+      </div>
     </div>
   </div>
 </div>
