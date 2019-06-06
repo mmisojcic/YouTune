@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Subscription, Subject } from 'rxjs';
 
 @Component({
   selector: 'yt-player',
@@ -11,7 +12,7 @@ export class PlayerComponent implements OnInit {
   url = 'https://www.youtube.com/embed/uCIgxYuNGu0?enablejsapi=1';
   safeUrl: SafeResourceUrl;
 
-  videoId = 'rqYE9kYYtkQ';
+  videoId = 'XL4iZVCBgQk';
 
   player;
   playerState: number;
@@ -37,8 +38,8 @@ export class PlayerComponent implements OnInit {
         width: '100%',
         videoId: this.videoId,
         events: {
-          onReady: event => {
-            this.onPlayerReady(event);
+          onReady: () => {
+            this.onPlayerReady();
           },
           onStateChange: event => {
             this.onPlayerStateChange(event);
@@ -53,6 +54,9 @@ export class PlayerComponent implements OnInit {
         }
       });
     };
+
+    //
+    this.videoDurationCount();
   }
 
   // Loads the YouTube API script
@@ -68,23 +72,21 @@ export class PlayerComponent implements OnInit {
   onPlayerStateChange(event) {
     console.log('onPlayerStateChange');
     console.log(event.data);
+
     this.playerState = event.data;
 
-    if (event.data === 1) {
-      this.videoDurationCount();
+    if (event.data === 2 && this.paused === false) {
+      this.paused = true;
+    } else if (event.data === 1 && this.paused === true) {
+      this.paused = false;
     }
   }
 
   // The API will call this function when the video player is ready
-  onPlayerReady(event) {
-    console.log(event);
+  onPlayerReady() {
+    console.log();
     this.videoDuration = this.player.getDuration();
     console.log(this.videoDuration);
-
-    // event.target.cueVideoById({
-    //   videoId: this.videoId
-    // });
-    // event.target.playVideo();
   }
 
   playToggle() {

@@ -22,9 +22,9 @@
       </mat-slider>
 
       <div class="player_controls-panel--time full-width">
-        <span>{{ videoCurrentTime }}</span>
+        <span>{{ videoCurrentTime | secondsFormat}}</span>
         <span>&nbsp;/&nbsp;</span>
-        <span>{{ videoDuration }}</span>
+        <span>{{ videoDuration | secondsFormat }}</span>
       </div>
     </div>
   </div>
