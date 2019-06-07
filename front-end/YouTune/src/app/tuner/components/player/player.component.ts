@@ -38,8 +38,8 @@ export class PlayerComponent implements OnInit {
         width: '100%',
         videoId: this.videoId,
         events: {
-          onReady: () => {
-            this.onPlayerReady();
+          onReady: event => {
+            this.onPlayerReady(event);
           },
           onStateChange: event => {
             this.onPlayerStateChange(event);
@@ -54,7 +54,10 @@ export class PlayerComponent implements OnInit {
         }
       });
     };
-
+    //
+    isNaN(this.videoDuration)
+      ? (this.videoDuration = 0)
+      : (this.videoDuration = this.player.getDuration() - 1);
     //
     this.videoDurationCount();
   }
@@ -83,9 +86,8 @@ export class PlayerComponent implements OnInit {
   }
 
   // The API will call this function when the video player is ready
-  onPlayerReady() {
-    console.log();
-    this.videoDuration = this.player.getDuration();
+  onPlayerReady(event) {
+    this.videoDuration = this.player.getDuration() - 1;
     console.log(this.videoDuration);
   }
 
@@ -103,13 +105,14 @@ export class PlayerComponent implements OnInit {
   // fast forwards to the time givin by slider
   seek(slider: HTMLInputElement) {
     this.player.seekTo(slider.value, true);
+    this.videoCurrentTime = Math.round(this.player.getCurrentTime());
   }
 
   videoDurationCount() {
     setInterval(() => {
       this.videoCurrentTime = Math.round(this.player.getCurrentTime());
       console.log(this.videoCurrentTime);
-    }, 1000);
+    }, 500);
   }
 
   // regulate volume with slider

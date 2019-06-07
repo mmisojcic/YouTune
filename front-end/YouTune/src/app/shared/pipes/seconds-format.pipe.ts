@@ -6,9 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SecondsFormatPipe implements PipeTransform {
   transform(value: any, args?: any): any {
     const minutes = Math.floor(value / 60);
-    const seconds = Math.floor(value % 60);
+    const seconds = value - minutes * 60;
 
-    let formatedDuration = '';
+    let formatedDuration: string;
 
     if (seconds < 10) {
       formatedDuration = minutes + ':' + '0' + seconds;
