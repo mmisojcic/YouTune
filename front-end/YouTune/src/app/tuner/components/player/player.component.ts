@@ -1,12 +1,15 @@
+import { SpinnerService } from './../../../services/spinner.service';
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subscription, Subject } from 'rxjs';
+import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 
 @Component({
   selector: 'yt-player',
   templateUrl: './player.component.html',
-  styleUrls: ['./player.component.scss']
+  styleUrls: ['./player.component.scss'],
+  animations: [domFaderAnimation]
 })
 export class PlayerComponent implements OnInit {
   url = 'https://www.youtube.com/embed/uCIgxYuNGu0?enablejsapi=1';
@@ -23,11 +26,9 @@ export class PlayerComponent implements OnInit {
   paused = false;
   levelBeforeMute: string;
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private spinnerService: SpinnerService) {}
 
   ngOnInit() {
-    // this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
-
     // Loads the YouTube API script
     this.loadYouTubeAPI();
 
@@ -53,8 +54,12 @@ export class PlayerComponent implements OnInit {
           showInfo: 0
         }
       });
+
+      // shows spinner
+      this.spinnerService.spinnerShow();
     };
-    //
+
+    // sets duration to 0 if video is not loaded / synchronizes video duration with originial youtube duration
     isNaN(this.videoDuration)
       ? (this.videoDuration = 0)
       : (this.videoDuration = this.player.getDuration() - 1);
@@ -87,8 +92,12 @@ export class PlayerComponent implements OnInit {
 
   // The API will call this function when the video player is ready
   onPlayerReady(event) {
+    // synchronizes video duration with originial youtube duration
     this.videoDuration = this.player.getDuration() - 1;
     console.log(this.videoDuration);
+
+    // hides spinner
+    this.spinnerService.spinnerHide();
   }
 
   playToggle() {

@@ -18,7 +18,8 @@
         <i class="fas fa-volume-up" *ngIf="!muted"></i>
         <i class="fas fa-volume-mute" *ngIf="muted"></i>
       </button>
-      <mat-slider color="primary" min="0" max="100" step="1" value="100" #volumeSlider (input)="volume(volumeSlider)">
+      <mat-slider class="player_controls-panel--volume" color="primary" min="0" max="100" step="1" value="100"
+        #volumeSlider (input)="volume(volumeSlider)">
       </mat-slider>
 
       <div class="player_controls-panel--time full-width">
@@ -26,6 +27,11 @@
         <span>&nbsp;/&nbsp;</span>
         <span>{{ videoDuration | secondsFormat }}</span>
       </div>
+      <!-- spinner -->
+      <div #s class="spinner" [@domFader]="s" *ytSpinnerToggle>
+        <mat-spinner aria-label="loading content"></mat-spinner>
+      </div>
     </div>
+
   </div>
 </div>

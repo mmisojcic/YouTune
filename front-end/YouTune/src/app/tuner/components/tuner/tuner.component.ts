@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tuner.component.scss']
 })
 export class TunerComponent implements OnInit {
-  test = 0;
+  backgroundImage = 'https://img.youtube.com/vi/8c0t1lpB1-Y/0.jpg';
   constructor() {}
 
   ngOnInit() {}
