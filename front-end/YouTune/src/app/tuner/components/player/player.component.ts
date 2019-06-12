@@ -150,4 +150,19 @@ export class PlayerComponent implements OnInit {
       this.muted = true;
     }
   }
+
+  secondsFormater(value: number): string {
+    const minutes = Math.floor(value / 60);
+    const seconds = value - minutes * 60;
+
+    let formatedDuration: string;
+
+    if (seconds < 10) {
+      formatedDuration = minutes + ':' + '0' + seconds;
+    } else {
+      formatedDuration = minutes + ':' + seconds;
+    }
+
+    return formatedDuration;
+  }
 }

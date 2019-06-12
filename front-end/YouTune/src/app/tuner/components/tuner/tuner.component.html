@@ -8,9 +8,6 @@
       </button>
     </mat-drawer>
     <mat-drawer-content class="tuner_content-main">
-      <!-- <div class="tuner_background">
-        <img src="https://img.youtube.com/vi/8c0t1lpB1-Y/0.jpg" alt="thumbnail" />
-      </div> -->
 
       <mat-toolbar class="tuner_content-main--search">
         <button mat-raised-button (click)="drawer.toggle()" class="color-secondary text-color-white">
@@ -62,8 +59,10 @@
         <div class="tuner_content-main--player">
           <yt-player></yt-player>
         </div>
+        <!-- <div class="tuner_content-main--wrapper--background"
+          [ngStyle]="{backgroundImage: 'url(https://img.youtube.com/vi/eYRC14UicI0/0.jpg)', backgroundSize: 'cover'}">
+        </div> -->
       </div>
     </mat-drawer-content>
-
   </mat-drawer-container>
 </div>

@@ -24,11 +24,12 @@
 
     &-seeker {
       width: 100%;
-      align-self: flex-start;
+      // align-self: flex-start;
 
       &--slider {
-        padding: 0 .5rem !important;
+        width: 100%;
       }
+
     }
 
     &-panel {
@@ -37,8 +38,10 @@
       align-items: center;
       padding: 0.2rem;
 
-      &--volume {
-        width: 30%;
+      &--volume,
+      .mat-slider-horizontal {
+        height: 48px;
+        min-width: 100px;
       }
 
       &--time {
