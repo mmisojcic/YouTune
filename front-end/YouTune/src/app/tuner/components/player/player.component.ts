@@ -1,8 +1,5 @@
 import { SpinnerService } from './../../../services/spinner.service';
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Subscription, Subject } from 'rxjs';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 
 @Component({
@@ -12,9 +9,6 @@ import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation
   animations: [domFaderAnimation]
 })
 export class PlayerComponent implements OnInit {
-  url = 'https://www.youtube.com/embed/uCIgxYuNGu0?enablejsapi=1';
-  safeUrl: SafeResourceUrl;
-
   videoId = 'XL4iZVCBgQk';
 
   player;
@@ -25,6 +19,8 @@ export class PlayerComponent implements OnInit {
   muted = false;
   paused = false;
   levelBeforeMute: string;
+
+  seekerValue: number;
 
   constructor(private spinnerService: SpinnerService) {}
 
@@ -63,7 +59,8 @@ export class PlayerComponent implements OnInit {
     isNaN(this.videoDuration)
       ? (this.videoDuration = 0)
       : (this.videoDuration = this.player.getDuration() - 1);
-    //
+
+    // starts the timer counting and displaying video current time each second
     this.videoDurationCount();
   }
 
@@ -83,6 +80,7 @@ export class PlayerComponent implements OnInit {
 
     this.playerState = event.data;
 
+    // toggles play/pause button when clicking on video itself
     if (event.data === 2 && this.paused === false) {
       this.paused = true;
     } else if (event.data === 1 && this.paused === true) {
@@ -117,6 +115,7 @@ export class PlayerComponent implements OnInit {
     this.videoCurrentTime = Math.round(this.player.getCurrentTime());
   }
 
+  // timer counting and displaying current time of the video
   videoDurationCount() {
     setInterval(() => {
       this.videoCurrentTime = Math.round(this.player.getCurrentTime());

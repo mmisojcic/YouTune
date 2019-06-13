@@ -5,7 +5,9 @@
   <div class="player_controls">
     <div class="player_controls-seeker">
       <mat-slider class="player_controls-seeker--slider" color="primary" min="0" [max]="videoDuration" step="1"
-        [value]="videoCurrentTime" #durationSlider (input)="seek(durationSlider)"></mat-slider>
+        [value]="videoCurrentTime" #durationSlider (input)="seek(durationSlider)">
+      </mat-slider>
+      <span>{{seekerValue}}</span>
     </div>
     <mat-divider></mat-divider>
     <div class="player_controls-panel">

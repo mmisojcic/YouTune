@@ -11,6 +11,7 @@
     width: 50%;
     height: 100%;
     background-color: $color-primary;
+    box-shadow: .3rem .1rem .7rem rgba(0, 0, 0, 0.4);
 
     &-you {
       display: flex;
@@ -35,6 +36,7 @@
 
   &_grey {
     position: relative;
+    // z-index: -1;
     width: 50%;
     height: 100%;
     background-color: $color-secondary;
