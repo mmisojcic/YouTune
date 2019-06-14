@@ -23,40 +23,9 @@
       <mat-divider></mat-divider>
       <div class="tuner_content-main--wrapper">
         <div class="tuner_content-main--songs">
-          <div class="mat-elevation-z4 song" matRipple>
-            <div class="song_img">
-              <i class="fas fa-play fa-lg absolute-center text-color-white opacity-50"></i>
-              <img mat-card-image src="https://img.youtube.com/vi/8c0t1lpB1-Y/0.jpg" alt="thumbnail" />
-            </div>
-            <div class="song_info">
-              <div class="song_info-top">
-                <span class="song_info-top--artist">Artist</span>
-                -
-                <span class="song_info-top--title">Title</span>
-              </div>
-              <div class="song_info-bottom">
-                <span class="song_info-bottom--genre">Genre</span>
-              </div>
-            </div>
-          </div>
-          <div class="mat-elevation-z4 song" matRipple>
-            <div class="song_img">
-              <i class="fas fa-play fa-lg absolute-center text-color-white opacity-50"></i>
-              <img mat-card-image src="https://img.youtube.com/vi/eYRC14UicI0/2.jpg" alt="thumbnail" />
-            </div>
-            <div class="song_info">
-              <div class="song_info-top">
-                <span class="song_info-top--artist">Artist </span>
-                <span>&nbsp;-&nbsp;</span>
-                <span class="song_info-top--title">TitleTitle</span>
-              </div>
-              <div class="song_info-bottom">
-                <span class="song_info-bottom--genre">Genre</span>
-              </div>
-            </div>
-          </div>
+          <yt-playlist [testLength]="numbers"></yt-playlist>
         </div>
-        <div class="tuner_content-main--player">
+        <div class="tuner_content-main--player rounded">
           <yt-player></yt-player>
         </div>
         <!-- decoration -->
