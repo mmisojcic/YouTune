@@ -37,6 +37,7 @@ namespace YouTune
             services.AddTransient<SongService>();
             services.AddTransient<ReportService>();
             services.AddTransient<PlaylistService>();
+            services.AddTransient<LoginService>();
 
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -46,6 +47,12 @@ namespace YouTune
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
 
             services.AddDbContext<AppDbContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -65,6 +72,7 @@ namespace YouTune
                 app.UseHsts();
             }
 
+            app.UseCors("MyPolicy");
             app.UseHttpsRedirection();
             app.UseMvc();
         }

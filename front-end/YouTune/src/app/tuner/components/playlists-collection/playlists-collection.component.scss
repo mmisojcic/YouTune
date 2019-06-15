@@ -1,0 +1,39 @@
+@import '../../../../assets/scss/imports';
+
+.playlists-collection {
+  margin-top: 1rem;
+  height: calc(100vh - #{$header-height} - 4.5rem);
+  overflow-y: scroll;
+  //   box-shadow: 0 0 1rem rgba(0, 0, 0, .4) inset;
+
+  &_playlist {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    white-space: nowrap;
+    padding: .5rem;
+    margin: .6rem;
+    box-shadow: $google-shadow;
+    cursor: pointer;
+
+    &-logo {
+      width: 8rem;
+
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    &-title {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      // font-size: 0.7rem;
+      padding: .25rem;
+      color: $color-secondary;
+    }
+  }
+
+}

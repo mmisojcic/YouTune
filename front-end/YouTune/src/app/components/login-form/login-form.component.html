@@ -1,0 +1,32 @@
+<div class="login absolute-center">
+  <form class="login_form rounded" [formGroup]="loginFrom" (ngSubmit)="onLogin()">
+    <div class="form-group">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Username" formControlName="username" />
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field class="full-width">
+        <input matInput type="password" placeholder="Password" formControlName="password" />
+      </mat-form-field>
+      <small class="form-text text-muted">Combine numbers and mixed case letters.</small>
+    </div>
+
+    <button type="submit" mat-raised-button color="primary" matTooltip="Click the button to submit the form">
+      Login
+    </button>
+
+    <span #error [@domFader]="error" *ngIf="loginError!==undefined" class="login_form-error form-text ">
+      {{loginError}}
+    </span>
+
+    <div #s class="spinner" [@domFader]="s" *ytSpinnerToggle>
+      <mat-spinner aria-label="loading content"></mat-spinner>
+    </div>
+  </form>
+
+  <p class="login_info">
+    If you don't have an account click
+    <a class="login_info-register" [routerLink]="['/welcome/register']">REGISTER</a>
+  </p>
+</div>

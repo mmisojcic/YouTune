@@ -1,0 +1,41 @@
+<div class="tuner">
+  <yt-header></yt-header>
+  <mat-drawer-container class="tuner_content" [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="over" class="tuner_content-side">
+      <button mat-raised-button (click)="drawer.toggle()" class="color-secondary text-color-white ">
+        <i class="fas fa-chevron-left"></i>
+        &nbsp;Playlists
+      </button>
+      <yt-playlists-collection (click)="drawer.toggle()"></yt-playlists-collection>
+    </mat-drawer>
+    <mat-drawer-content class="tuner_content-main">
+
+      <mat-toolbar class="tuner_content-main--search">
+        <button mat-raised-button (click)="drawer.toggle()" class="color-secondary text-color-white">
+          Playlists&nbsp;<i class="fas fa-chevron-right"></i>
+        </button>
+        <form class="tuner_content-main--search--form">
+          <input placeholder="Search YouTune" class="rounded" />
+          <button mat-raised-button class="color-secondary text-color-white">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </mat-toolbar>
+      <mat-divider></mat-divider>
+      <div class="tuner_content-main--wrapper">
+        <div class="tuner_content-main--songs rounded">
+          <yt-playlist [testLength]="numbers"></yt-playlist>
+        </div>
+        <div class="tuner_content-main--player rounded">
+          <yt-player></yt-player>
+        </div>
+        <!-- decoration -->
+        <!-- <div class="tuner_decoration">
+          <div class="tuner_decoration-blue"></div>
+          <div class="tuner_decoration-grey"></div>
+        </div> -->
+        <!-- decoration -->
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

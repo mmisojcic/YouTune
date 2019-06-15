@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { routingAnimation } from './shared/animations/router.animation';
+import { domFaderAnimation } from './shared/animations/dom-fader.animation';
 
 @Component({
   selector: 'yt-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: [routingAnimation]
+  animations: [domFaderAnimation]
 })
 export class AppComponent {
   title = 'YouTune';

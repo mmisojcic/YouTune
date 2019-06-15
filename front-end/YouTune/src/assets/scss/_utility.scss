@@ -1,6 +1,48 @@
+// centers vertically and horizontally
 .absolute-center {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.absolute-top-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+// centers vertically and horizontally item inside using flex
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.color-primary {
+  background-color: $color-primary;
+}
+
+.color-secondary {
+  background-color: $color-secondary;
+}
+
+.text-color-white {
+  color: #fff;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  width: 100%;
+}
+
+// 100% width and height container
+.full-width-height {
+  width: 100%;
+  height: 100%;
 }

@@ -1,0 +1,61 @@
+@import '../../../../assets/scss/imports';
+
+.player {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: $color-tertiary;
+
+  &_video {
+    width: 100%;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
+      0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+
+    iframe {
+      width: 100%;
+    }
+  }
+
+  &_controls {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    &-seeker {
+      width: 100%;
+      // align-self: flex-start;
+
+      &--slider {
+        width: 100%;
+      }
+
+    }
+
+    &-panel {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      padding: 0.2rem;
+
+      &--volume,
+      .mat-slider-horizontal {
+        height: 48px;
+        min-width: 100px;
+      }
+
+      &--time {
+        display: flex;
+        justify-content: center;
+        font-weight: 600;
+        color: $color-secondary;
+      }
+    }
+  }
+
+  button {
+    outline: none;
+    color: $color-primary;
+    margin: 0 0.2rem;
+  }
+}
