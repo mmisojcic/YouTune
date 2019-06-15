@@ -15,10 +15,16 @@
     <button type="submit" mat-raised-button color="primary" matTooltip="Click the button to submit the form">
       Login
     </button>
+
+    <span #error [@domFader]="error" *ngIf="loginError!==undefined" class="login_form-error form-text ">
+      {{loginError}}
+    </span>
+
     <div #s class="spinner" [@domFader]="s" *ytSpinnerToggle>
       <mat-spinner aria-label="loading content"></mat-spinner>
     </div>
   </form>
+
   <p class="login_info">
     If you don't have an account click
     <a class="login_info-register" [routerLink]="['/welcome/register']">REGISTER</a>

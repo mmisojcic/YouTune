@@ -12,6 +12,8 @@ export class PlayerComponent implements OnInit {
   videoId = 'XL4iZVCBgQk';
 
   player;
+  loaded = false;
+  firstTimePlay = true;
   playerState: number;
   videoDuration: number;
   videoCurrentTime = 0;
@@ -19,6 +21,7 @@ export class PlayerComponent implements OnInit {
   muted = false;
   paused = false;
   levelBeforeMute: string;
+  thumbLabelValue = 100;
 
   seekerValue: number;
 
@@ -94,12 +97,23 @@ export class PlayerComponent implements OnInit {
     this.videoDuration = this.player.getDuration() - 1;
     console.log(this.videoDuration);
 
+    this.loaded = true;
+
+    console.log(this.playerState);
     // hides spinner
     this.spinnerService.spinnerHide();
   }
 
   playToggle() {
-    // this.player.loadVideoById(this.videoId);
+    // // show play icon on button and allow video to be...
+    // // played from controlls menu for the first time...
+    // // after video was loaded
+    // if (this.firstTimePlay) {
+    //   this.player.playVideo();
+    //   this.firstTimePlay = false;
+    //   this.paused = false;
+    // } else {
+    // else just toggle play/pause
     if (this.playerState === 1) {
       this.player.pauseVideo();
       this.paused = true;
@@ -107,9 +121,10 @@ export class PlayerComponent implements OnInit {
       this.player.playVideo();
       this.paused = false;
     }
+    // }
   }
 
-  // fast forwards to the time givin by slider
+  // fast forwards to the time given by slider
   seek(slider: HTMLInputElement) {
     this.player.seekTo(slider.value, true);
     this.videoCurrentTime = Math.round(this.player.getCurrentTime());
@@ -118,8 +133,10 @@ export class PlayerComponent implements OnInit {
   // timer counting and displaying current time of the video
   videoDurationCount() {
     setInterval(() => {
-      this.videoCurrentTime = Math.round(this.player.getCurrentTime());
-      console.log(this.videoCurrentTime);
+      if (this.loaded === true) {
+        this.videoCurrentTime = Math.round(this.player.getCurrentTime());
+        console.log(this.videoCurrentTime);
+      }
     }, 500);
   }
 

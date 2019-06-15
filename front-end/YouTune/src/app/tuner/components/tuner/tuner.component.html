@@ -2,10 +2,11 @@
   <yt-header></yt-header>
   <mat-drawer-container class="tuner_content" [hasBackdrop]="true">
     <mat-drawer #drawer [mode]="over" class="tuner_content-side">
-      <button mat-raised-button (click)="drawer.toggle()" class="color-secondary text-color-white">
+      <button mat-raised-button (click)="drawer.toggle()" class="color-secondary text-color-white ">
         <i class="fas fa-chevron-left"></i>
         &nbsp;Playlists
       </button>
+      <yt-playlists-collection (click)="drawer.toggle()"></yt-playlists-collection>
     </mat-drawer>
     <mat-drawer-content class="tuner_content-main">
 
@@ -22,7 +23,7 @@
       </mat-toolbar>
       <mat-divider></mat-divider>
       <div class="tuner_content-main--wrapper">
-        <div class="tuner_content-main--songs">
+        <div class="tuner_content-main--songs rounded">
           <yt-playlist [testLength]="numbers"></yt-playlist>
         </div>
         <div class="tuner_content-main--player rounded">

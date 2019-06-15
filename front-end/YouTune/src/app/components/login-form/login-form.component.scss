@@ -12,6 +12,13 @@
     padding: 1.5rem;
     box-shadow: $box-shadow-lg;
     transition: all 0.3s;
+
+    &-error {
+      text-align: center;
+      font-weight: 600;
+      color: $error-message-color;
+      margin-top: .5rem;
+    }
   }
 
   &_info {

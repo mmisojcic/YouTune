@@ -16,6 +16,8 @@ export class LoginFormComponent implements OnInit {
   loginFrom: FormGroup;
   loginInfo: Login;
 
+  loginError: string;
+
   constructor(
     private formBuilder: FormBuilder,
     private loginService: LoginService,
@@ -35,9 +37,14 @@ export class LoginFormComponent implements OnInit {
     // sending request
     this.loginService
       .login(api.fullUrl(api.users.login()), this.loginInfo)
-      .subscribe(res => {
-        console.log(res);
-      });
+      .subscribe(
+        res => {
+          console.log(res);
+        },
+        err => {
+          this.loginError = err;
+        }
+      );
   }
 
   ngOnInit() {
