@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'yt-playlists-collection',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./playlists-collection.component.scss']
 })
 export class PlaylistsCollectionComponent implements OnInit {
-  testLength = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+  testLength = [1, 2, 3, 4, 5];
 
   constructor() {}
 
