@@ -23,7 +23,7 @@ export class PlayerComponent implements OnInit {
   levelBeforeMute: string;
   thumbLabelValue = 100;
 
-  seekerValue: number;
+  seekerValue = this.secondsFormater(this.videoCurrentTime);
 
   constructor(private spinnerService: SpinnerService) {}
 
@@ -180,5 +180,9 @@ export class PlayerComponent implements OnInit {
     }
 
     return formatedDuration;
+  }
+
+  test(event, elem) {
+    console.log(elem);
   }
 }

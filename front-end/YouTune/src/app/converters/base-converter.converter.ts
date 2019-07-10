@@ -4,7 +4,7 @@ export abstract class BaseConverter<M, D> {
   public abstract DTOtoModel(dto: D): M;
 
   public modelToDTOList(models: M[]): D[] {
-    let dtoList: D[] = [];
+    const dtoList: D[] = [];
 
     models.forEach(m => {
       dtoList.push(this.modelToDTO(m));
@@ -14,7 +14,7 @@ export abstract class BaseConverter<M, D> {
   }
 
   public DTOtoModelList(dto: D[]): M[] {
-    let modelList: M[] = [];
+    const modelList: M[] = [];
 
     dto.forEach(d => {
       modelList.push(this.DTOtoModel(d));

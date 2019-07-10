@@ -42,6 +42,7 @@ export class LoginFormComponent implements OnInit {
           console.log(res);
         },
         err => {
+          console.log(err);
           this.loginError = err;
         }
       );

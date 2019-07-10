@@ -53,7 +53,7 @@ export class LoginService {
       }),
       catchError(err => {
         console.log('Error ocurred: ', err);
-        return throwError(err.error);
+        return throwError(err.statusText);
       }),
       finalize(() => {
         // hide spinner
