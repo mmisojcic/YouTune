@@ -10,13 +10,13 @@ import { PlaylistsCollectionComponent } from './components/playlists-collection/
 import { SongComponent } from './components/song/song.component';
 
 @NgModule({
-  declarations: [
-    TunerComponent,
-    PlayerComponent,
-    PlaylistComponent,
-    PlaylistsCollectionComponent,
-    SongComponent
-  ],
-  imports: [CommonModule, TunerRoutingModule, SharedModule]
+   declarations: [
+      TunerComponent,
+      PlayerComponent,
+      PlaylistComponent,
+      PlaylistsCollectionComponent,
+      SongComponent
+   ],
+   imports: [CommonModule, TunerRoutingModule, SharedModule]
 })
 export class TunerModule {}
