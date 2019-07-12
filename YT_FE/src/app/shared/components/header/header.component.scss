@@ -1,58 +1,57 @@
 @import '../../../../assets/scss/imports';
 
 .header {
-  position: relative;
-  z-index: 100;
-  box-shadow: $google-shadow;
+   position: relative;
+   z-index: 100;
+   box-shadow: $google-shadow;
 
-  &_toolbar {
-    display: flex;
-    justify-content: space-between;
-    height: $header-height;
-  }
+   &_toolbar {
+      display: flex;
+      justify-content: space-between;
+      height: $header-height;
+   }
 
-  &_brand {
-    display: flex;
-    align-items: center;
+   &_brand {
+      display: flex;
+      align-items: center;
 
-    &-logo {
-      width: 2.5rem;
+      &-logo {
+         width: 2.5rem;
 
-      &--img {
-        width: 100%;
-      }
-    }
-
-    &-title {
-      font-weight: 700;
-      font-size: 2.5rem;
-      text-shadow: $text-shadow-md;
-
-      &--you {
-        color: $color-secondary;
+         &--img {
+            width: 100%;
+         }
       }
 
-      &--tune {
-        color: $color-primary;
+      &-title {
+         font-weight: 700;
+         font-size: 2.5rem;
+         text-shadow: $text-shadow-md, $text-shadow-ultra-sm;
+
+         &--you {
+            color: $color-secondary;
+         }
+
+         &--tune {
+            color: $color-primary;
+         }
       }
-    }
-  }
+   }
 
-  &_menu {
+   &_menu {
+      &-item {
+         outline: none;
+      }
+   }
 
-    &-item {
-      outline: none;
-    }
-  }
-
-  &_user {
-    font-size: 1rem;
-    outline: none;
-
-    &-name {
-      margin-left: 0.5rem;
-      margin-right: 1rem;
+   &_user {
       font-size: 1rem;
-    }
-  }
+      outline: none;
+
+      &-name {
+         margin-left: 0.5rem;
+         margin-right: 1rem;
+         font-size: 1rem;
+      }
+   }
 }

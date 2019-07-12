@@ -19,6 +19,8 @@ export class RegisterFormComponent implements OnInit {
   registerFrom: FormGroup;
   registerInfo: Register;
 
+  errorMessage: string;
+
   constructor(
     private formBuilder: FormBuilder,
     private loginService: LoginService,
@@ -39,9 +41,14 @@ export class RegisterFormComponent implements OnInit {
     // sending request
     this.loginService
       .register(api.fullUrl(api.users.register()), this.registerInfo)
-      .subscribe(res => {
-        console.log(res);
-      });
+      .subscribe(
+        res => {
+          console.log(res);
+        },
+        err => {
+          this.errorMessage = err;
+        }
+      );
   }
 
   ngOnInit() {

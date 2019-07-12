@@ -1,48 +1,48 @@
 @import '../../../../assets/scss/imports';
 
 .playlists-collection {
-  margin-top: 1rem;
-  width: fit-content;
-  height: calc(100vh - #{$header-height} - 4.5rem);
-  overflow-y: scroll;
+   margin-top: 1rem;
+   width: fit-content;
+   height: calc(100vh - #{$header-height} - 4.5rem);
+   overflow-y: scroll;
 
-  &_playlist {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    white-space: nowrap;
-    padding: .5rem;
-    margin: .6rem;
-    box-shadow: $google-shadow;
-    cursor: pointer;
-    color: $color-secondary;
-
-    &-logo {
-      position: relative;
-      width: 8rem;
+   &_playlist {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      white-space: nowrap;
+      padding: 1rem;
+      margin: 1rem;
+      box-shadow: $google-shadow;
+      cursor: pointer;
+      color: $color-secondary;
 
-      img {
-        display: block;
-        width: 100%;
+      &-logo {
+         position: relative;
+         width: 6rem;
+         margin: 1rem 0;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+
+         img {
+            display: block;
+            width: 100%;
+         }
+
+         &--icon {
+            position: absolute;
+            top: 40%;
+            left: 40%;
+            text-shadow: $text-shadow-sm;
+         }
       }
 
-      &--icon {
-        position: absolute;
-        top: 40%;
-        left: 40%;
-        text-shadow: $text-shadow-sm;
+      &-title {
+         text-transform: uppercase;
+         letter-spacing: 3px;
+         padding: 0.25rem;
       }
-    }
-
-    &-title {
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      padding: .25rem;
-    }
-  }
-
+   }
 }
