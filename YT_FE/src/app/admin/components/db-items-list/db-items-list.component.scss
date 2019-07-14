@@ -1,0 +1,9 @@
+@import '../../../../assets/scss/imports';
+
+.list {
+  margin: 1rem;
+  padding: .5rem;
+  overflow-y: scroll;
+  height: 100% !important;
+  width: fit-content;
+}

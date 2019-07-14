@@ -84,6 +84,33 @@ a:hover {
   text-decoration: none !important;
 }
 
+//
+
+// OVERRIDING MATERIAL STYLES
+.mat-tab-group {
+  height:calc(100vh - #{$header-height});
+}
+
+.mat-tab-header {
+  height: $mat-tab-header-height;
+}
+
+.mat-tab-body-wrapper {
+  width: 100%;
+  height:calc(100% - #{$mat-tab-header-height});
+  overflow: hidden !important;
+}
+
+.mat-tab-body {
+  height: 100% !important;
+}
+
+.mat-tab-body-content {
+  height: 100%;
+  overflow: hidden !important;
+}
+
+//
 
 .spinner {
   display: flex;
