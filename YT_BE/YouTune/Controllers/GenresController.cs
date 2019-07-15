@@ -78,6 +78,23 @@ namespace YouTune.Controllers
             return Ok(genreDTO);
         }
 
+        //// POST: api/Genres
+        //[HttpPost("saveAll")]
+        //public async Task<IActionResult> PostGenres([FromBody] ICollection<Genre> genres)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    //var genreDTO = await _genreService.Save(genre);
+
+        //    this._context.UpdateRange(genres);
+        //    this._context.SaveChanges();
+
+        //    return Ok("Radi");
+        //}
+
         // DELETE: api/Genres/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGenre([FromRoute] long id)

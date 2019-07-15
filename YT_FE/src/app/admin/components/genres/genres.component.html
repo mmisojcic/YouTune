@@ -1,6 +1,38 @@
 <div class="x">
-  <yt-db-items-list></yt-db-items-list>
-  <div>
-    <p>form</p>
+  <yt-db-items-list class="x_list" [dbItems]="dbItems$ | async">
+  </yt-db-items-list>
+
+  <div class="x_actions">
+    <form class="form rounded" [formGroup]="genreForm" (ngSubmit)="onSave()">
+      <div class="form-group">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Id" formControlName="id" />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="full-width">
+          <input
+            matInput
+            type="text"
+            placeholder="Genre"
+            formControlName="name"
+          />
+        </mat-form-field>
+      </div>
+
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        matTooltip="Click the button to submit the form"
+      >
+        Save
+      </button>
+      <!--   
+      <span #error [@domFader]="error" *ngIf="errorMessage !== undefined" class="credentials_form-error form-text ">
+        {{ errorMessage }}
+      </span>
+  -->
+    </form>
   </div>
 </div>

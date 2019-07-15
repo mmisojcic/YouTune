@@ -1,144 +1,143 @@
 @import '../../../../assets/scss/imports';
 
 .tuner {
-   position: relative;
-   width: 100vw;
-   height: 100vh;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
 
-   &_content {
-      width: 100%;
-      height: calc(100% - #{$header-height});
+  &_content {
+    width: 100%;
+    height: calc(100% - #{$header-height});
 
-      &-side {
-         padding: 0.5rem;
-         width: fit-content;
-      }
+    &-side {
+      padding: 0.5rem;
+      width: fit-content;
+    }
 
-      &-main {
-         position: relative;
-         // background-color: $color-tertiary;
+    &-main {
+      position: relative;
+      // background-color: $color-tertiary;
 
-         &--search {
-            display: flex;
-            align-items: center;
+      &--search {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 0.5rem;
+        height: fit-content;
+
+        &--form {
+          // width: fit-content;
+          min-width: 30%;
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+
+          input {
             width: 100%;
-            padding: 0.5rem;
-            height: fit-content;
-
-            &--form {
-               // width: fit-content;
-               min-width: 30%;
-               margin: 0 auto;
-               display: flex;
-               align-items: center;
-
-               input {
-                  width: 100%;
-                  outline: none;
-                  border: none;
-                  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-                     0 2px 2px 0 rgba(0, 0, 0, 0.14),
-                     0 1px 5px 0 rgba(0, 0, 0, 0.12);
-                  font-size: 1.1rem;
-                  font-family: $font-primary;
-                  padding: 0 0.5rem;
-                  margin: 0 0.5rem;
-                  transition: all 0.3s;
-
-                  &:focus {
-                     border-color: $color-primary !important;
-                     box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-                        0 8px 10px 1px rgba(0, 0, 0, 0.14),
-                        0 3px 14px 2px rgba(0, 0, 0, 0.12);
-                  }
-               }
-            }
-         }
-
-         &--wrapper {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            height: calc(100vh - #{$header-height} - 3.33rem);
-
-            // background-color: rgba($color-primary, .3);
-
-            @media screen and (max-width: 630px) {
-               flex-direction: column;
-               align-items: center;
-            }
-         }
-
-         &--player {
-            max-width: 100%;
-            min-width: 30%;
-            height: fit-content;
-            margin: 2rem 1rem;
+            outline: none;
+            border: none;
             box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-               0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+              0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+            font-size: 1.1rem;
+            font-family: $font-primary;
+            padding: 0 0.5rem;
+            margin: 0 0.5rem;
+            transition: all 0.3s;
 
-            @media screen and (max-width: 630px) {
-               min-width: 90%;
-               margin: 1rem 0.5rem 1rem 0.5rem;
+            &:focus {
+              border-color: $color-primary !important;
+              box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
             }
-         }
-
-         &--songs {
-            width: fit-content;
-            padding: 0 1rem;
-            margin: 2rem 1rem;
-            max-height: 100%;
-            overflow-y: scroll;
-            // background-color: $color-tertiary;
-
-            @media screen and (max-width: 630px) {
-               max-width: 90%;
-               margin: 1rem 0.5rem 0.5rem 1rem;
-            }
-         }
+          }
+        }
       }
-   }
+
+      &--wrapper {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        height: calc(100vh - #{$header-height} - 3.33rem);
+
+        // background-color: rgba($color-primary, .3);
+
+        @media screen and (max-width: 630px) {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      &--player {
+        max-width: 100%;
+        min-width: 30%;
+        height: fit-content;
+        margin: 2rem 1rem;
+        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+          0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+
+        @media screen and (max-width: 630px) {
+          min-width: 90%;
+          margin: 1rem 0.5rem 1rem 0.5rem;
+        }
+      }
+
+      &--songs {
+        width: fit-content;
+        padding: 0 1rem;
+        margin: 2rem 1rem;
+        max-height: 100%;
+        overflow-y: scroll;
+        // background-color: $color-tertiary;
+
+        @media screen and (max-width: 630px) {
+          max-width: 90%;
+          margin: 1rem 0.5rem 0.5rem 1rem;
+        }
+      }
+    }
+  }
 }
 
 button {
-   outline: none;
+  outline: none;
 }
 
 .tuner_decoration {
-   position: absolute;
-   z-index: -1;
-   top: 0;
-   width: 100%;
-   height: 100%;
-   display: flex;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
 
-   &-blue {
-      position: relative;
-      width: 50%;
-      height: 100%;
-      // background-color: $color-primary;
-      background: linear-gradient(
-         180deg,
-         rgba($color-primary, 0.1),
-         rgba($color-primary, 0.5)
-      );
+  &-blue {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    // background-color: $color-primary;
+    background: linear-gradient(
+      180deg,
+      rgba($color-primary, 0.1),
+      rgba($color-primary, 0.5)
+    );
 
-      box-shadow: 0.3rem 0.1rem 0.5rem rgba(0, 0, 0, 0.4);
-   }
+    box-shadow: 0.3rem 0.1rem 0.5rem rgba(0, 0, 0, 0.4);
+  }
 
-   &-grey {
-      position: relative;
-      width: 50%;
-      height: 100%;
-      // background-color: $color-secondary;
-      background: linear-gradient(
-         180deg,
-         rgba($color-secondary, 0.2),
-         rgba($color-secondary, 0.8)
-      );
-   }
+  &-grey {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    // background-color: $color-secondary;
+    background: linear-gradient(
+      180deg,
+      rgba($color-secondary, 0.2),
+      rgba($color-secondary, 0.8)
+    );
+  }
 }
 
 .mat-drawer-inner-container {
-   overflow: hidden !important;
+  overflow: hidden !important;
 }

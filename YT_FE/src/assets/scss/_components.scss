@@ -17,7 +17,7 @@
   position: relative;
   background-color: $color-tertiary;
   padding: 1.5rem;
-  box-shadow: $box-shadow-lg;
+  box-shadow: $box-shadow-md;
   transition: all 0.3s;
 
   &-error {
@@ -26,5 +26,45 @@
     color: $error-message-color;
     margin-top: 1rem;
     transition: all 0.3s;
+  }
+}
+
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  // padding: 0.5rem;
+  height: fit-content;
+  margin-bottom: 1rem;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  font-size: 1.1rem;
+
+  &_icon {
+    margin: 0.25rem;
+  }
+
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    outline: none;
+    border: none;
+
+    font-family: $font-primary;
+    padding: 0 0.5rem;
+    padding-left: 2rem;
+    // margin: 0 0.5rem;
+    transition: all 0.3s;
+    background-color: transparent;
+
+    &:focus {
+      border-color: $color-primary !important;
+      box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    }
   }
 }

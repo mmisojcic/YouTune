@@ -1,9 +1,17 @@
 @import '../../../../assets/scss/imports';
 
 .list {
-  margin: 1rem;
-  padding: .5rem;
+  padding: 0.5rem 1rem;
   overflow-y: scroll;
-  height: 100% !important;
+  flex: 1;
+  flex-grow: 1;
+  flex-basis: auto;
   width: fit-content;
+  background-color: #00000008;
+  box-shadow: $google-shadow-sm;
+}
+
+button {
+  display: block;
+  margin: 0 auto;
 }

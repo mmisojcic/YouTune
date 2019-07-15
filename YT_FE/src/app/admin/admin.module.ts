@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { PanelComponent } from './components/panel/panel.component';
@@ -9,7 +8,12 @@ import { DbItemsListComponent } from './components/db-items-list/db-items-list.c
 import { DbItemComponent } from './components/db-item/db-item.component';
 
 @NgModule({
-  declarations: [PanelComponent, GenresComponent, DbItemsListComponent, DbItemComponent],
-  imports: [CommonModule, AdminRoutingModule, SharedModule]
+  declarations: [
+    PanelComponent,
+    GenresComponent,
+    DbItemsListComponent,
+    DbItemComponent
+  ],
+  imports: [AdminRoutingModule, SharedModule]
 })
 export class AdminModule {}

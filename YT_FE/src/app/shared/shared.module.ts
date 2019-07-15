@@ -4,15 +4,19 @@ import { SpinnerToggleDirective } from '../shared/directives/spinner-toggle.dire
 import { MaterialModule } from '../material/material.module';
 import { HeaderComponent } from './components/header/header.component';
 import { SecondsFormatPipe } from './pipes/seconds-format.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [SpinnerToggleDirective, HeaderComponent, SecondsFormatPipe],
-  imports: [CommonModule, MaterialModule],
+  imports: [MaterialModule, FormsModule, ReactiveFormsModule, CommonModule],
   exports: [
     MaterialModule,
     SpinnerToggleDirective,
     HeaderComponent,
-    SecondsFormatPipe
+    SecondsFormatPipe,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule
   ]
 })
 export class SharedModule {}
