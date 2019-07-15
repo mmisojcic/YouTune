@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -20,7 +19,6 @@ import { MatSliderModule } from '@angular/material/slider';
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
     MatButtonModule,
     MatCheckboxModule,
     MatInputModule,

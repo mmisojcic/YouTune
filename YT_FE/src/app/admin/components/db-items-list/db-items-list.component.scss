@@ -1,6 +1,7 @@
 @import '../../../../assets/scss/imports';
 
 .list {
+  position: relative;
   padding: 0.5rem 1rem;
   overflow-y: scroll;
   flex: 1;
@@ -9,6 +10,17 @@
   width: fit-content;
   background-color: #00000008;
   box-shadow: $google-shadow-sm;
+  transition: all .3s;
+
+  &_title {
+    width: 100%;
+    display: block;
+
+    font-weight: 300;
+    font-style: italic;
+    text-align: center;
+    color: $color-secondary;
+  }
 }
 
 button {

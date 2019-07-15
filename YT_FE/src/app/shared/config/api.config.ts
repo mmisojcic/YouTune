@@ -1,5 +1,6 @@
 export const api = {
-  baseUrl: 'https://localhost:44318/api',
+  baseUrl: 'https://localhost:5001/api', // linux
+  // baseUrl: 'https://localhost:44318/api',
   users: {
     base: '/Users',
     register() {
@@ -11,12 +12,6 @@ export const api = {
   },
   genres: {
     base: '/Genres'
-    // register() {
-    //   return this.base + '/register';
-    // },
-    // login() {
-    //   return this.base + '/login';
-    // }
   },
   fullUrl(endPoint: string, id?: number): string {
     let result;

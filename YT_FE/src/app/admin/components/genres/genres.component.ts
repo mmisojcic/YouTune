@@ -4,10 +4,7 @@ import { GenreService } from './../../services/genre.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Genre } from 'src/app/models/genre.model';
 import { DbItem } from '../../models/db-item.model';
-import { Login } from 'src/app/models/login.model';
-import { Song } from 'src/app/models/song.model';
 import { Observable } from 'rxjs';
-import { DISABLED } from '@angular/forms/src/model';
 
 @Component({
   selector: 'yt-genres',
@@ -40,8 +37,9 @@ export class GenresComponent implements OnInit {
       this.genreForm.controls['name'].value
     );
 
-    this.spinnerService.spinnerShow;
-    this.genreService.saveGenre(this.genre).subscribe(res => {
+    this.spinnerService.spinnerShow();
+
+    this.genreService.saveGenre(this.genre).subscribe(() => {
       this.dbItems$ = this.genreService.getGenres();
     });
   }

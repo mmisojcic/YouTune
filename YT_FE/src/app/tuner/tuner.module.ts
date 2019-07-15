@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { TunerRoutingModule } from './tuner-routing.module';
 import { TunerComponent } from './components/tuner/tuner.component';
@@ -10,13 +9,13 @@ import { PlaylistsCollectionComponent } from './components/playlists-collection/
 import { SongComponent } from './components/song/song.component';
 
 @NgModule({
-   declarations: [
-      TunerComponent,
-      PlayerComponent,
-      PlaylistComponent,
-      PlaylistsCollectionComponent,
-      SongComponent
-   ],
-   imports: [CommonModule, TunerRoutingModule, SharedModule]
+  declarations: [
+    TunerComponent,
+    PlayerComponent,
+    PlaylistComponent,
+    PlaylistsCollectionComponent,
+    SongComponent
+  ],
+  imports: [TunerRoutingModule, SharedModule]
 })
 export class TunerModule {}

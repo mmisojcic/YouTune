@@ -1,5 +1,4 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,12 +15,7 @@ import { SharedModule } from './shared/shared.module';
     RegisterFormComponent,
     WelcomeComponent
   ],
-  imports: [
-    AppRoutingModule,
-    HttpClientModule,
-    SharedModule,
-    BrowserAnimationsModule
-  ],
+  imports: [AppRoutingModule, BrowserAnimationsModule, SharedModule],
   providers: [],
   bootstrap: [AppComponent]
 })
