@@ -1,10 +1,11 @@
+import { DbItemsService } from './../../services/db-items.service';
 import { SpinnerService } from './../../../services/spinner.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { GenreService } from './../../services/genre.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Genre } from 'src/app/models/genre.model';
 import { DbItem } from '../../models/db-item.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 
 @Component({
@@ -13,14 +14,18 @@ import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation
   styleUrls: ['./genres.component.scss'],
   animations: [domFaderAnimation]
 })
-export class GenresComponent implements OnInit {
+export class GenresComponent implements OnInit, OnDestroy {
   genre: Genre;
   genreForm: FormGroup;
+  dbItemsSubscription: Subscription;
+  genreIdSubscription: Subscription;
   dbItems$: Observable<DbItem<Genre>[]>;
+  genreSubscription: Subscription;
 
   constructor(
     private genreService: GenreService,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    private dbItemsService: DbItemsService
   ) {}
 
   ngOnInit() {
@@ -31,6 +36,24 @@ export class GenresComponent implements OnInit {
       id: new FormControl({ value: null, disabled: true }),
       name: new FormControl(null)
     });
+
+    // load genre to form for editing
+    this.genreSubscription = this.dbItemsService.genreEmitter.subscribe(res => {
+      this.genreForm.controls['id'].setValue(res.genreId);
+      this.genreForm.controls['name'].setValue(res.name);
+    });
+
+    this.genreIdSubscription = this.dbItemsService.genreIdEmitter.subscribe(
+      res => {
+        this.genreService.deleteGenre(res).subscribe(() => {
+          this.dbItems$ = this.genreService.getGenres();
+        });
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.genreSubscription.unsubscribe();
   }
 
   onSave() {
@@ -39,10 +62,22 @@ export class GenresComponent implements OnInit {
       this.genreForm.controls['name'].value
     );
 
+    console.log(this.genreForm.controls['id'].value);
+
     this.spinnerService.spinnerShow();
 
-    this.genreService.saveGenre(this.genre).subscribe(() => {
-      this.dbItems$ = this.genreService.getGenres();
-    });
+    if (this.genreForm.controls['id'].value === null) {
+      this.genreService.saveGenre(this.genre).subscribe(() => {
+        this.dbItems$ = this.genreService.getGenres();
+      });
+    } else {
+      this.genreService.updateGenre(this.genre).subscribe(() => {
+        this.dbItems$ = this.genreService.getGenres();
+      });
+    }
+  }
+
+  resetForm() {
+    this.genreForm.reset();
   }
 }

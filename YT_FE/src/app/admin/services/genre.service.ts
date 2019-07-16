@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as server from '../../shared/config/api.config';
 import { Genre } from 'src/app/models/genre.model';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, Subject } from 'rxjs';
 import { GenreDTO } from 'src/app/DTOs/genre.dto';
 import { map, catchError, finalize } from 'rxjs/operators';
 
@@ -18,7 +18,7 @@ export class GenreService {
 
   constructor(
     private http: HttpClient,
-    private spinerService: SpinnerService
+    private spinnerService: SpinnerService
   ) {}
 
   // get all genres
@@ -38,7 +38,7 @@ export class GenreService {
       }),
       finalize(() => {
         // hide spinner
-        this.spinerService.spinnerHide();
+        this.spinnerService.spinnerHide();
         console.log('kraj');
       })
     );
@@ -56,7 +56,38 @@ export class GenreService {
       }),
       finalize(() => {
         // hide spinner
-        this.spinerService.spinnerHide();
+        // this.spinnerService.spinnerHide();
+        console.log('kraj');
+      })
+    );
+  }
+
+  updateGenre(model: Genre): Observable<Genre> {
+    const dto = this.genreConverter.modelToDTO(model);
+    return this.http.put(this.url + '/' + model.genreId, dto).pipe(
+      map((res: GenreDTO) => {
+        return this.genreConverter.DTOtoModel(res);
+      }),
+      catchError(err => {
+        console.log('ERROR: ', err);
+        return throwError(err.statusText);
+      }),
+      finalize(() => {
+        // hide spinner
+        this.spinnerService.spinnerHide();
+        console.log('kraj');
+      })
+    );
+  }
+
+  deleteGenre(id: number) {
+    this.spinnerService.spinnerShow();
+    return this.http.delete(this.url + '/' + id).pipe(
+      catchError(err => {
+        console.log('ERROR: ', err);
+        return throwError(err.statusText);
+      }),
+      finalize(() => {
         console.log('kraj');
       })
     );

@@ -1,4 +1,4 @@
 export interface GenreDTO {
-  id: number;
-  name: string;
+  genreId?: number;
+  name?: string;
 }

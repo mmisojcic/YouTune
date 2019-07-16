@@ -1,26 +1,29 @@
 @import '../../../../assets/scss/imports';
 
-.list {
-  position: relative;
-  padding: 0.5rem 1rem;
-  overflow-y: scroll;
-  flex: 1;
-  flex-grow: 1;
-  flex-basis: auto;
-  width: fit-content;
-  background-color: #00000008;
-  box-shadow: $google-shadow-sm;
-  transition: all 0.3s;
+.list-header {
+  padding: 1rem;
 
   &_title {
     width: 100%;
     display: block;
+    margin-top: 1rem;
 
     font-weight: 300;
     font-style: italic;
     text-align: center;
     color: $color-secondary;
   }
+}
+.list {
+  min-width: 300px;
+  position: relative;
+  overflow-y: scroll;
+  padding: 1rem;
+  flex: 1;
+  flex-grow: 1;
+  flex-basis: auto;
+  width: fit-content;
+  transition: all 0.3s;
 }
 
 button {

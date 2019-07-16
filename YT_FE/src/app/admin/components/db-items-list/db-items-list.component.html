@@ -1,12 +1,16 @@
-<div class="search rounded">
-  <i class="fas fa-search search_icon"></i>
-  <input placeholder="Filter" class="rounded" />
+<div class="list-header">
+  <div class="search rounded">
+    <i class="fas fa-search search_icon"></i>
+    <input placeholder="Filter" class="rounded" />
+  </div>
+  <span class="list-header_title">List of all {{ title }}</span>
 </div>
+<mat-divider></mat-divider>
 <div class="list rounded">
-  <span class="list_title">List of all {{ title }}</span>
   <yt-db-item
     *ngFor="let dbItem of dbItems; let i = index"
     [dbItem]="dbItem"
+    [index]="i"
   ></yt-db-item>
   <yt-spinner></yt-spinner>
 </div>

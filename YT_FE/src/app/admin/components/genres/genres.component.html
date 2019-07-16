@@ -5,7 +5,7 @@
     [dbItems]="dbItems$ | async"
   >
   </yt-db-items-list>
-
+  <mat-divider [vertical]="true"></mat-divider>
   <div class="x_actions">
     <form class="form rounded" [formGroup]="genreForm" (ngSubmit)="onSave()">
       <div class="form-group">
@@ -32,10 +32,16 @@
       >
         Save
       </button>
-
-      <!-- <span #error [@domFader]="error" *ngIf="errorMessage !== undefined" class="credentials_form-error form-text ">
-        {{ errorMessage }}
-      </span> -->
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        matTooltip="Add new genre"
+        (click)="resetForm()"
+        class="margin-left-auto"
+      >
+        New
+      </button>
     </form>
   </div>
 </div>

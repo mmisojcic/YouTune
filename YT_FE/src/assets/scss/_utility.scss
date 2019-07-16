@@ -25,6 +25,12 @@
   background-color: $color-secondary;
 }
 
+.color-error {
+  background-color: $color-error;
+}
+.color-ok {
+  background-color: $color-ok;
+}
 .text-color-white {
   color: #fff;
 }
@@ -45,4 +51,8 @@
 .full-width-height {
   width: 100%;
   height: 100%;
+}
+
+.margin-left-auto {
+  margin-left: 3rem;
 }

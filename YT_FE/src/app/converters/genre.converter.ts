@@ -5,13 +5,14 @@ import { GenreDTO } from '../DTOs/genre.dto';
 
 export class GenreConverter extends BaseConverter<Genre, GenreDTO> {
   public modelToDTO(model: Genre): GenreDTO {
-    return {
-      id: model.id,
-      name: model.name
-    };
+    let dto;
+    model.genreId === null
+      ? (dto = { name: model.name })
+      : (dto = { genreId: model.genreId, name: model.name });
+    return dto;
   }
   public DTOtoModel(dto: GenreDTO): Genre {
-    return new Genre(dto.id, dto.name);
+    return new Genre(dto.genreId, dto.name);
   }
 
   public DTOtoModelList(dto: GenreDTO[]): Genre[] {
