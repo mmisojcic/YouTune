@@ -23,10 +23,11 @@ export class GenreService {
 
   // get all genres
   getGenres(): Observable<DbItem<Genre>[]> {
+    this.spinnerService.spinnerShow();
     return this.http.get(this.url).pipe(
       map((res: GenreDTO[]) => {
-        let genres = this.genreConverter.DTOtoModelList(res);
-        let dbItems: DbItem<Genre>[] = [];
+        const genres = this.genreConverter.DTOtoModelList(res);
+        const dbItems: DbItem<Genre>[] = [];
         genres.forEach(g => {
           dbItems.push(new DbItem(g.name, g));
         });
@@ -55,8 +56,6 @@ export class GenreService {
         return throwError(err.statusText);
       }),
       finalize(() => {
-        // hide spinner
-        // this.spinnerService.spinnerHide();
         console.log('kraj');
       })
     );
@@ -73,15 +72,12 @@ export class GenreService {
         return throwError(err.statusText);
       }),
       finalize(() => {
-        // hide spinner
-        this.spinnerService.spinnerHide();
         console.log('kraj');
       })
     );
   }
 
   deleteGenre(id: number) {
-    this.spinnerService.spinnerShow();
     return this.http.delete(this.url + '/' + id).pipe(
       catchError(err => {
         console.log('ERROR: ', err);

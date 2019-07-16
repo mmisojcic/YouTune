@@ -18,8 +18,8 @@ export class GenresComponent implements OnInit, OnDestroy {
   genre: Genre;
   genreForm: FormGroup;
   dbItemsSubscription: Subscription;
-  genreIdSubscription: Subscription;
   dbItems$: Observable<DbItem<Genre>[]>;
+  genreIdSubscription: Subscription;
   genreSubscription: Subscription;
 
   constructor(
@@ -54,6 +54,7 @@ export class GenresComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.genreSubscription.unsubscribe();
+    this.genreIdSubscription.unsubscribe();
   }
 
   onSave() {
@@ -61,10 +62,6 @@ export class GenresComponent implements OnInit, OnDestroy {
       this.genreForm.controls['id'].value,
       this.genreForm.controls['name'].value
     );
-
-    console.log(this.genreForm.controls['id'].value);
-
-    this.spinnerService.spinnerShow();
 
     if (this.genreForm.controls['id'].value === null) {
       this.genreService.saveGenre(this.genre).subscribe(() => {
@@ -75,6 +72,8 @@ export class GenresComponent implements OnInit, OnDestroy {
         this.dbItems$ = this.genreService.getGenres();
       });
     }
+
+    this.genreForm.reset();
   }
 
   resetForm() {
