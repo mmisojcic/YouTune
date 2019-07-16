@@ -6,8 +6,14 @@ import { SecondsFormatPipe } from './pipes/seconds-format.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 @NgModule({
-  declarations: [SpinnerToggleDirective, HeaderComponent, SecondsFormatPipe],
+  declarations: [
+    SpinnerToggleDirective,
+    HeaderComponent,
+    SecondsFormatPipe,
+    SpinnerComponent
+  ],
   imports: [
     MaterialModule,
     FormsModule,
@@ -23,7 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    SpinnerComponent
   ]
 })
 export class SharedModule {}

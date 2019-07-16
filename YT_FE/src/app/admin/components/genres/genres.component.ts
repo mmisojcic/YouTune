@@ -5,11 +5,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Genre } from 'src/app/models/genre.model';
 import { DbItem } from '../../models/db-item.model';
 import { Observable } from 'rxjs';
+import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 
 @Component({
   selector: 'yt-genres',
   templateUrl: './genres.component.html',
-  styleUrls: ['./genres.component.scss']
+  styleUrls: ['./genres.component.scss'],
+  animations: [domFaderAnimation]
 })
 export class GenresComponent implements OnInit {
   genre: Genre;

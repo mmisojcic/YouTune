@@ -3,13 +3,13 @@
   <input placeholder="Filter" class="rounded" />
 </div>
 <div class="list rounded">
-  <span class="list_title">List of all {{title}}</span>
-  <yt-db-item *ngFor="let dbItem of dbItems; let i = index" [dbItem]="dbItem" #item [@domFader]="item"></yt-db-item>
-  <div #s class="spinner" [@domFader]="s" *ytSpinnerToggle>
-    <mat-spinner aria-label="loading content"></mat-spinner>
-  </div>
+  <span class="list_title">List of all {{ title }}</span>
+  <yt-db-item
+    *ngFor="let dbItem of dbItems; let i = index"
+    [dbItem]="dbItem"
+  ></yt-db-item>
+  <yt-spinner></yt-spinner>
 </div>
-
 
 <!-- <button mat-raised-button color="primary">
   Update
