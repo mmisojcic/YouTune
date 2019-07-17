@@ -7,12 +7,13 @@ import { Genre } from 'src/app/models/genre.model';
 import { DbItem } from '../../models/db-item.model';
 import { Observable, Subscription } from 'rxjs';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
+import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
 
 @Component({
   selector: 'yt-genres',
   templateUrl: './genres.component.html',
   styleUrls: ['./genres.component.scss'],
-  animations: [domFaderAnimation]
+  animations: [domFaderAnimation, ngIfAnimation]
 })
 export class GenresComponent implements OnInit, OnDestroy {
   genre: Genre;

@@ -20,6 +20,12 @@
   box-shadow: $google-shadow;
   transition: all 0.3s;
 
+  &_buttons {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+  }
+
   &-error {
     text-align: center;
     font-weight: 600;

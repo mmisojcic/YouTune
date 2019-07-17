@@ -1,21 +1,16 @@
 <div class="list-header">
   <div class="search rounded">
     <i class="fas fa-search search_icon"></i>
-    <input
-      placeholder="Filter"
-      class="rounded"
-      #filter
-      (input)="onSearch(filter)"
-    />
+    <input placeholder="Filter" class="rounded" #filter (input)="onSearch(filter)" />
   </div>
   <span class="list-header_title">List of all {{ title }}</span>
 </div>
 <mat-divider></mat-divider>
 <div class="list">
-  <yt-db-item
-    *ngFor="let dbItem of dbItems; let i = index"
-    [dbItem]="dbItem"
-    [index]="i"
-  ></yt-db-item>
+  <div *ngFor="let dbItem of dbItems; let i = index">
+    <yt-db-item #item [@ngIfFade]="item" [dbItem]="dbItem" [index]="i">
+    </yt-db-item>
+  </div>
+
   <yt-spinner [spin]="spin"></yt-spinner>
 </div>

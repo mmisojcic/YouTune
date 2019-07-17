@@ -9,12 +9,13 @@ import {
 } from '@angular/core';
 import { Genre } from 'src/app/models/genre.model';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
+import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
 
 @Component({
   selector: 'yt-db-items-list',
   templateUrl: './db-items-list.component.html',
   styleUrls: ['./db-items-list.component.scss'],
-  animations: [domFaderAnimation]
+  animations: [domFaderAnimation, ngIfAnimation]
 })
 export class DbItemsListComponent implements OnInit, OnChanges {
   @Input() title: string;
@@ -34,7 +35,7 @@ export class DbItemsListComponent implements OnInit, OnChanges {
 
   onSearch(e: HTMLInputElement) {
     this.spin = true;
-    let inputRegExp = new RegExp(e.value.toLowerCase());
+    const inputRegExp = new RegExp(e.value.toLowerCase());
     const tmpDbItems: DbItem<Genre>[] = [];
 
     this.dbItemsCached.forEach(dbItem => {

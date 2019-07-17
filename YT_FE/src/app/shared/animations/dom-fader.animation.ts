@@ -3,7 +3,8 @@ import {
   animate,
   transition,
   style,
-  query
+  query,
+  state
 } from '@angular/animations';
 
 export const domFaderAnimation = trigger('domFader', [
