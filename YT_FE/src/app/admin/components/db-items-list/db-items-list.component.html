@@ -1,20 +1,21 @@
 <div class="list-header">
   <div class="search rounded">
     <i class="fas fa-search search_icon"></i>
-    <input placeholder="Filter" class="rounded" />
+    <input
+      placeholder="Filter"
+      class="rounded"
+      #filter
+      (input)="onSearch(filter)"
+    />
   </div>
   <span class="list-header_title">List of all {{ title }}</span>
 </div>
 <mat-divider></mat-divider>
-<div class="list rounded">
+<div class="list">
   <yt-db-item
     *ngFor="let dbItem of dbItems; let i = index"
     [dbItem]="dbItem"
     [index]="i"
   ></yt-db-item>
-  <yt-spinner></yt-spinner>
+  <yt-spinner [spin]="spin"></yt-spinner>
 </div>
-
-<!-- <button mat-raised-button color="primary">
-  Update
-</button> -->

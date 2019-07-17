@@ -1,4 +1,4 @@
-import { SpinnerService } from './../../../services/spinner.service';
+import { SpinnerService } from '../../../shared/services/spinner.service';
 import { GenreService } from './../../services/genre.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DbItem } from '../../models/db-item.model';

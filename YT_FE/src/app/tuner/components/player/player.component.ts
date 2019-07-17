@@ -1,4 +1,4 @@
-import { SpinnerService } from './../../../services/spinner.service';
+import { SpinnerService } from '../../../shared/services/spinner.service';
 import { Component, OnInit } from '@angular/core';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 

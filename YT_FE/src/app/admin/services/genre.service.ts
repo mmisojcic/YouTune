@@ -1,5 +1,5 @@
 import { DbItem } from './../models/db-item.model';
-import { SpinnerService } from './../../services/spinner.service';
+import { SpinnerService } from '../../shared/services/spinner.service';
 import { GenreConverter } from './../../converters/genre.converter';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -34,13 +34,13 @@ export class GenreService {
         return dbItems;
       }),
       catchError(err => {
-        console.log('ERROR: ', err);
+        console.log('ERROR:::', err);
         return throwError(err.statusText);
       }),
       finalize(() => {
         // hide spinner
         this.spinnerService.spinnerHide();
-        console.log('kraj');
+        console.log('ALL GENRES LOADED:::');
       })
     );
   }
@@ -56,7 +56,7 @@ export class GenreService {
         return throwError(err.statusText);
       }),
       finalize(() => {
-        console.log('kraj');
+        console.log('GENRE SAVED:::');
       })
     );
   }
@@ -72,7 +72,7 @@ export class GenreService {
         return throwError(err.statusText);
       }),
       finalize(() => {
-        console.log('kraj');
+        console.log('GENRE UPDATED:::');
       })
     );
   }
@@ -84,7 +84,7 @@ export class GenreService {
         return throwError(err.statusText);
       }),
       finalize(() => {
-        console.log('kraj');
+        console.log('GENRE DELETED:::');
       })
     );
   }

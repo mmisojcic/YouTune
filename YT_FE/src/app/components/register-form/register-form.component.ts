@@ -1,5 +1,5 @@
 import { UserDTO } from './../../DTOs/user.dto';
-import { SpinnerService } from './../../services/spinner.service';
+import { SpinnerService } from '../../shared/services/spinner.service';
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { Register } from 'src/app/models/register.model';

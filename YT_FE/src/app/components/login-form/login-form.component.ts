@@ -1,4 +1,4 @@
-import { SpinnerService } from './../../services/spinner.service';
+import { SpinnerService } from '../../shared/services/spinner.service';
 import { Login } from './../../models/login.model';
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';

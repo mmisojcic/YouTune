@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { SpinnerService } from './../../services/spinner.service';
+import { SpinnerService } from '../services/spinner.service';
 import {
   Directive,
   TemplateRef,
@@ -8,7 +8,8 @@ import {
   OnInit,
   Input,
   ElementRef,
-  HostBinding
+  HostBinding,
+  OnChanges
 } from '@angular/core';
 import { NgIfContext } from '@angular/common';
 
@@ -16,7 +17,8 @@ import { NgIfContext } from '@angular/common';
   // tslint:disable-next-line:directive-selector
   selector: '[ytSpinnerToggle]'
 })
-export class SpinnerToggleDirective implements OnInit, OnDestroy {
+export class SpinnerToggleDirective implements OnInit, OnChanges, OnDestroy {
+  @Input('ytSpinnerToggle') show: boolean;
   spinnerTriggerSub: Subscription;
 
   // templateRef is the template (translates to <ng-template></ng-template> and wraps the view element) that directive works with
@@ -43,6 +45,10 @@ export class SpinnerToggleDirective implements OnInit, OnDestroy {
     this.spinnerTriggerSub = this.spinnerService.trigger.subscribe(res => {
       this.ytSpinnerToggle(res);
     });
+  }
+
+  ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
+    // this.ytSpinnerToggle(this.show);
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,5 @@
 import { DbItemsService } from './../../services/db-items.service';
-import { SpinnerService } from './../../../services/spinner.service';
+import { SpinnerService } from '../../../shared/services/spinner.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { GenreService } from './../../services/genre.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
@@ -24,7 +24,6 @@ export class GenresComponent implements OnInit, OnDestroy {
 
   constructor(
     private genreService: GenreService,
-    private spinnerService: SpinnerService,
     private dbItemsService: DbItemsService
   ) {}
 
@@ -45,6 +44,7 @@ export class GenresComponent implements OnInit, OnDestroy {
 
     this.genreIdSubscription = this.dbItemsService.genreIdEmitter.subscribe(
       res => {
+        this.genreForm.reset();
         this.genreService.deleteGenre(res).subscribe(() => {
           this.dbItems$ = this.genreService.getGenres();
         });

@@ -9,7 +9,7 @@ import { RegisterConverter } from '../converters/register.converter';
 import { UserConverter } from '../converters/user.converter';
 import { UserDTO } from '../DTOs/user.dto';
 import { Login } from '../models/login.model';
-import { SpinnerService } from './spinner.service';
+import { SpinnerService } from '../shared/services/spinner.service';
 
 @Injectable({
   providedIn: 'root'
