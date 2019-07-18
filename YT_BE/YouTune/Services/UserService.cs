@@ -10,7 +10,7 @@ using YouTune.Models;
 
 namespace YouTune.Services
 {
-    public class UserService : IYouTuneRepository<User,UserDTO>
+    public class UserService : IYouTuneRepository<User, UserDTO>
     {
 
         private readonly AppDbContext _context;
@@ -38,16 +38,22 @@ namespace YouTune.Services
 
                 return userData;
             }
-            
+
+        }
+
+        // DELETE LIST
+        public Task<IEnumerable<UserDTO>> DeleteList(IEnumerable<User> _object)
+        {
+            throw new NotImplementedException();
         }
 
         //GET ALL
         public IEnumerable<UserDTO> GetAll()
         {
-            var usersData =  _context.Users.ToList();
+            var usersData = _context.Users.ToList();
             var usersDTO = new List<UserDTO>();
 
-            foreach(User u in usersData)
+            foreach (User u in usersData)
             {
                 var roleData = _context.Roles.Find(u.RoleId);
                 var playlistData = _context.Playlists.Where(p => p.UserId == u.UserId).ToList();
@@ -81,7 +87,7 @@ namespace YouTune.Services
 
                 return _mapper.Map<User, UserDTO>(userData);
             }
-            
+
         }
 
         // SAVE
@@ -90,7 +96,7 @@ namespace YouTune.Services
             _object.RoleId = 2;
             _context.Users.Add(_object);
             await _context.SaveChangesAsync();
-            
+
             return await GetOne(_object.UserId);
         }
 

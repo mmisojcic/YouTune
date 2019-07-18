@@ -5,6 +5,7 @@ import { DbItem } from '../../models/db-item.model';
 import { Genre } from 'src/app/models/genre.model';
 import { DbItemsService } from '../../services/db-items.service';
 import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
+import { Song } from 'src/app/models/song.model';
 
 @Component({
   selector: 'yt-db-item',
@@ -14,7 +15,7 @@ import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
 })
 export class DbItemComponent implements OnInit {
   @Input() index: number;
-  @Input() dbItem: DbItem<Genre>;
+  @Input() dbItem: DbItem<Genre | Song>;
   @Input() checked;
   // @Input() checkboxShow = false;
 
@@ -23,22 +24,23 @@ export class DbItemComponent implements OnInit {
   ngOnInit() {}
 
   onEdit() {
+    console.log(this.dbItem.item instanceof Genre);
     this.dbItemsService.genreEmitter.next(this.dbItem.item);
   }
 
   onDelete() {
-    this.dbItemsService.genreIdEmitter.next(this.dbItem.item.genreId);
+    // this.dbItemsService.genreIdEmitter.next(this.dbItem.item.genreId);
   }
 
   onCheck() {
     if (!this.checked) {
-      this.dbItemsService.textarr.push(this.dbItem.item);
+      this.dbItemsService.genres.push(this.dbItem.item);
     } else {
-      this.dbItemsService.textarr = this.dbItemsService.textarr.filter(t => {
+      this.dbItemsService.genres = this.dbItemsService.genres.filter(t => {
         return t !== this.dbItem.item;
       });
     }
 
-    console.log(this.dbItemsService.textarr);
+    console.log(this.dbItemsService.genres);
   }
 }

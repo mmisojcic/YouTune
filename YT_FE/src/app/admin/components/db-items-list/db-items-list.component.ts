@@ -11,6 +11,7 @@ import { Genre } from 'src/app/models/genre.model';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
 import { DbItemsService } from '../../services/db-items.service';
+import { Song } from 'src/app/models/song.model';
 
 @Component({
   selector: 'yt-db-items-list',
@@ -51,11 +52,11 @@ export class DbItemsListComponent implements OnInit, OnChanges {
   onCheck() {
     if (!this.checked) {
       this.dbItems.forEach(dbi => {
-        this.dbItemsService.textarr.push(dbi.item);
+        this.dbItemsService.genres.push(dbi.item);
       });
     } else {
-      this.dbItemsService.textarr = [];
+      this.dbItemsService.genres = [];
     }
-    console.log(this.dbItemsService.textarr);
+    console.log(this.dbItemsService.genres);
   }
 }

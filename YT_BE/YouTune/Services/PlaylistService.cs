@@ -38,6 +38,11 @@ namespace YouTune.Services
             }
         }
 
+        public Task<IEnumerable<PlaylistDTO>> DeleteList(IEnumerable<Playlist> _object)
+        {
+            throw new NotImplementedException();
+        }
+
         // GET ALL
         public IEnumerable<PlaylistDTO> GetAll()
         {
@@ -69,7 +74,7 @@ namespace YouTune.Services
                     .Select(pls => _mapper.Map<Song, SongForPlaylistDTO>(pls.Song))
                     .ToList();
 
-                foreach(SongForPlaylistDTO s in songsData)
+                foreach (SongForPlaylistDTO s in songsData)
                 {
                     var genreData = await _context.Genres.Where(g => g.GenreId == s.GenreId).FirstOrDefaultAsync();
                     var reportData = await _context.Reports.Where(r => r.SongId == s.SongId).FirstOrDefaultAsync();

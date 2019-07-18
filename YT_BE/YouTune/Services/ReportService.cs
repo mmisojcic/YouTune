@@ -38,6 +38,12 @@ namespace YouTune.Services
             }
         }
 
+        // DELETE LIST
+        public Task<IEnumerable<ReportDTO>> DeleteList(IEnumerable<Report> _object)
+        {
+            throw new NotImplementedException();
+        }
+
         // GET ALL
         public IEnumerable<ReportDTO> GetAll()
         {
@@ -47,15 +53,15 @@ namespace YouTune.Services
             foreach (Report r in reportsData)
             {
 
-                var userData =  _context.Users.Find(r.UserId);
-                var songData =  _context.Songs.Find(r.SongId);
-                var statusData =  _context.Statuses.Find(r.StatusId);
+                var userData = _context.Users.Find(r.UserId);
+                var songData = _context.Songs.Find(r.SongId);
+                var statusData = _context.Statuses.Find(r.StatusId);
 
                 r.User = userData;
                 r.Song = songData;
                 r.Status = statusData;
 
-                reportsDTO.Add(_mapper.Map<Report,ReportDTO>(r));
+                reportsDTO.Add(_mapper.Map<Report, ReportDTO>(r));
             }
 
             return reportsDTO;

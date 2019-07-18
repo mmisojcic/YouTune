@@ -1,8 +1,7 @@
-import { SpinnerService } from './../../../shared/services/spinner.service';
 import { DbItemsService } from './../../services/db-items.service';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { GenreService } from './../../services/genre.service';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Genre } from 'src/app/models/genre.model';
 import { DbItem } from '../../models/db-item.model';
 import { Observable, Subscription } from 'rxjs';
@@ -18,7 +17,6 @@ import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
 export class GenresComponent implements OnInit, OnDestroy {
   genre: Genre;
   genreForm: FormGroup;
-  dbItemsSubscription: Subscription;
   dbItems$: Observable<DbItem<Genre>[]>;
   genreIdSubscription: Subscription;
   genreSubscription: Subscription;

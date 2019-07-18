@@ -40,6 +40,12 @@ namespace YouTune.Services
             }
         }
 
+        // DELETE LIST
+        public Task<IEnumerable<SongDTO>> DeleteList(IEnumerable<Song> _object)
+        {
+            throw new NotImplementedException();
+        }
+
         //GET ALL
         public IEnumerable<SongDTO> GetAll()
         {
@@ -73,8 +79,8 @@ namespace YouTune.Services
             {
                 var genreData = await _context.Genres.FindAsync(songData.GenreId);
                 var reportData = await _context.Reports.Where(r => r.SongId == songData.SongId).FirstOrDefaultAsync();
-                
-                var artistsData = _context.ArtistSong.Where(ars => ars.SongId == songData.SongId).Select(ars => _mapper.Map<Artist,ArtistDTO>(ars.Artist)).ToList();
+
+                var artistsData = _context.ArtistSong.Where(ars => ars.SongId == songData.SongId).Select(ars => _mapper.Map<Artist, ArtistDTO>(ars.Artist)).ToList();
 
                 songData.Genre = genreData;
 

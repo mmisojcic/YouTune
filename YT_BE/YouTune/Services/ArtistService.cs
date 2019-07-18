@@ -40,6 +40,12 @@ namespace YouTune.Services
             }
         }
 
+        // DELETE LIST
+        public Task<IEnumerable<ArtistDTO>> DeleteList(IEnumerable<Artist> _object)
+        {
+            throw new NotImplementedException();
+        }
+
 
         // GET ALL
         public IEnumerable<ArtistDTO> GetAll()
@@ -49,7 +55,7 @@ namespace YouTune.Services
 
             foreach (Artist a in artistsData)
             {
-                
+
                 var songsDTO = _context.ArtistSong.Where(ars => ars.ArtistId == a.ArtistId).Select(ars => _mapper.Map<Song, SongForArtistDTO>(ars.Song)).ToList();
                 var artistDTO = _mapper.Map<Artist, ArtistDTO>(a);
 
@@ -72,7 +78,7 @@ namespace YouTune.Services
             }
             else
             {
-                
+
                 var songsDTO = _context.ArtistSong
                     .Where(ars => ars.ArtistId == artistData.ArtistId)
                     .Select(ars => _mapper.Map<Song, SongForArtistDTO>(ars.Song)

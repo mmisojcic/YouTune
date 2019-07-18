@@ -9,7 +9,7 @@ using YouTune.Models;
 
 namespace YouTune.Services
 {
-    public class GenreService :IYouTuneRepository<Genre, GenreDTO>
+    public class GenreService : IYouTuneRepository<Genre, GenreDTO>
     {
 
         private readonly AppDbContext _context;
@@ -39,6 +39,19 @@ namespace YouTune.Services
             }
         }
 
+        // DELETE LIST
+        public async Task<IEnumerable<GenreDTO>> DeleteList(IEnumerable<Genre> _object)
+        {
+
+            _context.Genres.RemoveRange(_object);
+            await _context.SaveChangesAsync();
+
+            var genresDTO = this.GetAll();
+
+            return genresDTO;
+
+        }
+
         // GET ALL
         public IEnumerable<GenreDTO> GetAll()
         {
@@ -47,7 +60,7 @@ namespace YouTune.Services
 
             foreach (Genre g in genresData)
             {
-                
+
                 var genreDTO = _mapper.Map<Genre, GenreDTO>(g);
 
                 genresDTO.Add(genreDTO);

@@ -116,19 +116,25 @@ namespace YouTune.Controllers
             }
         }
 
-        // DELETE: api/Genres/bulk
-        [HttpDelete("bulk")]
-        public async Task<IActionResult> DeleteGenres([FromBody] ICollection<Genre> genres)
+        // DELETE: api/Genres/list
+        [HttpDelete("list")]
+        public async Task<IActionResult> DeleteGenres([FromBody] IEnumerable<Genre> genres)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.RemoveRange(genres);
-            _context.SaveChanges();
+            var remainingGenres = await _genreService.DeleteList(genres);
 
-            return Ok(_genreService.GetAll());
+            if (remainingGenres == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(remainingGenres.ToList());
+            }
         }
 
         private bool GenreExists(long id)
