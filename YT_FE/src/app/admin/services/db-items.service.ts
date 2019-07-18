@@ -11,5 +11,6 @@ export class DbItemsService {
   genreIdEmitter: Subject<number> = new Subject<number>();
   dbItemsEmitter: Subject<DbItem<Genre>[]> = new Subject<DbItem<Genre>[]>();
 
+  textarr: Genre[] = [];
   constructor() {}
 }

@@ -10,6 +10,7 @@ import {
 import { Genre } from 'src/app/models/genre.model';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
+import { DbItemsService } from '../../services/db-items.service';
 
 @Component({
   selector: 'yt-db-items-list',
@@ -22,9 +23,9 @@ export class DbItemsListComponent implements OnInit, OnChanges {
   @Input() dbItemsCached: DbItem<Genre>[] = [];
   dbItems: DbItem<Genre>[] = [];
   @ViewChild('filter') filter: ElementRef<HTMLInputElement>;
-  spin = false;
+  checked = false;
 
-  constructor() {}
+  constructor(private dbItemsService: DbItemsService) {}
 
   ngOnInit() {}
 
@@ -34,7 +35,6 @@ export class DbItemsListComponent implements OnInit, OnChanges {
   }
 
   onSearch(e: HTMLInputElement) {
-    this.spin = true;
     const inputRegExp = new RegExp(e.value.toLowerCase());
     const tmpDbItems: DbItem<Genre>[] = [];
 
@@ -45,5 +45,17 @@ export class DbItemsListComponent implements OnInit, OnChanges {
     });
 
     this.dbItems = tmpDbItems;
+    console.log(this.checked);
+  }
+
+  onCheck() {
+    if (!this.checked) {
+      this.dbItems.forEach(dbi => {
+        this.dbItemsService.textarr.push(dbi.item);
+      });
+    } else {
+      this.dbItemsService.textarr = [];
+    }
+    console.log(this.dbItemsService.textarr);
   }
 }

@@ -1,5 +1,5 @@
+import { SpinnerService } from './../../../shared/services/spinner.service';
 import { DbItemsService } from './../../services/db-items.service';
-import { SpinnerService } from '../../../shared/services/spinner.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { GenreService } from './../../services/genre.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';

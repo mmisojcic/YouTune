@@ -116,6 +116,21 @@ namespace YouTune.Controllers
             }
         }
 
+        // DELETE: api/Genres/bulk
+        [HttpDelete("bulk")]
+        public async Task<IActionResult> DeleteGenres([FromBody] ICollection<Genre> genres)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.RemoveRange(genres);
+            _context.SaveChanges();
+
+            return Ok(_genreService.GetAll());
+        }
+
         private bool GenreExists(long id)
         {
             return _context.Genres.Any(e => e.GenreId == id);

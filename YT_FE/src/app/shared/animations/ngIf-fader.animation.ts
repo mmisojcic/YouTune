@@ -9,11 +9,11 @@ import {
 export const ngIfAnimation = trigger('ngIfFade', [
   transition(':enter', [
     style({ opacity: '0' }),
-    animate('300ms ease-out', style({ opacity: '1' }))
+    animate('400ms ease-out', style({ opacity: '1' }))
   ]),
   transition(':leave', [
     style({ opacity: '1' }),
-    animate('300ms ease-out', style({ opacity: '0' }))
+    animate('400ms ease-out', style({ opacity: '0' }))
   ]),
   state('*', style({ opacity: '1' }))
 ]);

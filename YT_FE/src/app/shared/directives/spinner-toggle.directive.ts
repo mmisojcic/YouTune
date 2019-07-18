@@ -18,7 +18,7 @@ import { NgIfContext } from '@angular/common';
   selector: '[ytSpinnerToggle]'
 })
 export class SpinnerToggleDirective implements OnInit, OnChanges, OnDestroy {
-  @Input('ytSpinnerToggle') show: boolean;
+  // @Input('ytSpinnerToggle') show: boolean;
   spinnerTriggerSub: Subscription;
 
   // templateRef is the template (translates to <ng-template></ng-template> and wraps the view element) that directive works with
