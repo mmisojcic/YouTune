@@ -1,4 +1,4 @@
-import { DbItem } from './../models/db-item.model';
+import { DbItem, Action } from './../models/db-item.model';
 import { SpinnerService } from '../../shared/services/spinner.service';
 import { GenreConverter } from './../../converters/genre.converter';
 import { HttpClient } from '@angular/common/http';
@@ -29,7 +29,7 @@ export class GenreService {
         const genres = this.genreConverter.DTOtoModelList(res);
         const dbItems: DbItem<Genre>[] = [];
         genres.forEach(g => {
-          dbItems.push(new DbItem(g.name, g));
+          dbItems.push(new DbItem(g.name, Action.NONE, g));
         });
         return dbItems;
       }),
@@ -79,6 +79,28 @@ export class GenreService {
 
   deleteGenre(id: number) {
     return this.http.delete(this.url + '/' + id).pipe(
+      catchError(err => {
+        console.log('ERROR: ', err);
+        return throwError(err.statusText);
+      }),
+      finalize(() => {
+        console.log('GENRE DELETED:::');
+      })
+    );
+  }
+
+  deleteGenres(genres: Genre[]) {
+    const dto = this.genreConverter.modelToDTOList(genres);
+
+    return this.http.post(this.url + '/deleteList', dto).pipe(
+      map((res: GenreDTO[]) => {
+        const genres = this.genreConverter.DTOtoModelList(res);
+        const dbItems: DbItem<Genre>[] = [];
+        genres.forEach(g => {
+          dbItems.push(new DbItem(g.name, Action.NONE, g));
+        });
+        return dbItems;
+      }),
       catchError(err => {
         console.log('ERROR: ', err);
         return throwError(err.statusText);

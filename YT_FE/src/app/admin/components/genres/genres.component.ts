@@ -1,3 +1,4 @@
+import { Action } from './../../models/db-item.model';
 import { DbItemsService } from './../../services/db-items.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { GenreService } from './../../services/genre.service';
@@ -7,6 +8,7 @@ import { DbItem } from '../../models/db-item.model';
 import { Observable, Subscription } from 'rxjs';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
+import { Login } from 'src/app/models/login.model';
 
 @Component({
   selector: 'yt-genres',
@@ -18,8 +20,8 @@ export class GenresComponent implements OnInit, OnDestroy {
   genre: Genre;
   genreForm: FormGroup;
   dbItems$: Observable<DbItem<Genre>[]>;
-  genreIdSubscription: Subscription;
   genreSubscription: Subscription;
+  genresSubscription: Subscription;
 
   constructor(
     private genreService: GenreService,
@@ -29,31 +31,41 @@ export class GenresComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.dbItems$ = this.genreService.getGenres();
 
-    // Returns object that will represent form nad its controls to the form local var
+    // Returns object that will represent form and its controls to the form local var
     this.genreForm = new FormGroup({
       id: new FormControl({ value: null, disabled: true }),
       name: new FormControl(null)
     });
 
-    // load genre to form for editing
-    this.genreSubscription = this.dbItemsService.genreEmitter.subscribe(res => {
-      this.genreForm.controls['id'].setValue(res.genreId);
-      this.genreForm.controls['name'].setValue(res.name);
-    });
+    this.genreSubscription = this.dbItemsService.dbItemEmitter.subscribe(
+      (dbItem: DbItem<Genre>) => {
+        this.dbItemAction(dbItem);
+      }
+    );
 
-    this.genreIdSubscription = this.dbItemsService.genreIdEmitter.subscribe(
-      res => {
-        this.genreForm.reset();
-        this.genreService.deleteGenre(res).subscribe(() => {
-          this.dbItems$ = this.genreService.getGenres();
-        });
+    this.genresSubscription = this.dbItemsService.dbItemsEmitter.subscribe(
+      (markedDbItems: DbItem<any>[]) => {
+        let modelList;
+
+        this.dbItemsService.checkItemType();
+
+        if (this.dbItemsService.IS_GENRES) {
+          console.log('genre je');
+          modelList = this.dbItemsService.dbItemsToModelList<Genre>(
+            markedDbItems
+          );
+          this.genreService.deleteGenres(modelList).subscribe(() => {
+            this.dbItems$ = this.genreService.getGenres();
+          });
+        } else {
+          console.log('nije');
+        }
       }
     );
   }
 
   ngOnDestroy(): void {
     this.genreSubscription.unsubscribe();
-    this.genreIdSubscription.unsubscribe();
   }
 
   onSave() {
@@ -77,5 +89,17 @@ export class GenresComponent implements OnInit, OnDestroy {
 
   resetForm() {
     this.genreForm.reset();
+  }
+
+  dbItemAction(dbItem: DbItem<Genre>) {
+    if (dbItem.action === Action.EDIT) {
+      this.genreForm.controls['id'].setValue(dbItem.item.genreId);
+      this.genreForm.controls['name'].setValue(dbItem.item.name);
+    } else if (dbItem.action === Action.DELETE) {
+      this.genreForm.reset();
+      this.genreService.deleteGenre(dbItem.item.genreId).subscribe(() => {
+        this.dbItems$ = this.genreService.getGenres();
+      });
+    }
   }
 }

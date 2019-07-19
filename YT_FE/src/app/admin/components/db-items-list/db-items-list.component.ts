@@ -11,7 +11,7 @@ import { Genre } from 'src/app/models/genre.model';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
 import { DbItemsService } from '../../services/db-items.service';
-import { Song } from 'src/app/models/song.model';
+import { Login } from 'src/app/models/login.model';
 
 @Component({
   selector: 'yt-db-items-list',
@@ -22,7 +22,7 @@ import { Song } from 'src/app/models/song.model';
 export class DbItemsListComponent implements OnInit, OnChanges {
   @Input() title: string;
   @Input() dbItemsCached: DbItem<Genre>[] = [];
-  dbItems: DbItem<Genre>[] = [];
+  dbItems: DbItem<Genre | Login>[] = [];
   @ViewChild('filter') filter: ElementRef<HTMLInputElement>;
   checked = false;
 
@@ -50,13 +50,17 @@ export class DbItemsListComponent implements OnInit, OnChanges {
   }
 
   onCheck() {
+    this.dbItemsService.markedDbItems = [];
     if (!this.checked) {
       this.dbItems.forEach(dbi => {
-        this.dbItemsService.genres.push(dbi.item);
+        this.dbItemsService.markedDbItems.push(dbi);
       });
-    } else {
-      this.dbItemsService.genres = [];
     }
-    console.log(this.dbItemsService.genres);
+    console.log(this.dbItemsService.markedDbItems);
+  }
+
+  onDelete() {
+    this.dbItemsService.emitDbItems();
+    this.checked = false;
   }
 }

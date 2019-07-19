@@ -1,3 +1,4 @@
+import { Action } from './../../models/db-item.model';
 import { SpinnerService } from '../../../shared/services/spinner.service';
 import { GenreService } from './../../services/genre.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
@@ -17,30 +18,33 @@ export class DbItemComponent implements OnInit {
   @Input() index: number;
   @Input() dbItem: DbItem<Genre | Song>;
   @Input() checked;
-  // @Input() checkboxShow = false;
 
   constructor(private dbItemsService: DbItemsService) {}
 
   ngOnInit() {}
 
   onEdit() {
-    console.log(this.dbItem.item instanceof Genre);
-    this.dbItemsService.genreEmitter.next(this.dbItem.item);
+    this.dbItem.action = Action.EDIT;
+    this.dbItemsService.dbItemEmitter.next(this.dbItem);
   }
 
   onDelete() {
-    // this.dbItemsService.genreIdEmitter.next(this.dbItem.item.genreId);
+    this.dbItem.action = Action.DELETE;
+    this.onCheck();
+    this.dbItemsService.dbItemEmitter.next(this.dbItem);
   }
 
   onCheck() {
     if (!this.checked) {
-      this.dbItemsService.genres.push(this.dbItem.item);
+      this.dbItemsService.markedDbItems.push(this.dbItem);
     } else {
-      this.dbItemsService.genres = this.dbItemsService.genres.filter(t => {
-        return t !== this.dbItem.item;
-      });
+      this.dbItemsService.markedDbItems = this.dbItemsService.markedDbItems.filter(
+        dbi => {
+          return dbi !== this.dbItem;
+        }
+      );
     }
 
-    console.log(this.dbItemsService.genres);
+    console.log(this.dbItemsService.markedDbItems);
   }
 }

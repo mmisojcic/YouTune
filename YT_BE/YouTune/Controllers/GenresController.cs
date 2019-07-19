@@ -116,8 +116,8 @@ namespace YouTune.Controllers
             }
         }
 
-        // DELETE: api/Genres/list
-        [HttpDelete("list")]
+        // DELETE: api/Genres/deleteList
+        [HttpPost("deleteList")]
         public async Task<IActionResult> DeleteGenres([FromBody] IEnumerable<Genre> genres)
         {
             if (!ModelState.IsValid)
