@@ -84,7 +84,7 @@ export class GenresComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.genreForm.reset();
+    this.resetForm();
   }
 
   resetForm() {

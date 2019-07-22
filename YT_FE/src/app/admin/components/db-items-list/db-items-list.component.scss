@@ -17,11 +17,12 @@
   &_options {
     width: 100%;
     display: flex;
+    flex-direction: row;
     align-items: center;
     margin-top: 1rem;
 
     &-selection {
-      justify-self: flex-end;
+      // justify-self: flex-end;
     }
 
     &-button {
@@ -42,6 +43,19 @@
       &:active {
         box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
           0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+      }
+    }
+
+    &-sort {
+      margin-left: auto;
+      width: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      span {
+        cursor: pointer;
+        // margin: 0 0.5rem;
       }
     }
   }

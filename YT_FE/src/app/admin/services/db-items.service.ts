@@ -14,6 +14,8 @@ export class DbItemsService {
 
   markedDbItems: Array<DbItem<Genre | Login>> = new Array();
 
+  deleteButtonEmitter: Subject<boolean> = new Subject();
+
   IS_GENRES;
   IS_ARTIST;
   IS_SONG;

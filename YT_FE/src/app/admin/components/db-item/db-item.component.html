@@ -1,16 +1,32 @@
 <div class="item_wrapper">
-  <mat-checkbox #check (click)="onCheck()" color="primary" class="item_action-checkbox" [(ngModel)]="checked"
-    [labelPosition]="'after'">
+  <mat-checkbox
+    #check
+    (change)="onCheck()"
+    color="primary"
+    class="item_action-checkbox"
+    [(ngModel)]="checked"
+    [labelPosition]="'after'"
+  >
   </mat-checkbox>
   <div class="mat-elevation-z4 item rounded">
     <div class="item_info">
-      <span class="item_info-title">#{{ index + 1 }}.&nbsp;{{ dbItem.title }}</span>
+      <span class="item_info-title"
+        >#{{ index + 1 }}.&nbsp;{{ dbItem.title }}</span
+      >
     </div>
     <div class="item_action">
-      <span matRipple class="color-ok text-color-white item_action-button rounded" (click)="onEdit()">
+      <span
+        matRipple
+        class="color-ok text-color-white item_action-button rounded"
+        (click)="onEdit()"
+      >
         <i class="fas fa-pen fa-xs"></i>
       </span>
-      <span matRipple class="color-error text-color-white item_action-button rounded" (click)="onDelete()">
+      <span
+        matRipple
+        class="color-error text-color-white item_action-button rounded"
+        (click)="onDelete()"
+      >
         <i class="fas fa-trash-alt fa-xs"></i>
       </span>
     </div>

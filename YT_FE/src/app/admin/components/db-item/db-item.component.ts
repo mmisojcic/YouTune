@@ -35,7 +35,7 @@ export class DbItemComponent implements OnInit {
   }
 
   onCheck() {
-    if (!this.checked) {
+    if (this.checked) {
       this.dbItemsService.markedDbItems.push(this.dbItem);
     } else {
       this.dbItemsService.markedDbItems = this.dbItemsService.markedDbItems.filter(
@@ -44,7 +44,9 @@ export class DbItemComponent implements OnInit {
         }
       );
     }
-
+    this.dbItemsService.markedDbItems.length > 1
+      ? this.dbItemsService.deleteButtonEmitter.next(true)
+      : this.dbItemsService.deleteButtonEmitter.next(false);
     console.log(this.dbItemsService.markedDbItems);
   }
 }

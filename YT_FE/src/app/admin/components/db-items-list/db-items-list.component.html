@@ -15,20 +15,29 @@
       class="list-header_options-selection"
       [(ngModel)]="checked"
       [labelPosition]="'after'"
-      (click)="onCheck()"
+      [disabled]="dbItems?.length === 0"
+      (change)="onCheck()"
     >
-      <i class="fas fa-tasks ml-2"></i>
+      <i class="fas fa-tasks ml-2 fa-lg"></i>
     </mat-checkbox>
     <span
       #deleteList
       [@ngIfFade]="deleteList"
-      *ngIf="checked"
+      *ngIf="showDeleteButton"
       matRipple
       class="color-error text-color-white list-header_options-button rounded"
       (click)="onDelete()"
     >
       <i class="fas fa-trash-alt fa-xs"></i>
     </span>
+    <div class="list-header_options-sort">
+      <span (click)="onSortAsc()"
+        ><i class="fas fa-sort-alpha-up fa-lg"></i
+      ></span>
+      <span (click)="onSortDesc()"
+        ><i class="fas fa-sort-alpha-down fa-lg"></i
+      ></span>
+    </div>
   </div>
 </div>
 
