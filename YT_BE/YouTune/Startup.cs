@@ -50,14 +50,13 @@ namespace YouTune
 
 
             services.AddDbContext<AppDbContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("WinDbConnection")));
+                opt.UseSqlServer(Configuration.GetConnectionString("LinuxDbConnection")));
 
             services.AddCors(o => o.AddPolicy("AllowAll", builder =>
             {
                 builder.AllowAnyOrigin()
                        .AllowAnyMethod()
-                       .AllowAnyHeader()
-                       .AllowCredentials();
+                       .AllowAnyHeader();
             }));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -75,8 +74,9 @@ namespace YouTune
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseCors("AllowAll");
+            app.UseHttpsRedirection();
+
             app.UseMvc();
         }
     }
