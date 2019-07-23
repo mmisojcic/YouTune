@@ -1,0 +1,18 @@
+@import '../../../../assets/scss/imports';
+
+.sort {
+  height: 24px;
+  overflow: visible;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  span {
+    position: absolute;
+    width: max-content;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+  }
+}

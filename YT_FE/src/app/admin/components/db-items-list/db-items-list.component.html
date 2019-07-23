@@ -18,7 +18,7 @@
       [disabled]="dbItems?.length === 0"
       (change)="onCheck()"
     >
-      <i class="fas fa-tasks ml-2 fa-lg"></i>
+      <i matRipple class="fas fa-tasks ml-2 "></i>
     </mat-checkbox>
     <span
       #deleteList
@@ -26,18 +26,14 @@
       *ngIf="showDeleteButton"
       matRipple
       class="color-error text-color-white list-header_options-button rounded"
-      (click)="onDelete()"
+      (click)="openDialog()"
     >
       <i class="fas fa-trash-alt fa-xs"></i>
     </span>
-    <div class="list-header_options-sort">
-      <span (click)="onSortAsc()"
-        ><i class="fas fa-sort-alpha-up fa-lg"></i
-      ></span>
-      <span (click)="onSortDesc()"
-        ><i class="fas fa-sort-alpha-down fa-lg"></i
-      ></span>
-    </div>
+    <yt-alphabetical-sort
+      (click)="onSort()"
+      [sort]="sort"
+    ></yt-alphabetical-sort>
   </div>
 </div>
 

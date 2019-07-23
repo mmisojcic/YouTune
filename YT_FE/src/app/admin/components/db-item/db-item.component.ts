@@ -30,11 +30,19 @@ export class DbItemComponent implements OnInit {
 
   onDelete() {
     this.dbItem.action = Action.DELETE;
-    this.onCheck();
+    // this.checkItem();
     this.dbItemsService.dbItemEmitter.next(this.dbItem);
   }
 
   onCheck() {
+    this.checkItem();
+    this.dbItemsService.markedDbItems.length > 1
+      ? this.dbItemsService.deleteButtonEmitter.next(true)
+      : this.dbItemsService.deleteButtonEmitter.next(false);
+    console.log(this.dbItemsService.markedDbItems);
+  }
+
+  checkItem() {
     if (this.checked) {
       this.dbItemsService.markedDbItems.push(this.dbItem);
     } else {
@@ -44,9 +52,5 @@ export class DbItemComponent implements OnInit {
         }
       );
     }
-    this.dbItemsService.markedDbItems.length > 1
-      ? this.dbItemsService.deleteButtonEmitter.next(true)
-      : this.dbItemsService.deleteButtonEmitter.next(false);
-    console.log(this.dbItemsService.markedDbItems);
   }
 }

@@ -1,3 +1,4 @@
+import { ConfirmDialogComponent } from './../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DbItem } from './../../models/db-item.model';
 import {
   Component,
@@ -5,7 +6,8 @@ import {
   Input,
   OnChanges,
   ViewChild,
-  ElementRef
+  ElementRef,
+  Inject
 } from '@angular/core';
 import { Genre } from 'src/app/models/genre.model';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
@@ -14,6 +16,7 @@ import { DbItemsService } from '../../services/db-items.service';
 import { Login } from 'src/app/models/login.model';
 import { Subscription } from 'rxjs';
 import { Song } from 'src/app/models/song.model';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'yt-db-items-list',
@@ -29,8 +32,12 @@ export class DbItemsListComponent implements OnInit, OnChanges {
   checked = false;
   deleteButtonSubscription: Subscription;
   showDeleteButton = false;
+  sort = 'asc';
 
-  constructor(private dbItemsService: DbItemsService) {}
+  constructor(
+    private dbItemsService: DbItemsService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.deleteButtonSubscription = this.dbItemsService.deleteButtonEmitter.subscribe(
@@ -46,6 +53,7 @@ export class DbItemsListComponent implements OnInit, OnChanges {
     this.checked = false;
     this.showDeleteButton = false;
     this.dbItemsService.markedDbItems = [];
+    this.sort = 'asc';
   }
 
   onSearch(e: HTMLInputElement) {
@@ -80,8 +88,8 @@ export class DbItemsListComponent implements OnInit, OnChanges {
     // this.onCheck();
   }
 
-  onSortAsc() {
-    this.dbItems = this.dbItemsCached.sort((itemA, itemB) => {
+  sortAsc() {
+    this.dbItems = this.dbItems.sort((itemA, itemB) => {
       if (itemA.title > itemB.title) {
         return 1;
       } else if (itemA.title < itemB.title) {
@@ -90,9 +98,10 @@ export class DbItemsListComponent implements OnInit, OnChanges {
 
       return 0;
     });
+    this.sort = 'desc';
   }
-  onSortDesc() {
-    this.dbItems = this.dbItemsCached.sort((itemA, itemB) => {
+  sortDesc() {
+    this.dbItems = this.dbItems.sort((itemA, itemB) => {
       if (itemA.title < itemB.title) {
         return 1;
       } else if (itemA.title > itemB.title) {
@@ -100,6 +109,26 @@ export class DbItemsListComponent implements OnInit, OnChanges {
       }
 
       return 0;
+    });
+    this.sort = 'asc';
+  }
+
+  onSort() {
+    if (this.sort === 'asc') {
+      this.sortAsc();
+    } else if (this.sort === 'desc') {
+      this.sortDesc();
+    }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: 'sranje'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
     });
   }
 }
