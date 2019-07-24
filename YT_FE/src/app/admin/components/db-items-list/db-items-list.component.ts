@@ -1,3 +1,4 @@
+import { DialogAction } from './../../../shared/components/confirm-dialog/dialog-actions.enum';
 import { ConfirmDialogComponent } from './../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DbItem } from './../../models/db-item.model';
 import {
@@ -16,7 +17,7 @@ import { DbItemsService } from '../../services/db-items.service';
 import { Login } from 'src/app/models/login.model';
 import { Subscription } from 'rxjs';
 import { Song } from 'src/app/models/song.model';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'yt-db-items-list',
@@ -33,6 +34,7 @@ export class DbItemsListComponent implements OnInit, OnChanges {
   deleteButtonSubscription: Subscription;
   showDeleteButton = false;
   sort = 'asc';
+  actions = DialogAction;
 
   constructor(
     private dbItemsService: DbItemsService,
@@ -89,7 +91,7 @@ export class DbItemsListComponent implements OnInit, OnChanges {
   }
 
   sortAsc() {
-    this.dbItems = this.dbItems.sort((itemA, itemB) => {
+    this.dbItems.sort((itemA, itemB) => {
       if (itemA.title > itemB.title) {
         return 1;
       } else if (itemA.title < itemB.title) {
@@ -101,7 +103,7 @@ export class DbItemsListComponent implements OnInit, OnChanges {
     this.sort = 'desc';
   }
   sortDesc() {
-    this.dbItems = this.dbItems.sort((itemA, itemB) => {
+    this.dbItems.sort((itemA, itemB) => {
       if (itemA.title < itemB.title) {
         return 1;
       } else if (itemA.title > itemB.title) {
@@ -123,12 +125,14 @@ export class DbItemsListComponent implements OnInit, OnChanges {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '250px',
-      data: 'sranje'
+      data: this.dbItemsService.markedDbItems.length + '' + ' items'
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The dialog was closed', result);
+      if (result === DialogAction.YES) {
+        this.onDelete();
+      }
     });
   }
 }

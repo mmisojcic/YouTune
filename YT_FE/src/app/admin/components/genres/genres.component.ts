@@ -44,7 +44,7 @@ export class GenresComponent implements OnInit, OnDestroy {
     );
 
     this.genresSubscription = this.dbItemsService.dbItemsEmitter.subscribe(
-      (markedDbItems: DbItem<any>[]) => {
+      (markedDbItems: DbItem<Genre>[]) => {
         let modelList;
 
         this.dbItemsService.checkItemType();

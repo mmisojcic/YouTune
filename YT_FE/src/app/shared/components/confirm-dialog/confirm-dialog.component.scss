@@ -1,0 +1,16 @@
+@import '.././../../../assets/scss/imports';
+
+.dialog {
+  text-align: center;
+
+  //   &_title {}
+
+  &_actions {
+    margin-top: .5rem;
+
+
+    &-button {
+      margin-left: 1rem;
+    }
+  }
+}

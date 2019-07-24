@@ -37,6 +37,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     SpinnerComponent,
     AlphabeticalSortComponent,
     ConfirmDialogComponent
-  ]
+  ],
+  entryComponents: [ConfirmDialogComponent]
 })
 export class SharedModule {}
