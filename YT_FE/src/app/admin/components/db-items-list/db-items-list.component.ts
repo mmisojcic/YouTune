@@ -1,4 +1,4 @@
-import { DialogAction } from './../../../shared/components/confirm-dialog/dialog-actions.enum';
+import { DialogAction } from '../../../shared/models/confirm-dialog-actions.enum';
 import { ConfirmDialogComponent } from './../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DbItem } from './../../models/db-item.model';
 import {
@@ -7,8 +7,7 @@ import {
   Input,
   OnChanges,
   ViewChild,
-  ElementRef,
-  Inject
+  ElementRef
 } from '@angular/core';
 import { Genre } from 'src/app/models/genre.model';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
@@ -69,7 +68,6 @@ export class DbItemsListComponent implements OnInit, OnChanges {
     });
 
     this.dbItems = tmpDbItems;
-    console.log(this.checked);
   }
 
   onCheck() {
@@ -125,7 +123,12 @@ export class DbItemsListComponent implements OnInit, OnChanges {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: this.dbItemsService.markedDbItems.length + '' + ' items'
+      data: {
+        title:
+          'Delete ' +
+          this.dbItemsService.markedDbItems.length.toString() +
+          ' items?'
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

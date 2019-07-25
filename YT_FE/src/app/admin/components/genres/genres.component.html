@@ -16,11 +16,19 @@
       <div class="form-group">
         <mat-form-field class="full-width">
           <input
+            #name
             matInput
             type="text"
             placeholder="Name"
             formControlName="name"
+            [errorStateMatcher]="matcher"
           />
+          <mat-error *ngIf="genreForm.get('name').hasError('required')">
+            Name is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="genreForm.get('name').hasError('pattern')">
+            Only letters <strong>allowed</strong>
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -30,6 +38,7 @@
           mat-raised-button
           color="primary"
           matTooltip="Click the button to submit the form"
+          [disabled]="genreForm.invalid"
         >
           Save
         </button>

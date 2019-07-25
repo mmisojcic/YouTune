@@ -7,22 +7,28 @@
     </div>
     <div class="form-group">
       <mat-form-field class="full-width">
-        <input matInput type="password" placeholder="Password" formControlName="password" />
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
       </mat-form-field>
-      <small class="form-text text-muted">Combine numbers and mixed case letters.</small>
+      <small class="form-text text-muted"
+        >Enter your credentials to login.</small
+      >
     </div>
 
-    <button type="submit" mat-raised-button color="primary" matTooltip="Click the button to submit the form">
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      matTooltip="Click the button to submit the form"
+    >
       Login
     </button>
 
-    <span #error [@domFader]="error" *ngIf="errorMessage !== undefined" class="credentials_form-error form-text ">
-      {{ errorMessage }}
-    </span>
-
-    <div #s class="spinner" [@domFader]="s" *ytSpinnerToggle>
-      <mat-spinner aria-label="loading content"></mat-spinner>
-    </div>
+    <yt-spinner *ngIf="spinning"></yt-spinner>
   </form>
 
   <p class="credentials_info">

@@ -16,6 +16,7 @@ export class LoginFormComponent implements OnInit {
   loginFrom: FormGroup;
   loginInfo: Login;
 
+  spinning = this.spinnerService.spinning;
   errorMessage: string;
 
   constructor(

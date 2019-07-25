@@ -16,6 +16,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [],
@@ -34,7 +35,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatRippleModule,
     MatDividerModule,
     MatSliderModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule
   ],
   exports: [
     MatButtonModule,
@@ -51,7 +53,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatRippleModule,
     MatDividerModule,
     MatSliderModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule
   ]
 })
 export class MaterialModule {}

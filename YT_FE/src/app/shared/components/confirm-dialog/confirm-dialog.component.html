@@ -1,10 +1,24 @@
 <div class="dialog">
-  <h2 class="dialog_title" mat-dialog-title>Delete all {{data}}</h2>
+  <h2 class="dialog_title" mat-dialog-title>{{ data.title }}</h2>
   <mat-dialog-content>Are you sure?</mat-dialog-content>
   <div class="dialog_actions">
-    <button color="primary" mat-raised-button mat-dialog-close (click)="closeDialog(actions.NO)">No</button>
+    <button
+      color="primary"
+      mat-raised-button
+      mat-dialog-close
+      (click)="closeDialog(actions.NO)"
+    >
+      No
+    </button>
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-    <button mat-raised-button color="warn" mat-dialog-close (click)="closeDialog(actions.YES)"
-      class="dialog_actions-button">Yes</button>
+    <button
+      mat-raised-button
+      color="warn"
+      mat-dialog-close
+      (click)="closeDialog(actions.YES)"
+      class="dialog_actions-button"
+    >
+      Yes
+    </button>
   </div>
 </div>

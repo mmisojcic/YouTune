@@ -1,7 +1,7 @@
+import { ConfirmDialogData } from './../../models/confirm-dialog-data.model';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-// import DialogAction as actions from './dialog-actions.enum';
-import { DialogAction } from './dialog-actions.enum';
+import { DialogAction } from '../../models/confirm-dialog-actions.enum';
 
 @Component({
   selector: 'yt-confirm-dialog',
@@ -11,13 +11,13 @@ import { DialogAction } from './dialog-actions.enum';
 export class ConfirmDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: string
+    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData
   ) {}
 
   actions = DialogAction;
 
   onNoClick(): void {
-    this.dialogRef.close('sarma');
+    this.dialogRef.close(this.actions.NO);
   }
 
   closeDialog(answer: DialogAction) {

@@ -1,15 +1,41 @@
 import { Action } from './../../models/db-item.model';
 import { DbItemsService } from './../../services/db-items.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  NgForm,
+  FormGroupDirective
+} from '@angular/forms';
 import { GenreService } from './../../services/genre.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Genre } from 'src/app/models/genre.model';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import { DbItem } from '../../models/db-item.model';
 import { Observable, Subscription } from 'rxjs';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
-import { Login } from 'src/app/models/login.model';
+import { Genre } from 'src/app/models/genre.model';
+import { ErrorStateMatcher } from '@angular/material/core';
 
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || control.touched || isSubmitted)
+    );
+  }
+}
 @Component({
   selector: 'yt-genres',
   templateUrl: './genres.component.html',
@@ -17,11 +43,15 @@ import { Login } from 'src/app/models/login.model';
   animations: [domFaderAnimation, ngIfAnimation]
 })
 export class GenresComponent implements OnInit, OnDestroy {
+  matcher = new MyErrorStateMatcher();
+
   genre: Genre;
   genreForm: FormGroup;
   dbItems$: Observable<DbItem<Genre>[]>;
   genreSubscription: Subscription;
   genresSubscription: Subscription;
+
+  @ViewChild('name') nameInput: ElementRef<HTMLInputElement>;
 
   constructor(
     private genreService: GenreService,
@@ -34,7 +64,10 @@ export class GenresComponent implements OnInit, OnDestroy {
     // Returns object that will represent form and its controls to the form local var
     this.genreForm = new FormGroup({
       id: new FormControl({ value: null, disabled: true }),
-      name: new FormControl(null)
+      name: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(/^[A-Z a-z]{1,50}$/)
+      ])
     });
 
     this.genreSubscription = this.dbItemsService.dbItemEmitter.subscribe(
@@ -66,14 +99,16 @@ export class GenresComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.genreSubscription.unsubscribe();
+    this.genresSubscription.unsubscribe();
   }
 
   onSave() {
     this.genre = new Genre(
       this.genreForm.controls['id'].value,
-      this.genreForm.controls['name'].value
+      this.genreForm.controls['name'].value.trim()
     );
 
+    console.log(this.genre.name);
     if (this.genreForm.controls['id'].value === null) {
       this.genreService.saveGenre(this.genre).subscribe(() => {
         this.dbItems$ = this.genreService.getGenres();
@@ -95,6 +130,8 @@ export class GenresComponent implements OnInit, OnDestroy {
     if (dbItem.action === Action.EDIT) {
       this.genreForm.controls['id'].setValue(dbItem.item.genreId);
       this.genreForm.controls['name'].setValue(dbItem.item.name);
+      this.nameInput.nativeElement.focus();
+      this.nameInput.nativeElement.select();
     } else if (dbItem.action === Action.DELETE) {
       this.genreForm.reset();
       this.genreService.deleteGenre(dbItem.item.genreId).subscribe(() => {

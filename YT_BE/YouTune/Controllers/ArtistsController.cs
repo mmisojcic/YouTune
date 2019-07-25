@@ -99,6 +99,28 @@ namespace YouTune.Controllers
             
         }
 
+
+        // DELETE: api/Artists/deleteList
+        [HttpPost("deleteList")]
+        public async Task<IActionResult> DeleteGenres([FromBody] IEnumerable<Artist> artists)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var remainingArtist = await _artistService.DeleteList(artists);
+
+            if (remainingArtist == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(remainingArtist.ToList());
+            }
+        }
+
         private bool ArtistExists(long id)
         {
             return _context.Artists.Any(e => e.ArtistId == id);
