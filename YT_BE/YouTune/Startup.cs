@@ -20,6 +20,9 @@ namespace YouTune
 {
     public class Startup
     {
+        private readonly string linux = "LinuxDbConnection";
+        private readonly string win = "WinDbConnection";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -50,7 +53,7 @@ namespace YouTune
 
 
             services.AddDbContext<AppDbContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("WinDbConnection")));
+                opt.UseSqlServer(Configuration.GetConnectionString(win)));
 
             services.AddCors(o => o.AddPolicy("AllowAll", builder =>
             {
