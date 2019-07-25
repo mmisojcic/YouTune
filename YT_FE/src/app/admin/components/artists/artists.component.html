@@ -1,3 +1,37 @@
-<p>
-  artists works!
-</p>
+<div class="tab-content">
+  <yt-db-items-list class="tab-content_list" [title]="'Artist'" [dbItemsCached]="dbItems$ | async">
+  </yt-db-items-list>
+  <mat-divider [vertical]="true"></mat-divider>
+  <div class="tab-content_actions">
+    <form class="form rounded" [formGroup]="artistForm" (ngSubmit)="onSave()">
+      <div class="form-group">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Id" formControlName="id" #id />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="full-width">
+          <input #name matInput type="text" placeholder="Name" formControlName="name" [errorStateMatcher]="matcher" />
+          <mat-error *ngIf="artistForm.get('name').hasError('required')">
+            Name is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="artistForm.get('name').hasError('pattern')">
+            Only letters <strong>allowed</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form_buttons">
+        <button type="submit" mat-raised-button color="primary" matTooltip="Click the button to submit the form"
+          [disabled]="artistForm.invalid">
+          Save
+        </button>
+        <div class="margin-left-auto" *ngIf="id.value" #new [@ngIfFade]="new">
+          <button type="button" mat-raised-button color="primary" matTooltip="Add new artist" (click)="resetForm()">
+            New
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

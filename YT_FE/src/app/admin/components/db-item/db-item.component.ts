@@ -1,5 +1,6 @@
+import { Artist } from 'src/app/models/artist.model';
 import { Action } from './../../models/db-item.model';
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DbItem } from '../../models/db-item.model';
 import { Genre } from 'src/app/models/genre.model';
 import { DbItemsService } from '../../services/db-items.service';
@@ -14,7 +15,7 @@ import { Song } from 'src/app/models/song.model';
 })
 export class DbItemComponent implements OnInit {
   @Input() index: number;
-  @Input() dbItem: DbItem<Genre | Song>;
+  @Input() dbItem: DbItem<Genre | Artist>;
   @Input() checked;
 
   constructor(private dbItemsService: DbItemsService) {}

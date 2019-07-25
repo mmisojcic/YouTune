@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as server from '../../shared/config/api.config';
 import { Genre } from 'src/app/models/genre.model';
-import { Observable, throwError, Subject } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { GenreDTO } from 'src/app/DTOs/genre.dto';
 import { map, catchError, finalize } from 'rxjs/operators';
 
@@ -26,12 +26,7 @@ export class GenreService {
     this.spinnerService.spinnerShow();
     return this.http.get(this.url).pipe(
       map((res: GenreDTO[]) => {
-        const genres = this.genreConverter.DTOtoModelList(res);
-        const dbItems: DbItem<Genre>[] = [];
-        genres.forEach(g => {
-          dbItems.push(new DbItem(g.name, Action.NONE, g));
-        });
-        return dbItems;
+        return this.map(res);
       }),
       catchError(err => {
         console.log('ERROR:::', err);
@@ -94,12 +89,7 @@ export class GenreService {
 
     return this.http.post(this.url + '/deleteList', dto).pipe(
       map((res: GenreDTO[]) => {
-        const genres = this.genreConverter.DTOtoModelList(res);
-        const dbItems: DbItem<Genre>[] = [];
-        genres.forEach(g => {
-          dbItems.push(new DbItem(g.name, Action.NONE, g));
-        });
-        return dbItems;
+        return this.map(res);
       }),
       catchError(err => {
         console.log('ERROR: ', err);
@@ -109,5 +99,14 @@ export class GenreService {
         console.log('GENRE DELETED:::');
       })
     );
+  }
+
+  map(res: GenreDTO[]) {
+    const genres = this.genreConverter.DTOtoModelList(res);
+    const dbItems: DbItem<Genre>[] = [];
+    genres.forEach(g => {
+      dbItems.push(new DbItem(g.name, Action.NONE, g));
+    });
+    return dbItems;
   }
 }

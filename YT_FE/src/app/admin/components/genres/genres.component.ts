@@ -108,7 +108,6 @@ export class GenresComponent implements OnInit, OnDestroy {
       this.genreForm.controls['name'].value.trim()
     );
 
-    console.log(this.genre.name);
     if (this.genreForm.controls['id'].value === null) {
       this.genreService.saveGenre(this.genre).subscribe(() => {
         this.dbItems$ = this.genreService.getGenres();
@@ -120,6 +119,8 @@ export class GenresComponent implements OnInit, OnDestroy {
     }
 
     this.resetForm();
+    this.nameInput.nativeElement.focus();
+    this.nameInput.nativeElement.select();
   }
 
   resetForm() {

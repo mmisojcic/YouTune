@@ -1,3 +1,4 @@
+import { Artist } from 'src/app/models/artist.model';
 import { DialogAction } from '../../../shared/models/confirm-dialog-actions.enum';
 import { ConfirmDialogComponent } from './../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DbItem } from './../../models/db-item.model';
@@ -26,8 +27,8 @@ import { MatDialog } from '@angular/material';
 })
 export class DbItemsListComponent implements OnInit, OnChanges {
   @Input() title: string;
-  @Input() dbItemsCached: DbItem<Genre | Song>[] = [];
-  dbItems: DbItem<Genre | Login>[] = [];
+  @Input() dbItemsCached: DbItem<Genre | Artist>[] = [];
+  dbItems: DbItem<Genre | Artist>[] = [];
   @ViewChild('filter') filter: ElementRef<HTMLInputElement>;
   checked = false;
   deleteButtonSubscription: Subscription;
@@ -59,7 +60,7 @@ export class DbItemsListComponent implements OnInit, OnChanges {
 
   onSearch(e: HTMLInputElement) {
     const inputRegExp = new RegExp(e.value.toLowerCase());
-    const tmpDbItems: DbItem<Genre | Login>[] = [];
+    const tmpDbItems: DbItem<Genre | Artist>[] = [];
 
     this.dbItemsCached.forEach(dbItem => {
       if (inputRegExp.test(dbItem.title.toLowerCase())) {

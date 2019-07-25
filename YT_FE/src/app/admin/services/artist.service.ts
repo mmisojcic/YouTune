@@ -26,12 +26,7 @@ export class ArtistService {
     this.spinnerService.spinnerShow();
     return this.http.get(this.url).pipe(
       map((res: ArtistDTO[]) => {
-        const artist = this.artistConverter.DTOtoModelList(res);
-        const dbItems: DbItem<Artist>[] = [];
-        artist.forEach(g => {
-          dbItems.push(new DbItem(g.name, Action.NONE, g));
-        });
-        return dbItems;
+        return this.map(res);
       }),
       catchError(err => {
         console.log('ERROR:::', err);
@@ -94,12 +89,7 @@ export class ArtistService {
 
     return this.http.post(this.url + '/deleteList', dto).pipe(
       map((res: ArtistDTO[]) => {
-        const artist = this.artistConverter.DTOtoModelList(res);
-        const dbItems: DbItem<Artist>[] = [];
-        artist.forEach(g => {
-          dbItems.push(new DbItem(g.name, Action.NONE, g));
-        });
-        return dbItems;
+        return this.map(res);
       }),
       catchError(err => {
         console.log('ERROR: ', err);
@@ -109,5 +99,14 @@ export class ArtistService {
         console.log('ARTIST DELETED:::');
       })
     );
+  }
+
+  map(res: ArtistDTO[]) {
+    const artist = this.artistConverter.DTOtoModelList(res);
+    const dbItems: DbItem<Artist>[] = [];
+    artist.forEach(a => {
+      dbItems.push(new DbItem(a.name, Action.NONE, a));
+    });
+    return dbItems;
   }
 }
