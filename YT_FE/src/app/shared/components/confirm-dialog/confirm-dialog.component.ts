@@ -1,5 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+// import DialogAction as actions from './dialog-actions.enum';
+import { DialogAction } from './dialog-actions.enum';
 
 @Component({
   selector: 'yt-confirm-dialog',
@@ -7,15 +9,20 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./confirm-dialog.component.scss']
 })
 export class ConfirmDialogComponent implements OnInit {
-  constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>) {}
+  constructor(
+    private dialogRef: MatDialogRef<ConfirmDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: string
+  ) {}
+
+  actions = DialogAction;
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close('sarma');
+  }
+
+  closeDialog(answer: DialogAction) {
+    this.dialogRef.close(answer);
   }
 
   ngOnInit() {}
-}
-export interface DialogData {
-  animal: string;
-  name: string;
 }

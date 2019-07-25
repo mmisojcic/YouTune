@@ -1,7 +1,5 @@
 import { Action } from './../../models/db-item.model';
-import { SpinnerService } from '../../../shared/services/spinner.service';
-import { GenreService } from './../../services/genre.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DbItem } from '../../models/db-item.model';
 import { Genre } from 'src/app/models/genre.model';
 import { DbItemsService } from '../../services/db-items.service';
