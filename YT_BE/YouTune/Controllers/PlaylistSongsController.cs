@@ -24,7 +24,7 @@ namespace YouTune.Controllers
         [HttpGet]
         public IEnumerable<PlaylistSong> GetPlaylistSong()
         {
-            return _context.PlaylistSong;
+            return _context.PlaylistsSongs;
         }
 
         // GET: api/PlaylistSongs/5
@@ -36,7 +36,7 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var playlistSong = await _context.PlaylistSong.FindAsync(id);
+            var playlistSong = await _context.PlaylistsSongs.FindAsync(id);
 
             if (playlistSong == null)
             {
@@ -90,7 +90,7 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.PlaylistSong.Add(playlistSong);
+            _context.PlaylistsSongs.Add(playlistSong);
             try
             {
                 await _context.SaveChangesAsync();
@@ -119,13 +119,13 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var playlistSong = await _context.PlaylistSong.FindAsync(id);
+            var playlistSong = await _context.PlaylistsSongs.FindAsync(id);
             if (playlistSong == null)
             {
                 return NotFound();
             }
 
-            _context.PlaylistSong.Remove(playlistSong);
+            _context.PlaylistsSongs.Remove(playlistSong);
             await _context.SaveChangesAsync();
 
             return Ok(playlistSong);
@@ -133,7 +133,7 @@ namespace YouTune.Controllers
 
         private bool PlaylistSongExists(long id)
         {
-            return _context.PlaylistSong.Any(e => e.SongId == id);
+            return _context.PlaylistsSongs.Any(e => e.SongId == id);
         }
     }
 }

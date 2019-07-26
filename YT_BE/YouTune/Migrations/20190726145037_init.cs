@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace YouTune.Migrations
 {
-    public partial class db_init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -104,7 +104,7 @@ namespace YouTune.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArtistSong",
+                name: "ArtistsSongs",
                 columns: table => new
                 {
                     SongId = table.Column<long>(nullable: false),
@@ -112,15 +112,15 @@ namespace YouTune.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArtistSong", x => new { x.SongId, x.ArtistId });
+                    table.PrimaryKey("PK_ArtistsSongs", x => new { x.SongId, x.ArtistId });
                     table.ForeignKey(
-                        name: "FK_ArtistSong_Artists_ArtistId",
+                        name: "FK_ArtistsSongs_Artists_ArtistId",
                         column: x => x.ArtistId,
                         principalTable: "Artists",
                         principalColumn: "ArtistId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ArtistSong_Songs_SongId",
+                        name: "FK_ArtistsSongs_Songs_SongId",
                         column: x => x.SongId,
                         principalTable: "Songs",
                         principalColumn: "SongId",
@@ -182,7 +182,7 @@ namespace YouTune.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PlaylistSong",
+                name: "PlaylistsSongs",
                 columns: table => new
                 {
                     SongId = table.Column<long>(nullable: false),
@@ -190,15 +190,15 @@ namespace YouTune.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlaylistSong", x => new { x.SongId, x.PlaylistId });
+                    table.PrimaryKey("PK_PlaylistsSongs", x => new { x.SongId, x.PlaylistId });
                     table.ForeignKey(
-                        name: "FK_PlaylistSong_Playlists_PlaylistId",
+                        name: "FK_PlaylistsSongs_Playlists_PlaylistId",
                         column: x => x.PlaylistId,
                         principalTable: "Playlists",
                         principalColumn: "PlaylistId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PlaylistSong_Songs_SongId",
+                        name: "FK_PlaylistsSongs_Songs_SongId",
                         column: x => x.SongId,
                         principalTable: "Songs",
                         principalColumn: "SongId",
@@ -206,8 +206,8 @@ namespace YouTune.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArtistSong_ArtistId",
-                table: "ArtistSong",
+                name: "IX_ArtistsSongs_ArtistId",
+                table: "ArtistsSongs",
                 column: "ArtistId");
 
             migrationBuilder.CreateIndex(
@@ -216,8 +216,8 @@ namespace YouTune.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlaylistSong_PlaylistId",
-                table: "PlaylistSong",
+                name: "IX_PlaylistsSongs_PlaylistId",
+                table: "PlaylistsSongs",
                 column: "PlaylistId");
 
             migrationBuilder.CreateIndex(
@@ -250,10 +250,10 @@ namespace YouTune.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ArtistSong");
+                name: "ArtistsSongs");
 
             migrationBuilder.DropTable(
-                name: "PlaylistSong");
+                name: "PlaylistsSongs");
 
             migrationBuilder.DropTable(
                 name: "Reports");

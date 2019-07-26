@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace YouTune.Models
+namespace YouTune.DTOs
 {
-    public class Artist
-    {
+    public class SonglessArtistDTO { 
         public long ArtistId { get; set; }
         public string Name { get; set; }
-        
-        public ICollection<ArtistSong> ArtistsSongs { get; set; }
+    
     }
 }

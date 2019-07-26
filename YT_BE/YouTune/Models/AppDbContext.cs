@@ -17,8 +17,8 @@ namespace YouTune.Models
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Status> Statuses { get; set; }
-        public DbSet<PlaylistSong> PlaylistSong { get; set; }
-        public DbSet<ArtistSong> ArtistSong { get; set; }
+        public DbSet<PlaylistSong> PlaylistsSongs { get; set; }
+        public DbSet<ArtistSong> ArtistsSongs { get; set; }
 
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
@@ -34,7 +34,7 @@ namespace YouTune.Models
 
             modelBuilder.Entity<PlaylistSong>()
                 .HasOne(ps => ps.Song)
-                .WithMany(s => s.PlaylistSongs)
+                .WithMany(s => s.PlaylistsSongs)
                 .HasForeignKey(ps => ps.SongId);
 
             modelBuilder.Entity<PlaylistSong>()
@@ -49,12 +49,12 @@ namespace YouTune.Models
 
             modelBuilder.Entity<ArtistSong>()
                 .HasOne(ars => ars.Song)
-                .WithMany(s => s.ArtistSongs)
+                .WithMany(s => s.ArtistsSongs)
                 .HasForeignKey(ars => ars.SongId);
 
             modelBuilder.Entity<ArtistSong>()
                 .HasOne(ars => ars.Artist)
-                .WithMany(a => a.ArtistSongs)
+                .WithMany(a => a.ArtistsSongs)
                 .HasForeignKey(ars => ars.ArtistId);
         }
         

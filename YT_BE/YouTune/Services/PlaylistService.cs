@@ -69,7 +69,7 @@ namespace YouTune.Services
             }
             else
             {
-                var songsData = _context.PlaylistSong
+                var songsData = _context.PlaylistsSongs
                     .Where(pls => pls.PlaylistId == playlistData.PlaylistId)
                     .Select(pls => _mapper.Map<Song, SongForPlaylistDTO>(pls.Song))
                     .ToList();
@@ -78,7 +78,7 @@ namespace YouTune.Services
                 {
                     var genreData = await _context.Genres.Where(g => g.GenreId == s.GenreId).FirstOrDefaultAsync();
                     var reportData = await _context.Reports.Where(r => r.SongId == s.SongId).FirstOrDefaultAsync();
-                    var artistsData = _context.ArtistSong.Where(ars => ars.SongId == s.SongId).Select(ars => ars.Artist).ToList();
+                    var artistsData = _context.ArtistsSongs.Where(ars => ars.SongId == s.SongId).Select(ars => ars.Artist).ToList();
 
                     s.Genre = _mapper.Map<Genre, SonglessGenreDTO>(genreData);
                     s.Artists = artistsData;

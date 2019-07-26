@@ -57,7 +57,7 @@ namespace YouTune.Services
 
             foreach (Song s in songsData)
             {
-                var artistsSong = _context.ArtistSong.Where(ars => ars.SongId == s.SongId).Select(ars => _mapper.Map<Artist, ArtistDTO>(ars.Artist)).ToList();
+                var artistsSong = _context.ArtistsSongs.Where(ars => ars.SongId == s.SongId).Select(ars => _mapper.Map<Artist, SonglessArtistDTO>(ars.Artist)).ToList();
                 var songDTO = _mapper.Map<Song, SongDTO>(s);
                 songDTO.Artists = artistsSong;
                 songsDTO.Add(songDTO);
@@ -80,7 +80,7 @@ namespace YouTune.Services
                 var genreData = await _context.Genres.FindAsync(songData.GenreId);
                 var reportData = await _context.Reports.Where(r => r.SongId == songData.SongId).FirstOrDefaultAsync();
 
-                var artistsData = _context.ArtistSong.Where(ars => ars.SongId == songData.SongId).Select(ars => _mapper.Map<Artist, ArtistDTO>(ars.Artist)).ToList();
+                var artistsData = _context.ArtistsSongs.Where(ars => ars.SongId == songData.SongId).Select(ars => _mapper.Map<Artist, SonglessArtistDTO>(ars.Artist)).ToList();
 
                 songData.Genre = genreData;
 

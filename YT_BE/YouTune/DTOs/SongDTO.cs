@@ -15,11 +15,11 @@ namespace YouTune.DTOs
         //public long GenreId { get; set; }
         public SonglessGenreDTO Genre { get; set; }
 
-        public ICollection<ArtistDTO> Artists { get; set; }
+        public ICollection<SonglessArtistDTO> Artists { get; set; }
 
         public ReportInSongDTO Report { get; set; }
 
-        //public ICollection<PlaylistSong> PlaylistSongs { get; set; }
-        //public ICollection<ArtistSong> ArtistSongs { get; set; }
+        public ICollection<PlaylistSong> PlaylistsSongs { get; set; }
+        public ICollection<ArtistSong> ArtistsSongs { get; set; }
     }
 }

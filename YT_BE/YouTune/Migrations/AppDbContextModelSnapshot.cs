@@ -42,7 +42,7 @@ namespace YouTune.Migrations
 
                     b.HasIndex("ArtistId");
 
-                    b.ToTable("ArtistSong");
+                    b.ToTable("ArtistsSongs");
                 });
 
             modelBuilder.Entity("YouTune.Models.Genre", b =>
@@ -85,7 +85,7 @@ namespace YouTune.Migrations
 
                     b.HasIndex("PlaylistId");
 
-                    b.ToTable("PlaylistSong");
+                    b.ToTable("PlaylistsSongs");
                 });
 
             modelBuilder.Entity("YouTune.Models.Report", b =>
@@ -183,12 +183,12 @@ namespace YouTune.Migrations
             modelBuilder.Entity("YouTune.Models.ArtistSong", b =>
                 {
                     b.HasOne("YouTune.Models.Artist", "Artist")
-                        .WithMany("ArtistSongs")
+                        .WithMany("ArtistsSongs")
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("YouTune.Models.Song", "Song")
-                        .WithMany("ArtistSongs")
+                        .WithMany("ArtistsSongs")
                         .HasForeignKey("SongId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -209,7 +209,7 @@ namespace YouTune.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("YouTune.Models.Song", "Song")
-                        .WithMany("PlaylistSongs")
+                        .WithMany("PlaylistsSongs")
                         .HasForeignKey("SongId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

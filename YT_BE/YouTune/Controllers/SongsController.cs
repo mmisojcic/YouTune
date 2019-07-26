@@ -75,6 +75,7 @@ namespace YouTune.Controllers
 
             var songDTO = await _songService.Save(song);
 
+            await _songService.Save(song);
             return Ok(songDTO);
         }
 

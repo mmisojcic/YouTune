@@ -18,11 +18,13 @@ namespace YouTune.DTOs
             CreateMap<Artist, ArtistDTO>();
             CreateMap<Genre, GenreDTO>();
             CreateMap<Song, SongDTO>();
+            CreateMap<SongDTO, Song>();
             CreateMap<Song, SongForPlaylistDTO>();
             CreateMap<Report, ReportDTO>();
             CreateMap<Status, StatusDTO>();
             CreateMap<Report, ReportInSongDTO>();
             CreateMap<Song, ArtistSong>();
+            CreateMap<Artist, SonglessArtistDTO>();
         }
     }
 }
