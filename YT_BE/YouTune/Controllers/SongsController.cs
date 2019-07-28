@@ -75,9 +75,25 @@ namespace YouTune.Controllers
 
             var songDTO = await _songService.Save(song);
 
-            await _songService.Save(song);
             return Ok(songDTO);
         }
+
+        ///////////////////////////////
+        // POST: api/Songs
+        [HttpPost("{testSave}")]
+        public async Task<IActionResult> TestPostSong([FromBody] Song song)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var songsDTO = await _songService.TestSave(song);
+
+            return Ok(songsDTO);
+        }
+        ////////////////////////////////
+
 
         // DELETE: api/Songs/5
         [HttpDelete("{id}")]

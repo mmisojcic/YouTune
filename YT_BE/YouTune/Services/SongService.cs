@@ -101,6 +101,18 @@ namespace YouTune.Services
             return await GetOne(_object.SongId);
         }
 
+        ////////////////////        
+        public async Task<IEnumerable<SongDTO>> TestSave(Song _object)
+        {
+            var list = new List<SongDTO>();
+            _context.Songs.Add(_object);
+            var isSaved = await _context.SaveChangesAsync();
+
+
+            return GetAll();
+        }
+        //////////////////////////////////
+
         // UPDATE
         public async Task<SongDTO> Update(Song _object, long _id)
         {
