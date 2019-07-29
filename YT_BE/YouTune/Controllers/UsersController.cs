@@ -61,7 +61,7 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-           var userDTO = await _userService.Update(user, id);
+           var userDTO = await _userService.UpdateUser(user, id);
 
            return Ok(userDTO);
         }
@@ -112,7 +112,7 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = await _userService.Delete(id);
+            var user = await _userService.DeleteUser(id);
             
             if (user == null)
             {

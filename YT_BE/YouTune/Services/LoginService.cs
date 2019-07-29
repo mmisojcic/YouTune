@@ -38,7 +38,7 @@ namespace YouTune.Services
 
         public async Task<UserDTO> Register(User registerInfo)
         {
-            return await _userService.Save(registerInfo);
+            return await _userService.SaveUser(registerInfo);
         }
     }
 }

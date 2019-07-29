@@ -23,7 +23,7 @@ namespace YouTune.Services
         }
 
         // DELETE
-        public async Task<User> Delete(long _id)
+        public async Task<User> DeleteUser(long _id)
         {
             var userData = await _context.Users.FindAsync(_id);
 
@@ -91,7 +91,7 @@ namespace YouTune.Services
         }
 
         // SAVE
-        public async Task<UserDTO> Save(User _object)
+        public async Task<UserDTO> SaveUser(User _object)
         {
             _object.RoleId = 2;
             _context.Users.Add(_object);
@@ -102,7 +102,7 @@ namespace YouTune.Services
 
 
         // UPDATE
-        public async Task<UserDTO> Update(User _object, long _id)
+        public async Task<UserDTO> UpdateUser(User _object, long _id)
         {
             if (_id != _object.UserId)
             {
@@ -120,6 +120,21 @@ namespace YouTune.Services
             {
                 return null;
             }
+        }
+
+        Task<IEnumerable<UserDTO>> IYouTuneRepository<User, UserDTO>.Delete(long _id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<UserDTO>> IYouTuneRepository<User, UserDTO>.Save(User _object)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<UserDTO>> IYouTuneRepository<User, UserDTO>.Update(User _object, long _id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -16,11 +16,11 @@ import {
 } from '@angular/forms';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
-import { Artist } from 'src/app/models/artist.model';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { DbItem } from '../../models/db-item.model';
 import { ArtistService } from '../../services/artist.service';
 import { DbItemsService } from '../../services/db-items.service';
+import { Artist } from 'src/app/models/artist.model';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -47,7 +47,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
 
   artist: Artist;
   artistForm: FormGroup;
-  dbItems$: Observable<DbItem<Artist>[]>;
+  dbItems: DbItem<Artist>[];
   artistSubscription: Subscription;
   artistsSubscription: Subscription;
 
@@ -59,7 +59,9 @@ export class ArtistsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.dbItems$ = this.artistService.getArtist();
+    this.artistService.getArtists().subscribe((res: DbItem<Artist>[]) => {
+      this.dbItems = res;
+    });
 
     // Returns object that will represent form and its controls to the form local var
     this.artistForm = new FormGroup({
@@ -87,9 +89,11 @@ export class ArtistsComponent implements OnInit, OnDestroy {
           modelList = this.dbItemsService.dbItemsToModelList<Artist>(
             markedDbItems
           );
-          this.artistService.deleteArtists(modelList).subscribe(() => {
-            this.dbItems$ = this.artistService.getArtist();
-          });
+          this.artistService
+            .deleteArtists(modelList)
+            .subscribe((res: DbItem<Artist>[]) => {
+              this.dbItems = res;
+            });
         } else {
           console.log('nije');
         }
@@ -109,13 +113,17 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     );
 
     if (this.artistForm.controls['id'].value === null) {
-      this.artistService.saveArtist(this.artist).subscribe(() => {
-        this.dbItems$ = this.artistService.getArtist();
-      });
+      this.artistService
+        .saveArtist(this.artist)
+        .subscribe((res: DbItem<Artist>[]) => {
+          this.dbItems = res;
+        });
     } else {
-      this.artistService.updateArtist(this.artist).subscribe(() => {
-        this.dbItems$ = this.artistService.getArtist();
-      });
+      this.artistService
+        .updateArtist(this.artist)
+        .subscribe((res: DbItem<Artist>[]) => {
+          this.dbItems = res;
+        });
     }
 
     this.resetForm();
@@ -135,9 +143,11 @@ export class ArtistsComponent implements OnInit, OnDestroy {
       this.nameInput.nativeElement.select();
     } else if (dbItem.action === Action.DELETE) {
       this.artistForm.reset();
-      this.artistService.deleteArtist(dbItem.item.artistId).subscribe(() => {
-        this.dbItems$ = this.artistService.getArtist();
-      });
+      this.artistService
+        .deleteArtist(dbItem.item.artistId)
+        .subscribe((res: DbItem<Artist>[]) => {
+          this.dbItems = res;
+        });
     }
   }
 }

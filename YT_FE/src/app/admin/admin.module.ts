@@ -7,6 +7,7 @@ import { GenresComponent } from './components/genres/genres.component';
 import { DbItemsListComponent } from './components/db-items-list/db-items-list.component';
 import { DbItemComponent } from './components/db-item/db-item.component';
 import { ArtistsComponent } from './components/artists/artists.component';
+import { SongsComponent } from './components/songs/songs.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ArtistsComponent } from './components/artists/artists.component';
     GenresComponent,
     DbItemsListComponent,
     DbItemComponent,
-    ArtistsComponent
+    ArtistsComponent,
+    SongsComponent
   ],
   imports: [AdminRoutingModule, SharedModule]
 })

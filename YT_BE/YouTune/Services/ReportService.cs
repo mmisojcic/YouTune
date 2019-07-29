@@ -119,5 +119,20 @@ namespace YouTune.Services
                 return null;
             }
         }
+
+        Task<IEnumerable<ReportDTO>> IYouTuneRepository<Report, ReportDTO>.Delete(long _id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<ReportDTO>> IYouTuneRepository<Report, ReportDTO>.Save(Report _object)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<ReportDTO>> IYouTuneRepository<Report, ReportDTO>.Update(Report _object, long _id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

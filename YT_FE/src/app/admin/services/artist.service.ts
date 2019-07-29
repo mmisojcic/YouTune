@@ -6,8 +6,8 @@ import * as server from '../../shared/config/api.config';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, finalize } from 'rxjs/operators';
 import { ArtistConverter } from 'src/app/converters/artist.converter';
-import { Artist } from 'src/app/models/artist.model';
 import { ArtistDTO } from 'src/app/DTOs/artist.dto';
+import { Artist } from 'src/app/models/artist.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +21,13 @@ export class ArtistService {
     private spinnerService: SpinnerService
   ) {}
 
-  // get all Artist
-  getArtist(): Observable<DbItem<Artist>[]> {
+  // get all Artists
+  getArtists(): Observable<DbItem<Artist>[]> {
     this.spinnerService.spinnerShow();
     return this.http.get(this.url).pipe(
       map((res: ArtistDTO[]) => {
-        return this.map(res);
+        console.log(res);
+        return this.mapList(res);
       }),
       catchError(err => {
         console.log('ERROR:::', err);
@@ -40,11 +41,11 @@ export class ArtistService {
     );
   }
 
-  saveArtist(model: Artist): Observable<Artist> {
+  saveArtist(model: Artist): Observable<DbItem<Artist>[]> {
     const dto = this.artistConverter.modelToDTO(model);
     return this.http.post(this.url, dto).pipe(
-      map((res: ArtistDTO) => {
-        return this.artistConverter.DTOtoModel(res);
+      map((res: ArtistDTO[]) => {
+        return this.mapList(res);
       }),
       catchError(err => {
         console.log('ERROR: ', err);
@@ -56,11 +57,11 @@ export class ArtistService {
     );
   }
 
-  updateArtist(model: Artist): Observable<Artist> {
+  updateArtist(model: Artist): Observable<DbItem<Artist>[]> {
     const dto = this.artistConverter.modelToDTO(model);
     return this.http.put(this.url + '/' + model.artistId, dto).pipe(
-      map((res: ArtistDTO) => {
-        return this.artistConverter.DTOtoModel(res);
+      map((res: ArtistDTO[]) => {
+        return this.mapList(res);
       }),
       catchError(err => {
         console.log('ERROR: ', err);
@@ -72,8 +73,11 @@ export class ArtistService {
     );
   }
 
-  deleteArtist(id: number) {
+  deleteArtist(id: number): Observable<DbItem<Artist>[]> {
     return this.http.delete(this.url + '/' + id).pipe(
+      map((res: ArtistDTO[]) => {
+        return this.mapList(res);
+      }),
       catchError(err => {
         console.log('ERROR: ', err);
         return throwError(err.statusText);
@@ -84,12 +88,12 @@ export class ArtistService {
     );
   }
 
-  deleteArtists(artist: Artist[]) {
+  deleteArtists(artist: Artist[]): Observable<DbItem<Artist>[]> {
     const dto = this.artistConverter.modelToDTOList(artist);
 
     return this.http.post(this.url + '/deleteList', dto).pipe(
       map((res: ArtistDTO[]) => {
-        return this.map(res);
+        return this.mapList(res);
       }),
       catchError(err => {
         console.log('ERROR: ', err);
@@ -101,7 +105,7 @@ export class ArtistService {
     );
   }
 
-  map(res: ArtistDTO[]) {
+  mapList(res: ArtistDTO[]) {
     const artist = this.artistConverter.DTOtoModelList(res);
     const dbItems: DbItem<Artist>[] = [];
     artist.forEach(a => {

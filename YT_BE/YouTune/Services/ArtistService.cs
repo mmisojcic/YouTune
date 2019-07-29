@@ -23,7 +23,7 @@ namespace YouTune.Services
 
 
         // DELETE
-        public async Task<Artist> Delete(long _id)
+        public async Task<IEnumerable<ArtistDTO>> Delete(long _id)
         {
             var artistData = await _context.Artists.FindAsync(_id);
 
@@ -36,7 +36,7 @@ namespace YouTune.Services
                 _context.Artists.Remove(artistData);
                 await _context.SaveChangesAsync();
 
-                return artistData;
+                return GetAll();
             }
         }
 
@@ -99,17 +99,17 @@ namespace YouTune.Services
         }
 
         // SAVE
-        public async Task<ArtistDTO> Save(Artist _object)
+        public async Task<IEnumerable<ArtistDTO>> Save(Artist _object)
         {
             _context.Artists.Add(_object);
             await _context.SaveChangesAsync();
 
-            return await GetOne(_object.ArtistId);
+            return GetAll();
         }
 
 
         // UPDATE
-        public async Task<ArtistDTO> Update(Artist _object, long _id)
+        public async Task<IEnumerable<ArtistDTO>> Update(Artist _object, long _id)
         {
             if (_id != _object.ArtistId)
             {
@@ -121,7 +121,7 @@ namespace YouTune.Services
             try
             {
                 await _context.SaveChangesAsync();
-                return await GetOne(_id);
+                return GetAll();
             }
             catch (DbUpdateConcurrencyException)
             {

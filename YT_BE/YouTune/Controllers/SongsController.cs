@@ -59,9 +59,9 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var songDTO = await _songService.Update(song, id);
+            var songsDTO = await _songService.Update(song, id);
 
-            return Ok(songDTO);
+            return Ok(songsDTO);
         }
 
         // POST: api/Songs
@@ -73,27 +73,12 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var songDTO = await _songService.Save(song);
-
-            return Ok(songDTO);
-        }
-
-        ///////////////////////////////
-        // POST: api/Songs
-        [HttpPost("{testSave}")]
-        public async Task<IActionResult> TestPostSong([FromBody] Song song)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var songsDTO = await _songService.TestSave(song);
+            var songsDTO = await _songService.Save(song);
 
             return Ok(songsDTO);
         }
-        ////////////////////////////////
 
+       
 
         // DELETE: api/Songs/5
         [HttpDelete("{id}")]
@@ -104,15 +89,15 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var song = await _songService.Delete(id);
+            var songsDTO = await _songService.Delete(id);
 
-            if (song == null)
+            if (songsDTO == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok();
+                return Ok(songsDTO);
             }
         }
 

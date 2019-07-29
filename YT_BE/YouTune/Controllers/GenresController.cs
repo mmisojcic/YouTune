@@ -59,9 +59,9 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var genreDTO = await _genreService.Update(genre, id);
+            var genresDTO = await  _genreService.Update(genre, id);
 
-            return Ok(genreDTO);
+            return Ok(genresDTO);
         }
 
         // POST: api/Genres
@@ -73,9 +73,9 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var genreDTO = await _genreService.Save(genre);
+            var genresDTO = await _genreService.Save(genre);
 
-            return Ok(genreDTO);
+            return Ok(genresDTO);
         }
 
         // DELETE: api/Genres/5
@@ -87,15 +87,15 @@ namespace YouTune.Controllers
                 return BadRequest(ModelState);
             }
 
-            var genre = await _genreService.Delete(id);
+            var genres = await _genreService.Delete(id);
 
-            if (genre == null)
+            if (genres == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok();
+                return Ok(genres);
             }
         }
 

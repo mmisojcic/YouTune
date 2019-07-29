@@ -1,4 +1,3 @@
-import { Artist } from 'src/app/models/artist.model';
 import { Action } from './../../models/db-item.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { DbItem } from '../../models/db-item.model';
@@ -6,6 +5,7 @@ import { Genre } from 'src/app/models/genre.model';
 import { DbItemsService } from '../../services/db-items.service';
 import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
 import { Song } from 'src/app/models/song.model';
+import { Artist } from 'src/app/models/artist.model';
 
 @Component({
   selector: 'yt-db-item',

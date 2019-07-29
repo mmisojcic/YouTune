@@ -1,4 +1,4 @@
-import { ArtistDTO } from './../DTOs/artist.dto';
+import { ArtistDTO } from '../DTOs/artist.dto';
 import { BaseConverter } from './base-converter.converter';
 import { Artist } from '../models/artist.model';
 

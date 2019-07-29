@@ -1,4 +1,3 @@
-import { Artist } from 'src/app/models/artist.model';
 import { DialogAction } from '../../../shared/models/confirm-dialog-actions.enum';
 import { ConfirmDialogComponent } from './../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DbItem } from './../../models/db-item.model';
@@ -14,10 +13,10 @@ import { Genre } from 'src/app/models/genre.model';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
 import { DbItemsService } from '../../services/db-items.service';
-import { Login } from 'src/app/models/login.model';
 import { Subscription } from 'rxjs';
 import { Song } from 'src/app/models/song.model';
 import { MatDialog } from '@angular/material';
+import { Artist } from 'src/app/models/artist.model';
 
 @Component({
   selector: 'yt-db-items-list',

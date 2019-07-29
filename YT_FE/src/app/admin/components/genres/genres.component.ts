@@ -47,7 +47,7 @@ export class GenresComponent implements OnInit, OnDestroy {
 
   genre: Genre;
   genreForm: FormGroup;
-  dbItems$: Observable<DbItem<Genre>[]>;
+  dbItems: DbItem<Genre>[];
   genreSubscription: Subscription;
   genresSubscription: Subscription;
 
@@ -59,7 +59,9 @@ export class GenresComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.dbItems$ = this.genreService.getGenres();
+    this.genreService.getGenres().subscribe((res: DbItem<Genre>[]) => {
+      this.dbItems = res;
+    });
 
     // Returns object that will represent form and its controls to the form local var
     this.genreForm = new FormGroup({
@@ -87,9 +89,11 @@ export class GenresComponent implements OnInit, OnDestroy {
           modelList = this.dbItemsService.dbItemsToModelList<Genre>(
             markedDbItems
           );
-          this.genreService.deleteGenres(modelList).subscribe(() => {
-            this.dbItems$ = this.genreService.getGenres();
-          });
+          this.genreService
+            .deleteGenres(modelList)
+            .subscribe((res: DbItem<Genre>[]) => {
+              this.dbItems = res;
+            });
         } else {
           console.log('nije');
         }
@@ -109,13 +113,17 @@ export class GenresComponent implements OnInit, OnDestroy {
     );
 
     if (this.genreForm.controls['id'].value === null) {
-      this.genreService.saveGenre(this.genre).subscribe(() => {
-        this.dbItems$ = this.genreService.getGenres();
-      });
+      this.genreService
+        .saveGenre(this.genre)
+        .subscribe((res: DbItem<Genre>[]) => {
+          this.dbItems = res;
+        });
     } else {
-      this.genreService.updateGenre(this.genre).subscribe(() => {
-        this.dbItems$ = this.genreService.getGenres();
-      });
+      this.genreService
+        .updateGenre(this.genre)
+        .subscribe((res: DbItem<Genre>[]) => {
+          this.dbItems = res;
+        });
     }
 
     this.resetForm();
@@ -135,9 +143,11 @@ export class GenresComponent implements OnInit, OnDestroy {
       this.nameInput.nativeElement.select();
     } else if (dbItem.action === Action.DELETE) {
       this.genreForm.reset();
-      this.genreService.deleteGenre(dbItem.item.genreId).subscribe(() => {
-        this.dbItems$ = this.genreService.getGenres();
-      });
+      this.genreService
+        .deleteGenre(dbItem.item.genreId)
+        .subscribe((res: DbItem<Genre>[]) => {
+          this.dbItems = res;
+        });
     }
   }
 }

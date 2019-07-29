@@ -23,7 +23,7 @@ namespace YouTune.Services
         }
 
         // DELETE
-        public async Task<Song> Delete(long _id)
+        public async Task<IEnumerable<SongDTO>> Delete(long _id)
         {
             var songData = await _context.Songs.FindAsync(_id);
 
@@ -36,7 +36,7 @@ namespace YouTune.Services
                 _context.Songs.Remove(songData);
                 await _context.SaveChangesAsync();
 
-                return songData;
+                return GetAll();
             }
         }
 
@@ -52,7 +52,7 @@ namespace YouTune.Services
             var songsData = _context.Songs
                 .Include(s => s.Genre)
                 .Include(s => s.Report)
-                .ToList();
+                .AsNoTracking();
             var songsDTO = new List<SongDTO>();
 
             foreach (Song s in songsData)
@@ -93,45 +93,35 @@ namespace YouTune.Services
         }
 
         // SAVE
-        public async Task<SongDTO> Save(Song _object)
+        public async Task<IEnumerable<SongDTO>> Save(Song _object)
         {
             _context.Songs.Add(_object);
             await _context.SaveChangesAsync();
 
-            return await GetOne(_object.SongId);
-        }
-
-        ////////////////////        
-        public async Task<IEnumerable<SongDTO>> TestSave(Song _object)
-        {
-            var list = new List<SongDTO>();
-            _context.Songs.Add(_object);
-            var isSaved = await _context.SaveChangesAsync();
-
-
             return GetAll();
         }
-        //////////////////////////////////
+
 
         // UPDATE
-        public async Task<SongDTO> Update(Song _object, long _id)
+        public async Task<IEnumerable<SongDTO>> Update(Song _object, long _id)
         {
             if (_id != _object.SongId)
             {
                 return null;
             }
 
-            _context.Entry(_object).State = EntityState.Modified;
+            _context.Songs.Update(_object);
 
             try
             {
                 await _context.SaveChangesAsync();
-                return await GetOne(_id);
+                return GetAll();
             }
             catch (DbUpdateConcurrencyException)
             {
                 return null;
             }
         }
+
     }
 }

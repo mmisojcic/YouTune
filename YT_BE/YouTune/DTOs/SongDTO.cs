@@ -20,6 +20,6 @@ namespace YouTune.DTOs
         public ReportInSongDTO Report { get; set; }
 
         public ICollection<PlaylistSong> PlaylistsSongs { get; set; }
-        public ICollection<ArtistSong> ArtistsSongs { get; set; }
+        public ICollection<ArtistsSongsDTO> ArtistsSongs { get; set; }
     }
 }

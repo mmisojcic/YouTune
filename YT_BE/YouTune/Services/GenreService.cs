@@ -22,7 +22,7 @@ namespace YouTune.Services
         }
 
         // DELETE
-        public async Task<Genre> Delete(long _id)
+        public async Task<IEnumerable<GenreDTO>> Delete(long _id)
         {
             var genreData = await _context.Genres.FindAsync(_id);
 
@@ -35,7 +35,7 @@ namespace YouTune.Services
                 _context.Genres.Remove(genreData);
                 await _context.SaveChangesAsync();
 
-                return genreData;
+                return GetAll();
             }
         }
 
@@ -55,7 +55,7 @@ namespace YouTune.Services
         // GET ALL
         public IEnumerable<GenreDTO> GetAll()
         {
-            var genresData = _context.Genres.ToList();
+            var genresData = _context.Genres.AsNoTracking();
             var genresDTO = new List<GenreDTO>();
 
             foreach (Genre g in genresData)
@@ -89,16 +89,17 @@ namespace YouTune.Services
         }
 
         // SAVE
-        public async Task<GenreDTO> Save(Genre _object)
+        public async Task<IEnumerable<GenreDTO>> Save(Genre _object)
         {
             _context.Genres.Add(_object);
             await _context.SaveChangesAsync();
 
-            return await GetOne(_object.GenreId);
+            return GetAll();
         }
 
+
         // UPDATE
-        public async Task<GenreDTO> Update(Genre _object, long _id)
+        public async Task<IEnumerable<GenreDTO>> Update(Genre _object, long _id)
         {
             if (_id != _object.GenreId)
             {
@@ -110,7 +111,7 @@ namespace YouTune.Services
             try
             {
                 await _context.SaveChangesAsync();
-                return await GetOne(_id);
+                return GetAll();
             }
             catch (DbUpdateConcurrencyException)
             {

@@ -111,7 +111,7 @@ namespace YouTune.Services
                 return null;
             }
 
-            _context.Entry(_object).State = EntityState.Modified;
+            _context.Playlists.Update(_object);
 
             try
             {
@@ -122,6 +122,21 @@ namespace YouTune.Services
             {
                 return null;
             }
+        }
+
+        Task<IEnumerable<PlaylistDTO>> IYouTuneRepository<Playlist, PlaylistDTO>.Delete(long _id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<PlaylistDTO>> IYouTuneRepository<Playlist, PlaylistDTO>.Save(Playlist _object)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<PlaylistDTO>> IYouTuneRepository<Playlist, PlaylistDTO>.Update(Playlist _object, long _id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

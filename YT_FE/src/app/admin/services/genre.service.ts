@@ -26,7 +26,7 @@ export class GenreService {
     this.spinnerService.spinnerShow();
     return this.http.get(this.url).pipe(
       map((res: GenreDTO[]) => {
-        return this.map(res);
+        return this.mapList(res);
       }),
       catchError(err => {
         console.log('ERROR:::', err);
@@ -40,11 +40,11 @@ export class GenreService {
     );
   }
 
-  saveGenre(model: Genre): Observable<Genre> {
+  saveGenre(model: Genre): Observable<DbItem<Genre>[]> {
     const dto = this.genreConverter.modelToDTO(model);
     return this.http.post(this.url, dto).pipe(
-      map((res: GenreDTO) => {
-        return this.genreConverter.DTOtoModel(res);
+      map((res: GenreDTO[]) => {
+        return this.mapList(res);
       }),
       catchError(err => {
         console.log('ERROR: ', err);
@@ -56,11 +56,11 @@ export class GenreService {
     );
   }
 
-  updateGenre(model: Genre): Observable<Genre> {
+  updateGenre(model: Genre): Observable<DbItem<Genre>[]> {
     const dto = this.genreConverter.modelToDTO(model);
     return this.http.put(this.url + '/' + model.genreId, dto).pipe(
-      map((res: GenreDTO) => {
-        return this.genreConverter.DTOtoModel(res);
+      map((res: GenreDTO[]) => {
+        return this.mapList(res);
       }),
       catchError(err => {
         console.log('ERROR: ', err);
@@ -74,6 +74,9 @@ export class GenreService {
 
   deleteGenre(id: number) {
     return this.http.delete(this.url + '/' + id).pipe(
+      map((res: GenreDTO[]) => {
+        return this.mapList(res);
+      }),
       catchError(err => {
         console.log('ERROR: ', err);
         return throwError(err.statusText);
@@ -89,7 +92,7 @@ export class GenreService {
 
     return this.http.post(this.url + '/deleteList', dto).pipe(
       map((res: GenreDTO[]) => {
-        return this.map(res);
+        return this.mapList(res);
       }),
       catchError(err => {
         console.log('ERROR: ', err);
@@ -101,7 +104,7 @@ export class GenreService {
     );
   }
 
-  map(res: GenreDTO[]) {
+  mapList(res: GenreDTO[]) {
     const genres = this.genreConverter.DTOtoModelList(res);
     const dbItems: DbItem<Genre>[] = [];
     genres.forEach(g => {
