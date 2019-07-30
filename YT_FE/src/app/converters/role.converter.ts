@@ -11,6 +11,11 @@ export class RoleConverter extends BaseConverter<Role, RoleDTO> {
     };
   }
   public DTOtoModel(dto: RoleDTO): Role {
-    return new Role(dto.roleId, dto.name);
+    let model: Role = new Role();
+
+    model.roleId = dto.roleId;
+    model.name = dto.name;
+
+    return model;
   }
 }

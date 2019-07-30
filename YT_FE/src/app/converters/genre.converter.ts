@@ -12,7 +12,9 @@ export class GenreConverter extends BaseConverter<Genre, GenreDTO> {
     return dto;
   }
   public DTOtoModel(dto: GenreDTO): Genre {
-    return new Genre(dto.genreId, dto.name);
+    let model: Genre = new Genre();
+    (model.genreId = dto.genreId), (model.name = dto.name);
+    return model;
   }
 
   public DTOtoModelList(dto: GenreDTO[]): Genre[] {

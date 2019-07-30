@@ -10,6 +10,11 @@ export class LoginConverter extends BaseConverter<Login, LoginDTO> {
     };
   }
   public DTOtoModel(dto: LoginDTO): Login {
-    return new Login(dto.username, dto.password);
+    let model: Login = new Login();
+
+    model.username = dto.username;
+    model.password = dto.password;
+
+    return model;
   }
 }

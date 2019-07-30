@@ -1,5 +1,6 @@
-import { ArtistDTO } from 'src/app/DTOs/songless-artist.dto';
+import { PlaylistDTO } from './playlist.dto';
 import { GenreDTO } from './genre.dto';
+import { ArtistDTO } from './artist.dto';
 export interface SongDTO {
   songId?: number;
   title?: string;
@@ -8,6 +9,6 @@ export interface SongDTO {
   genre?: GenreDTO;
   artists?: ArtistDTO[];
   report?: null;
-  playlistsSongs?: any[];
+  playlistsSongs?: PlaylistDTO[];
   artistsSongs?: ArtistDTO[];
 }

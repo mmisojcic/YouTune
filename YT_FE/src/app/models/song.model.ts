@@ -1,3 +1,4 @@
+import { Playlist } from './playlists.model';
 import { Genre } from './genre.model';
 import { Artist } from './artist.model';
 export class Song {
@@ -9,7 +10,7 @@ export class Song {
     public genre?: Genre,
     public artists?: Artist[],
     public report?: null,
-    public playlistsSongs?: any[],
+    public playlistsSongs?: Playlist[],
     public artistsSongs?: Artist[]
   ) {}
 }

@@ -12,6 +12,6 @@ export class RegisterConverter extends BaseConverter<Register, RegisterDTO> {
   }
 
   DTOtoModel(dto: RegisterDTO): Register {
-    return new Register(dto.username, dto.password, dto.password);
+    return new Register(dto.username, dto.password, dto.email);
   }
 }

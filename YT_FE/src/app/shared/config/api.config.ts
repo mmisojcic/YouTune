@@ -17,6 +17,9 @@ export const api = {
   artists: {
     base: '/Artists'
   },
+  songs: {
+    base: '/Songs'
+  },
   fullUrl(endPoint: string, id?: number): string {
     let result;
     id

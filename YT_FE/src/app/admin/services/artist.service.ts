@@ -5,9 +5,9 @@ import { Injectable } from '@angular/core';
 import * as server from '../../shared/config/api.config';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, finalize } from 'rxjs/operators';
-import { ArtistConverter } from 'src/app/converters/artist.converter';
 import { ArtistDTO } from 'src/app/DTOs/artist.dto';
 import { Artist } from 'src/app/models/artist.model';
+import { ArtistConverter } from 'src/app/converters/artist.converter';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,24 @@ export class ArtistService {
     private http: HttpClient,
     private spinnerService: SpinnerService
   ) {}
+
+  getArtistsClean(): Observable<Artist[]> {
+    this.spinnerService.spinnerShow();
+    return this.http.get(this.url).pipe(
+      map((res: ArtistDTO[]) => {
+        return this.artistConverter.DTOtoModelList(res);
+      }),
+      catchError(err => {
+        console.log('ERROR:::', err);
+        return throwError(err.statusText);
+      }),
+      finalize(() => {
+        // hide spinner
+        this.spinnerService.spinnerHide();
+        console.log('ALL GENRES LOADED:::');
+      })
+    );
+  }
 
   // get all Artists
   getArtists(): Observable<DbItem<Artist>[]> {

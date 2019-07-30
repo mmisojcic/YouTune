@@ -21,6 +21,24 @@ export class GenreService {
     private spinnerService: SpinnerService
   ) {}
 
+  getGenresClean(): Observable<Genre[]> {
+    this.spinnerService.spinnerShow();
+    return this.http.get(this.url).pipe(
+      map((res: GenreDTO[]) => {
+        return this.genreConverter.DTOtoModelList(res);
+      }),
+      catchError(err => {
+        console.log('ERROR:::', err);
+        return throwError(err.statusText);
+      }),
+      finalize(() => {
+        // hide spinner
+        this.spinnerService.spinnerHide();
+        console.log('ALL GENRES LOADED:::');
+      })
+    );
+  }
+
   // get all genres
   getGenres(): Observable<DbItem<Genre>[]> {
     this.spinnerService.spinnerShow();

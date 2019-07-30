@@ -12,7 +12,13 @@ export class PlaylistConverter extends BaseConverter<Playlist, PlaylistDTO> {
   }
 
   public DTOtoModel(dto: PlaylistDTO): Playlist {
-    return new Playlist(dto.playlistId, dto.title, dto.userId);
+    let model: Playlist = new Playlist();
+
+    model.playlistId = dto.playlistId;
+    model.title = dto.title;
+    model.userId = dto.userId;
+
+    return model;
   }
 
   public DTOtoModelList(dto: PlaylistDTO[]): Playlist[] {

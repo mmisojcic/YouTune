@@ -9,8 +9,8 @@ import { Artist } from 'src/app/models/artist.model';
   providedIn: 'root'
 })
 export class DbItemsService {
-  dbItemEmitter: Subject<DbItem<Genre | Artist>> = new Subject();
-  dbItemsEmitter: Subject<DbItem<Genre | Artist>[]> = new Subject();
+  dbItemEmitter: Subject<DbItem<Genre | Artist | Song>> = new Subject();
+  dbItemsEmitter: Subject<DbItem<Genre | Artist | Song>[]> = new Subject();
 
   markedDbItems: Array<DbItem<Genre | Artist>> = new Array();
 
