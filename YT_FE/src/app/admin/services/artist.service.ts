@@ -34,7 +34,7 @@ export class ArtistService {
       finalize(() => {
         // hide spinner
         this.spinnerService.spinnerHide();
-        console.log('ALL GENRES LOADED:::');
+        console.log('ALL ARTISTS LOADED:::');
       })
     );
   }

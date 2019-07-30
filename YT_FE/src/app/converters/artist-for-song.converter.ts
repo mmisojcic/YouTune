@@ -1,17 +1,18 @@
 import { ArtistDTO } from '../DTOs/artist.dto';
 import { BaseConverter } from './base-converter.converter';
 import { Artist } from '../models/artist.model';
-import { SongConverter } from './song.converter';
 import { SongsForArtistConverter } from './songs-for-artist.converter';
 
-export class ArtistConverter extends BaseConverter<Artist, ArtistDTO> {
+export class ArtistForSongConverter extends BaseConverter<Artist, ArtistDTO> {
   songsForArtistConverter: SongsForArtistConverter = new SongsForArtistConverter();
 
   modelToDTO(model: Artist): ArtistDTO {
     let dto;
+
     model.artistId === null
       ? (dto = { name: model.name })
       : (dto = { artistId: model.artistId, name: model.name });
+
     return dto;
   }
 
@@ -20,10 +21,6 @@ export class ArtistConverter extends BaseConverter<Artist, ArtistDTO> {
 
     model.artistId = dto.artistId;
     model.name = dto.name;
-    model.songs =
-      dto.songs === []
-        ? []
-        : this.songsForArtistConverter.DTOtoModelList(dto.songs);
 
     return model;
   }
@@ -39,16 +36,15 @@ export class ArtistConverter extends BaseConverter<Artist, ArtistDTO> {
   }
 
   public modelToDTOList(model: Artist[]): ArtistDTO[] {
-    const modelList: ArtistDTO[] = [];
+    const dtoList: ArtistDTO[] = [];
 
     model.forEach(m => {
-      modelList.push({
+      dtoList.push({
         artistId: m.artistId,
-        name: m.name,
-        songs: m.songs.length > 0 ? [] : []
+        name: m.name
       });
     });
 
-    return modelList;
+    return dtoList;
   }
 }

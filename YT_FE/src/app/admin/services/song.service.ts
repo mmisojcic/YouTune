@@ -16,7 +16,7 @@ export class SongService {
 
   constructor(private http: HttpClient) {}
 
-  // get all genres
+  // get all songs
   getSongs(): Observable<DbItem<Song>[]> {
     return this.http.get(this.url).pipe(
       map((res: SongDTO[]) => {

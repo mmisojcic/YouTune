@@ -1,6 +1,12 @@
 import { GenreService } from './../../services/genre.service';
 import { Song } from 'src/app/models/song.model';
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  OnDestroy
+} from '@angular/core';
 import { ErrorStateMatcher } from '@angular/material';
 import {
   FormControl,
@@ -37,7 +43,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./songs.component.scss'],
   animations: [ngIfAnimation]
 })
-export class SongsComponent implements OnInit {
+export class SongsComponent implements OnInit, OnDestroy {
   matcher = new MyErrorStateMatcher();
 
   song: Song;
@@ -119,11 +125,11 @@ export class SongsComponent implements OnInit {
 
   onSave() {
     this.song = new Song();
-    (this.song.songId = this.songForm.controls['id'].value),
-      (this.song.title = this.songForm.controls['title'].value.trim()),
-      (this.song.youtubeID = this.songForm.controls['youtubeID'].value.trim()),
-      (this.song.genreId = this.songForm.controls['genres'].value.genreId),
-      (this.song.artistsSongs = this.songForm.controls['artists'].value);
+    this.song.songId = this.songForm.controls['id'].value;
+    this.song.title = this.songForm.controls['title'].value.trim();
+    this.song.youtubeID = this.songForm.controls['youtubeID'].value.trim();
+    this.song.genreId = this.songForm.controls['genres'].value.genreId;
+    this.song.artistsSongs = this.songForm.controls['artists'].value;
 
     console.log(this.song, 'sssssss');
 

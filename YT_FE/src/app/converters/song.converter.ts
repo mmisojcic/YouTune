@@ -1,11 +1,11 @@
 import { Song } from './../models/song.model';
 import { BaseConverter } from './base-converter.converter';
 import { SongDTO } from '../DTOs/song.dto';
-import { ArtistConverter } from './artist.converter';
 import { GenreConverter } from './genre.converter';
+import { ArtistForSongConverter } from './artist-for-song.converter';
 
 export class SongConverter extends BaseConverter<Song, SongDTO> {
-  artistConverter: ArtistConverter = new ArtistConverter();
+  artistForSongConverter: ArtistForSongConverter = new ArtistForSongConverter();
   genreConverter: GenreConverter = new GenreConverter();
 
   public modelToDTO(model: Song): SongDTO {
@@ -21,26 +21,28 @@ export class SongConverter extends BaseConverter<Song, SongDTO> {
       artistsSongs:
         model.artistsSongs === []
           ? []
-          : this.artistConverter.modelToDTOList(model.artists)
+          : this.artistForSongConverter.modelToDTOList(model.artistsSongs)
     };
   }
 
   public DTOtoModel(dto: SongDTO): Song {
-    let model: Song = new Song();
+    const model: Song = new Song();
 
-    (model.songId = dto.songId),
-      (model.title = dto.title),
-      (model.youtubeID = dto.youtubeID),
-      (model.genre = this.genreConverter.DTOtoModel(dto.genre)),
-      (model.artists = this.artistConverter.DTOtoModelList(dto.artists)),
-      (model.report = dto.report),
-      (model.artistsSongs = dto.artistsSongs);
+    model.songId = dto.songId;
+    model.title = dto.title;
+    model.youtubeID = dto.youtubeID;
+    model.genre = this.genreConverter.DTOtoModel(dto.genre);
+    model.artists = this.artistForSongConverter.DTOtoModelList(dto.artists);
+    model.report = dto.report;
+    model.artistsSongs = this.artistForSongConverter.DTOtoModelList(
+      dto.artists
+    );
 
     return model;
   }
 
   DTOtoModelList(dto: SongDTO[]): Song[] {
-    let modelList: Song[] = [];
+    const modelList: Song[] = [];
 
     dto.forEach(d => {
       modelList.push(this.DTOtoModel(d));

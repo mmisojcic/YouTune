@@ -8,16 +8,31 @@ export class SongsForArtistConverter extends BaseConverter<Song, SongDTO> {
   }
 
   public DTOtoModel(dto: SongDTO): Song {
-    let model: Song = new Song();
+    const model: Song = new Song();
 
     model.songId = dto.songId;
-    (model.title = dto.title), (model.youtubeID = dto.youtubeID);
+    model.title = dto.title;
+    model.youtubeID = dto.youtubeID;
 
     return model;
   }
 
+  modelToDTOList(model: Song[]): SongDTO[] {
+    const dtoList: SongDTO[] = [];
+
+    model.forEach(m => {
+      dtoList.push({
+        songId: m.songId,
+        title: m.title
+      });
+    });
+
+    // ????
+    return dtoList;
+  }
+
   DTOtoModelList(dto: SongDTO[]): Song[] {
-    let modelList: Song[] = [];
+    const modelList: Song[] = [];
 
     dto.forEach(d => {
       modelList.push(this.DTOtoModel(d));
