@@ -9,20 +9,38 @@ export class SongConverter extends BaseConverter<Song, SongDTO> {
   genreConverter: GenreConverter = new GenreConverter();
 
   public modelToDTO(model: Song): SongDTO {
-    return {
-      songId: model.songId,
-      title: model.title,
-      youtubeID: model.youtubeID,
-      genreId: model.genreId,
-      genre: null,
-      artists: [],
-      report: null,
-      playlistsSongs: [],
-      artistsSongs:
-        model.artistsSongs === []
-          ? []
-          : this.artistForSongConverter.modelToDTOList(model.artistsSongs)
-    };
+    let dto: SongDTO;
+
+    model.songId === null
+      ? (dto = {
+          title: model.title,
+          youtubeID: model.youtubeID,
+          genreId: model.genreId,
+          genre: null,
+          artists: [],
+          report: null,
+          playlistsSongs: [],
+          artistsSongs:
+            model.artistsSongs === []
+              ? []
+              : this.artistForSongConverter.modelToDTOList(model.artistsSongs)
+        })
+      : (dto = {
+          songId: model.songId,
+          title: model.title,
+          youtubeID: model.youtubeID,
+          genreId: model.genreId,
+          genre: null,
+          artists: [],
+          report: null,
+          playlistsSongs: [],
+          artistsSongs:
+            model.artistsSongs === []
+              ? []
+              : this.artistForSongConverter.modelToDTOList(model.artistsSongs)
+        });
+
+    return dto;
   }
 
   public DTOtoModel(dto: SongDTO): Song {
@@ -34,9 +52,7 @@ export class SongConverter extends BaseConverter<Song, SongDTO> {
     model.genre = this.genreConverter.DTOtoModel(dto.genre);
     model.artists = this.artistForSongConverter.DTOtoModelList(dto.artists);
     model.report = dto.report;
-    model.artistsSongs = this.artistForSongConverter.DTOtoModelList(
-      dto.artists
-    );
+    model.artistsSongs = [];
 
     return model;
   }

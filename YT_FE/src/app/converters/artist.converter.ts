@@ -9,9 +9,11 @@ export class ArtistConverter extends BaseConverter<Artist, ArtistDTO> {
 
   modelToDTO(model: Artist): ArtistDTO {
     let dto;
+
     model.artistId === null
       ? (dto = { name: model.name })
       : (dto = { artistId: model.artistId, name: model.name });
+
     return dto;
   }
 

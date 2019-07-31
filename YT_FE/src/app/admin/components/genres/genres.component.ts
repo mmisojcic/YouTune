@@ -1,12 +1,6 @@
 import { Action } from './../../models/db-item.model';
 import { DbItemsService } from './../../services/db-items.service';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  NgForm,
-  FormGroupDirective
-} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GenreService } from './../../services/genre.service';
 import {
   Component,
@@ -16,26 +10,11 @@ import {
   ElementRef
 } from '@angular/core';
 import { DbItem } from '../../models/db-item.model';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
 import { Genre } from 'src/app/models/genre.model';
-import { ErrorStateMatcher } from '@angular/material/core';
 
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
 @Component({
   selector: 'yt-genres',
   templateUrl: './genres.component.html',
@@ -43,8 +22,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   animations: [domFaderAnimation, ngIfAnimation]
 })
 export class GenresComponent implements OnInit, OnDestroy {
-  matcher = new MyErrorStateMatcher();
-
   genre: Genre;
   genreForm: FormGroup;
   dbItems: DbItem<Genre>[];

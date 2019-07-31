@@ -6,14 +6,7 @@ import {
   ViewChild,
   ElementRef
 } from '@angular/core';
-import { ErrorStateMatcher } from '@angular/material/core';
-import {
-  FormControl,
-  FormGroupDirective,
-  NgForm,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
 import { Subscription } from 'rxjs';
@@ -22,20 +15,6 @@ import { ArtistService } from '../../services/artist.service';
 import { DbItemsService } from '../../services/db-items.service';
 import { Artist } from 'src/app/models/artist.model';
 
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
 @Component({
   selector: 'yt-artists',
   templateUrl: './artists.component.html',
@@ -43,8 +22,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   animations: [domFaderAnimation, ngIfAnimation]
 })
 export class ArtistsComponent implements OnInit, OnDestroy {
-  matcher = new MyErrorStateMatcher();
-
   artist: Artist;
   artistForm: FormGroup;
   dbItems: DbItem<Artist>[];

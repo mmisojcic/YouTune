@@ -7,14 +7,7 @@ import {
   ViewChild,
   OnDestroy
 } from '@angular/core';
-import { ErrorStateMatcher } from '@angular/material';
-import {
-  FormControl,
-  FormGroupDirective,
-  NgForm,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DbItem, Action } from '../../models/db-item.model';
 import { SongService } from '../../services/song.service';
@@ -24,19 +17,6 @@ import { Genre } from 'src/app/models/genre.model';
 import { Artist } from 'src/app/models/artist.model';
 import { ArtistService } from '../../services/artist.service';
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
 @Component({
   selector: 'yt-songs',
   templateUrl: './songs.component.html',
@@ -44,8 +24,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   animations: [ngIfAnimation]
 })
 export class SongsComponent implements OnInit, OnDestroy {
-  matcher = new MyErrorStateMatcher();
-
   song: Song;
   songForm: FormGroup;
   dbItems: DbItem<Song>[];
@@ -56,6 +34,9 @@ export class SongsComponent implements OnInit, OnDestroy {
 
   genres: Genre[] = [];
   artists: Artist[] = [];
+
+  selectedGenre: Genre = new Genre();
+  selectedArtists: Artist[] = [];
 
   constructor(
     private songService: SongService,
@@ -128,10 +109,8 @@ export class SongsComponent implements OnInit, OnDestroy {
     this.song.songId = this.songForm.controls['id'].value;
     this.song.title = this.songForm.controls['title'].value.trim();
     this.song.youtubeID = this.songForm.controls['youtubeID'].value.trim();
-    this.song.genreId = this.songForm.controls['genres'].value.genreId;
+    this.song.genreId = this.selectedGenre.genreId;
     this.song.artistsSongs = this.songForm.controls['artists'].value;
-
-    console.log(this.song, 'sssssss');
 
     if (this.songForm.controls['id'].value === null) {
       this.songService.saveSong(this.song).subscribe((res: DbItem<Song>[]) => {
@@ -156,8 +135,22 @@ export class SongsComponent implements OnInit, OnDestroy {
 
   dbItemAction(dbItem: DbItem<Song>) {
     if (dbItem.action === Action.EDIT) {
+      this.selectedGenre = this.genres.find(
+        g => g.genreId === dbItem.item.genre.genreId
+      );
+
+      console.log(this.genres);
+
       this.songForm.controls['id'].setValue(dbItem.item.songId);
       this.songForm.controls['title'].setValue(dbItem.item.title);
+      this.songForm.controls['youtubeID'].setValue(dbItem.item.youtubeID);
+      this.songForm.controls['genres'].setValue(this.selectedGenre.name);
+      // this.songForm.controls['artists'].setValue(dbItem.item.artists);
+
+      this.selectedArtists = dbItem.item.artists;
+
+      console.log(this.songForm.controls['genres'].value);
+
       this.titleInput.nativeElement.focus();
       this.titleInput.nativeElement.select();
     } else if (dbItem.action === Action.DELETE) {

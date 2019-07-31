@@ -50,13 +50,18 @@
 
       <div class="form-group">
         <mat-form-field>
-          <mat-select placeholder="Genres" formControlName="genres">
-            <mat-option *ngFor="let genre of genres" [value]="genre">
+          <mat-select
+            placeholder="Genres"
+            formControlName="genres"
+            [value]="selectedGenre.name"
+          >
+            <mat-option *ngFor="let genre of genres" [value]="genre.name">
               {{ genre.name }}
             </mat-option>
           </mat-select>
+
           <mat-error *ngIf="songForm.get('genres').hasError('required')"
-            >Please choose an genre</mat-error
+            >Please choose a genre</mat-error
           >
         </mat-form-field>
       </div>
@@ -79,7 +84,7 @@
                 }})
               </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let artist of artists" [value]="artist">{{
+            <mat-option *ngFor="let artist of artists" [value]="artist.name">{{
               artist.name
             }}</mat-option>
           </mat-select>
@@ -104,7 +109,7 @@
             type="button"
             mat-raised-button
             color="primary"
-            matTooltip="Add new genre"
+            matTooltip="Add new song"
             (click)="resetForm()"
           >
             New
