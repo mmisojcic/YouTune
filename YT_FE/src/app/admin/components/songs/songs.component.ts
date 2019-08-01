@@ -16,6 +16,7 @@ import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
 import { Genre } from 'src/app/models/genre.model';
 import { Artist } from 'src/app/models/artist.model';
 import { ArtistService } from '../../services/artist.service';
+import { getRenderedText } from '@angular/core/src/render3';
 
 @Component({
   selector: 'yt-songs',
@@ -37,6 +38,7 @@ export class SongsComponent implements OnInit, OnDestroy {
 
   selectedGenre: Genre = new Genre();
   selectedArtists: Artist[] = [];
+  displaySelectedArtists: string[] = [];
 
   constructor(
     private songService: SongService,
@@ -67,7 +69,7 @@ export class SongsComponent implements OnInit, OnDestroy {
       ]),
       youtubeID: new FormControl(null, [Validators.required]),
       genres: new FormControl(null, [Validators.required]),
-      artists: new FormControl(null, [Validators.required])
+      artists: new FormControl(null)
     });
 
     this.songSubscription = this.dbItemsService.dbItemEmitter.subscribe(
@@ -82,8 +84,8 @@ export class SongsComponent implements OnInit, OnDestroy {
 
         this.dbItemsService.checkItemType();
 
-        if (this.dbItemsService.IS_GENRES) {
-          console.log('genre je');
+        if (this.dbItemsService.IS_SONG) {
+          console.log('song je');
           modelList = this.dbItemsService.dbItemsToModelList<Song>(
             markedDbItems
           );
@@ -110,8 +112,9 @@ export class SongsComponent implements OnInit, OnDestroy {
     this.song.title = this.songForm.controls['title'].value.trim();
     this.song.youtubeID = this.songForm.controls['youtubeID'].value.trim();
     this.song.genreId = this.selectedGenre.genreId;
-    this.song.artistsSongs = this.songForm.controls['artists'].value;
+    this.song.artistsSongs = this.selectedArtists;
 
+    console.log(this.song.artistsSongs);
     if (this.songForm.controls['id'].value === null) {
       this.songService.saveSong(this.song).subscribe((res: DbItem<Song>[]) => {
         this.dbItems = res;
@@ -124,13 +127,15 @@ export class SongsComponent implements OnInit, OnDestroy {
         });
     }
 
-    this.resetForm();
+    this.songForm.reset();
     this.titleInput.nativeElement.focus();
     this.titleInput.nativeElement.select();
   }
 
-  resetForm() {
+  onNew() {
     this.songForm.reset();
+    this.titleInput.nativeElement.focus();
+    this.titleInput.nativeElement.select();
   }
 
   dbItemAction(dbItem: DbItem<Song>) {
@@ -139,17 +144,17 @@ export class SongsComponent implements OnInit, OnDestroy {
         g => g.genreId === dbItem.item.genre.genreId
       );
 
-      console.log(this.genres);
+      this.selectedArtists = dbItem.item.artists;
+      this.displaySelectedArtists = [];
+      dbItem.item.artists.forEach(a => {
+        this.displaySelectedArtists.push(a.name);
+      });
 
       this.songForm.controls['id'].setValue(dbItem.item.songId);
       this.songForm.controls['title'].setValue(dbItem.item.title);
       this.songForm.controls['youtubeID'].setValue(dbItem.item.youtubeID);
       this.songForm.controls['genres'].setValue(this.selectedGenre.name);
-      // this.songForm.controls['artists'].setValue(dbItem.item.artists);
-
-      this.selectedArtists = dbItem.item.artists;
-
-      console.log(this.songForm.controls['genres'].value);
+      this.songForm.controls['artists'].setValue(this.selectedArtists);
 
       this.titleInput.nativeElement.focus();
       this.titleInput.nativeElement.select();
@@ -163,11 +168,21 @@ export class SongsComponent implements OnInit, OnDestroy {
     }
   }
 
-  onOpenedChange() {
-    if (this.genres.length === 0) {
-      this.genreService.getGenresClean().subscribe((res: Genre[]) => {
-        this.genres = res;
+  onGenreSelectionChange(data: any) {
+    this.selectedGenre = this.genres.find(g => g.name === data.value);
+  }
+
+  onArtistsSelectionChange(data: any) {
+    this.selectedArtists = [];
+    this.artists.forEach(a => {
+      data.value.forEach(v => {
+        if (v === a.name) {
+          this.selectedArtists.push(a);
+        }
       });
-    }
+    });
+
+    console.log(this.selectedArtists);
+    this.displaySelectedArtists = data.value;
   }
 }

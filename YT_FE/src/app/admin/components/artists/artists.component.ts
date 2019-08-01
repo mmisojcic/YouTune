@@ -103,13 +103,15 @@ export class ArtistsComponent implements OnInit, OnDestroy {
         });
     }
 
-    this.resetForm();
+    this.artistForm.reset();
     this.nameInput.nativeElement.focus();
     this.nameInput.nativeElement.select();
   }
 
-  resetForm() {
+  onNew() {
     this.artistForm.reset();
+    this.nameInput.nativeElement.focus();
+    this.nameInput.nativeElement.select();
   }
 
   dbItemAction(dbItem: DbItem<Artist>) {

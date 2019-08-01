@@ -21,7 +21,6 @@
             type="text"
             placeholder="Title"
             formControlName="title"
-            [errorStateMatcher]="matcher"
           />
           <mat-error *ngIf="songForm.get('title').hasError('required')">
             Title is <strong>required</strong>
@@ -40,7 +39,6 @@
             type="text"
             placeholder="YouTube ID"
             formControlName="youtubeID"
-            [errorStateMatcher]="matcher"
           />
           <mat-error *ngIf="songForm.get('youtubeID').hasError('required')">
             YouTube ID is <strong>required</strong>
@@ -54,6 +52,7 @@
             placeholder="Genres"
             formControlName="genres"
             [value]="selectedGenre.name"
+            (selectionChange)="onGenreSelectionChange($event)"
           >
             <mat-option *ngFor="let genre of genres" [value]="genre.name">
               {{ genre.name }}
@@ -68,20 +67,21 @@
 
       <div class="form-group">
         <mat-form-field>
-          <mat-select placeholder="Artists" formControlName="artists" multiple>
+          <mat-select
+            placeholder="Artists"
+            formControlName="artists"
+            multiple
+            [value]="displaySelectedArtists"
+            (selectionChange)="onArtistsSelectionChange($event)"
+          >
             <mat-select-trigger>
-              {{
-                songForm.get('artists').value
-                  ? songForm.get('artists').value[0].name
-                  : ''
-              }}
-              <span *ngIf="songForm.get('artists').value?.length > 1">
-                (+{{ songForm.get('artists').value.length - 1 }}
-                {{
-                  songForm.get('artists').value?.length === 2
-                    ? 'other'
-                    : 'others'
-                }})
+              {{ displaySelectedArtists ? displaySelectedArtists[0] : '' }}
+              <span
+                *ngIf="songForm.get('artists').value?.length > 1"
+                class="selected-option-info"
+              >
+                (+{{ displaySelectedArtists.length - 1 }}
+                {{ displaySelectedArtists?.length === 2 ? 'other' : 'others' }})
               </span>
             </mat-select-trigger>
             <mat-option *ngFor="let artist of artists" [value]="artist.name">{{
@@ -110,7 +110,7 @@
             mat-raised-button
             color="primary"
             matTooltip="Add new song"
-            (click)="resetForm()"
+            (click)="onNew()"
           >
             New
           </button>

@@ -41,9 +41,14 @@ namespace YouTune.Services
         }
 
         // DELETE LIST
-        public Task<IEnumerable<SongDTO>> DeleteList(IEnumerable<Song> _object)
+        public async Task<IEnumerable<SongDTO>> DeleteList(IEnumerable<Song> _object)
         {
-            throw new NotImplementedException();
+            _context.Songs.RemoveRange(_object);
+            await _context.SaveChangesAsync();
+
+            var songsDTO = GetAll();
+
+            return songsDTO;
         }
 
         //GET ALL
@@ -109,6 +114,8 @@ namespace YouTune.Services
             {
                 return null;
             }
+
+
 
             _context.Songs.Update(_object);
 

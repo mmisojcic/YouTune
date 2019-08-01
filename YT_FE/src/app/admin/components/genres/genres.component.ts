@@ -103,13 +103,15 @@ export class GenresComponent implements OnInit, OnDestroy {
         });
     }
 
-    this.resetForm();
+    this.genreForm.reset();
     this.nameInput.nativeElement.focus();
     this.nameInput.nativeElement.select();
   }
 
-  resetForm() {
+  onNew() {
     this.genreForm.reset();
+    this.nameInput.nativeElement.focus();
+    this.nameInput.nativeElement.select();
   }
 
   dbItemAction(dbItem: DbItem<Genre>) {

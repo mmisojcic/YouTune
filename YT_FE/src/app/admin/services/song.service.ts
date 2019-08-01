@@ -35,6 +35,7 @@ export class SongService {
 
   saveSong(model: Song): Observable<DbItem<Song>[]> {
     const dto = this.songConverter.modelToDTO(model);
+    console.log(dto, '.....OVDE.....');
     return this.http.post(this.url, dto).pipe(
       map((res: SongDTO[]) => {
         return this.mapList(res);
@@ -51,7 +52,8 @@ export class SongService {
 
   updateSong(model: Song): Observable<DbItem<Song>[]> {
     const dto = this.songConverter.modelToDTO(model);
-    return this.http.put(this.url + '/' + model.songId, dto).pipe(
+
+    return this.http.put(this.url + '/' + dto.songId, dto).pipe(
       map((res: SongDTO[]) => {
         return this.mapList(res);
       }),

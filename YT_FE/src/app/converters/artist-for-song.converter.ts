@@ -39,10 +39,7 @@ export class ArtistForSongConverter extends BaseConverter<Artist, ArtistDTO> {
     const dtoList: ArtistDTO[] = [];
 
     model.forEach(m => {
-      dtoList.push({
-        artistId: m.artistId,
-        name: m.name
-      });
+      dtoList.push(this.modelToDTO(m));
     });
 
     return dtoList;

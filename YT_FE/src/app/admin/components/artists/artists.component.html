@@ -21,7 +21,6 @@
             type="text"
             placeholder="Name"
             formControlName="name"
-            [errorStateMatcher]="matcher"
           />
           <mat-error *ngIf="artistForm.get('name').hasError('required')">
             Name is <strong>required</strong>
@@ -48,7 +47,7 @@
             mat-raised-button
             color="primary"
             matTooltip="Add new artist"
-            (click)="resetForm()"
+            (click)="onNew()"
           >
             New
           </button>

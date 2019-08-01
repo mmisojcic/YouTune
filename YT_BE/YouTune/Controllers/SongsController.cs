@@ -101,6 +101,27 @@ namespace YouTune.Controllers
             }
         }
 
+
+        // DELETE: api/Songs/deleteList
+        [HttpPost("deleteList")]
+        public async Task<IActionResult> DeleteSongs([FromBody] IEnumerable<Song> songs)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var remainingSongs = await _songService.DeleteList(songs);
+
+            if (remainingSongs == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(remainingSongs);
+            }
+        }
         private bool SongExists(long id)
         {
             return _context.Songs.Any(e => e.SongId == id);
