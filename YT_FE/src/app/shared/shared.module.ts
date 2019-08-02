@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { AlphabeticalSortComponent } from './components/alphabetical-sort/alphabetical-sort.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { FilterComponent } from './components/filter/filter.component';
 @NgModule({
   declarations: [
     SpinnerToggleDirective,
@@ -16,7 +17,8 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     SecondsFormatPipe,
     SpinnerComponent,
     AlphabeticalSortComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    FilterComponent
   ],
   imports: [
     MaterialModule,

@@ -115,7 +115,28 @@ namespace YouTune.Services
                 return null;
             }
 
+            // create new  list where ArtistSong object for deletion will be stored
+            List<ArtistSong> forDeletion = new List<ArtistSong>();
 
+            // get all Artist for song sent by put request
+            var currentArtists = _context.ArtistsSongs.Where(ars => ars.SongId == _object.SongId).Select(ars => _mapper.Map<Artist, SonglessArtistDTO>(ars.Artist)).ToList();
+
+
+            // iterate through the list
+            foreach (var currentArtist in currentArtists)
+            {
+                // obtain temporary Artist matching current artist id and artist id from update object
+                var tmpArtist = _object.ArtistsSongs.FirstOrDefault(updateArtist => updateArtist.ArtistId == currentArtist.ArtistId);
+
+                if (tmpArtist != null)
+                    // if  there is such object, delete it from update object list of artists and leave only new ones
+                    _object.ArtistsSongs.Remove(tmpArtist);
+                else
+                    // if there is no such object, add it to the list of entities for deletion and later remove it
+                     forDeletion =  _context.ArtistsSongs.Where(ars => ars.SongId == _object.SongId && ars.ArtistId == currentArtist.ArtistId).ToList();
+                    // remove it from joined table
+                    _context.ArtistsSongs.RemoveRange(forDeletion);
+            }
 
             _context.Songs.Update(_object);
 

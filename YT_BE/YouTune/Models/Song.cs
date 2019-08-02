@@ -15,7 +15,7 @@ namespace YouTune.Models
         
         public long GenreId { get; set; }
         public Genre Genre { get; set; }
-        
+
         public Report Report { get; set; }
 
         public ICollection<PlaylistSong> PlaylistsSongs { get; set; }

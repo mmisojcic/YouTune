@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 import { Song } from 'src/app/models/song.model';
 import { MatDialog } from '@angular/material';
 import { Artist } from 'src/app/models/artist.model';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'yt-db-items-list',
@@ -26,9 +27,12 @@ import { Artist } from 'src/app/models/artist.model';
 })
 export class DbItemsListComponent implements OnInit, OnChanges {
   @Input() title: string;
-  @Input() dbItemsCached: DbItem<Genre | Artist>[] = [];
-  dbItems: DbItem<Genre | Artist>[] = [];
+  @Input() dbItemsCached: DbItem<Genre | Artist | Song>[] = [];
+
+  dbItems: DbItem<Genre | Artist | Song>[] = [];
+
   @ViewChild('filter') filter: ElementRef<HTMLInputElement>;
+
   checked = false;
   deleteButtonSubscription: Subscription;
   showDeleteButton = false;
@@ -59,7 +63,7 @@ export class DbItemsListComponent implements OnInit, OnChanges {
 
   onSearch(e: HTMLInputElement) {
     const inputRegExp = new RegExp(e.value.toLowerCase());
-    const tmpDbItems: DbItem<Genre | Artist>[] = [];
+    const tmpDbItems: DbItem<Genre | Artist | Song>[] = [];
 
     this.dbItemsCached.forEach(dbItem => {
       if (inputRegExp.test(dbItem.title.toLowerCase())) {
@@ -82,6 +86,7 @@ export class DbItemsListComponent implements OnInit, OnChanges {
   }
 
   onDelete() {
+    this.dbItemsService.checkItemType();
     this.dbItemsService.emitDbItems();
     this.checked = false;
     this.showDeleteButton = false;

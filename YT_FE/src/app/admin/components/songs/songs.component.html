@@ -73,6 +73,7 @@
             multiple
             [value]="displaySelectedArtists"
             (selectionChange)="onArtistsSelectionChange($event)"
+            (blur)="test()"
           >
             <mat-select-trigger>
               {{ displaySelectedArtists ? displaySelectedArtists[0] : '' }}
@@ -84,9 +85,18 @@
                 {{ displaySelectedArtists?.length === 2 ? 'other' : 'others' }})
               </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let artist of artists" [value]="artist.name">{{
-              artist.name
-            }}</mat-option>
+            <div class="search rounded">
+              <i class="fas fa-search search_icon"></i>
+              <input
+                placeholder="Filter"
+                class="rounded"
+                #filter
+                (input)="onSearch(filter)"
+              />
+            </div>
+            <mat-option *ngFor="let artist of artists" [value]="artist.name">
+              {{ artist.name }}
+            </mat-option>
           </mat-select>
           <mat-error *ngIf="songForm.get('artists').hasError('required')"
             >Please choose an artists</mat-error

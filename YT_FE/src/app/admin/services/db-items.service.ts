@@ -12,7 +12,7 @@ export class DbItemsService {
   dbItemEmitter: Subject<DbItem<Genre | Artist | Song>> = new Subject();
   dbItemsEmitter: Subject<DbItem<Genre | Artist | Song>[]> = new Subject();
 
-  markedDbItems: Array<DbItem<Genre | Artist>> = new Array();
+  markedDbItems: Array<DbItem<Genre | Artist | Song>> = new Array();
 
   deleteButtonEmitter: Subject<boolean> = new Subject();
 

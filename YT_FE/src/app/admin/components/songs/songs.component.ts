@@ -16,7 +16,6 @@ import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
 import { Genre } from 'src/app/models/genre.model';
 import { Artist } from 'src/app/models/artist.model';
 import { ArtistService } from '../../services/artist.service';
-import { getRenderedText } from '@angular/core/src/render3';
 
 @Component({
   selector: 'yt-songs',
@@ -32,9 +31,11 @@ export class SongsComponent implements OnInit, OnDestroy {
   songsSubscription: Subscription;
 
   @ViewChild('title') titleInput: ElementRef<HTMLInputElement>;
+  @ViewChild('filter') filter: ElementRef<HTMLInputElement>;
 
   genres: Genre[] = [];
   artists: Artist[] = [];
+  cachedArtists: Artist[] = [];
 
   selectedGenre: Genre = new Genre();
   selectedArtists: Artist[] = [];
@@ -57,7 +58,8 @@ export class SongsComponent implements OnInit, OnDestroy {
       this.genres = res;
     });
     this.artistService.getArtistsClean().subscribe((res: Artist[]) => {
-      this.artists = res;
+      this.cachedArtists = res;
+      this.artists = this.cachedArtists;
     });
 
     // Returns object that will represent form and its controls to the form local var
@@ -69,7 +71,7 @@ export class SongsComponent implements OnInit, OnDestroy {
       ]),
       youtubeID: new FormControl(null, [Validators.required]),
       genres: new FormControl(null, [Validators.required]),
-      artists: new FormControl(null)
+      artists: new FormControl(null, [Validators.required])
     });
 
     this.songSubscription = this.dbItemsService.dbItemEmitter.subscribe(
@@ -81,8 +83,6 @@ export class SongsComponent implements OnInit, OnDestroy {
     this.songsSubscription = this.dbItemsService.dbItemsEmitter.subscribe(
       (markedDbItems: DbItem<Song>[]) => {
         let modelList;
-
-        this.dbItemsService.checkItemType();
 
         if (this.dbItemsService.IS_SONG) {
           console.log('song je');
@@ -114,7 +114,6 @@ export class SongsComponent implements OnInit, OnDestroy {
     this.song.genreId = this.selectedGenre.genreId;
     this.song.artistsSongs = this.selectedArtists;
 
-    console.log(this.song.artistsSongs);
     if (this.songForm.controls['id'].value === null) {
       this.songService.saveSong(this.song).subscribe((res: DbItem<Song>[]) => {
         this.dbItems = res;
@@ -174,6 +173,7 @@ export class SongsComponent implements OnInit, OnDestroy {
 
   onArtistsSelectionChange(data: any) {
     this.selectedArtists = [];
+
     this.artists.forEach(a => {
       data.value.forEach(v => {
         if (v === a.name) {
@@ -184,5 +184,23 @@ export class SongsComponent implements OnInit, OnDestroy {
 
     console.log(this.selectedArtists);
     this.displaySelectedArtists = data.value;
+  }
+
+  onSearch(e: HTMLInputElement) {
+    const inputRegExp = new RegExp(e.value.toLowerCase());
+    const tmpArtists: Artist[] = [];
+
+    this.cachedArtists.forEach(a => {
+      if (inputRegExp.test(a.name.toLowerCase())) {
+        tmpArtists.push(a);
+      }
+    });
+
+    this.artists = tmpArtists;
+  }
+
+  test() {
+    this.filter.nativeElement.value = null;
+    this.artists = this.cachedArtists;
   }
 }

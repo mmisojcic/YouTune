@@ -27,6 +27,7 @@ namespace YouTune.DTOs
             CreateMap<Artist, SonglessArtistDTO>();
             CreateMap<ArtistSong, ArtistsSongsDTO>();
             CreateMap<ArtistsSongsDTO,ArtistSong>();
+            CreateMap<SonglessArtistDTO, Artist>();
         }
     }
 }
