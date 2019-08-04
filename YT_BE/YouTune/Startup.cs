@@ -54,7 +54,7 @@ namespace YouTune
 
             services.AddDbContext<AppDbContext>(opt =>
 
-                opt.UseSqlServer(Configuration.GetConnectionString(win)));
+                opt.UseSqlServer(Configuration.GetConnectionString(linux)));
 
             services.AddCors(o => o.AddPolicy("AllowAll", builder =>
             {

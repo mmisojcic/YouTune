@@ -39,7 +39,7 @@ export class SongsComponent implements OnInit, OnDestroy {
 
   selectedGenre: Genre = new Genre();
   selectedArtists: Artist[] = [];
-  displaySelectedArtists: string[] = [];
+  checkSelectedArtists: string[] = [];
 
   constructor(
     private songService: SongService,
@@ -144,10 +144,14 @@ export class SongsComponent implements OnInit, OnDestroy {
       );
 
       this.selectedArtists = dbItem.item.artists;
-      this.displaySelectedArtists = [];
+
+      this.checkSelectedArtists = [];
+
       dbItem.item.artists.forEach(a => {
-        this.displaySelectedArtists.push(a.name);
+        this.checkSelectedArtists.push(a.name);
       });
+
+      console.log(this.checkSelectedArtists);
 
       this.songForm.controls['id'].setValue(dbItem.item.songId);
       this.songForm.controls['title'].setValue(dbItem.item.title);
@@ -183,7 +187,7 @@ export class SongsComponent implements OnInit, OnDestroy {
     });
 
     console.log(this.selectedArtists);
-    this.displaySelectedArtists = data.value;
+    this.checkSelectedArtists = data.value;
   }
 
   onSearch(e: HTMLInputElement) {
@@ -196,11 +200,19 @@ export class SongsComponent implements OnInit, OnDestroy {
       }
     });
 
+    console.log(this.selectedArtists);
+
     this.artists = tmpArtists;
+
+    console.log(this.checkSelectedArtists);
   }
 
-  test() {
-    this.filter.nativeElement.value = null;
-    this.artists = this.cachedArtists;
+  test(e: any) {
+    console.log(e);
+
+    if (e === false) {
+      this.filter.nativeElement.value = '';
+      this.artists = this.cachedArtists;
+    }
   }
 }
