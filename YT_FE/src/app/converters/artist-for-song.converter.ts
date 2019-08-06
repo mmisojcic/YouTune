@@ -21,7 +21,7 @@ export class ArtistForSongConverter extends BaseConverter<Artist, ArtistDTO> {
 
     model.artistId = dto.artistId;
     model.name = dto.name;
-
+    model.songs = [];
     return model;
   }
 

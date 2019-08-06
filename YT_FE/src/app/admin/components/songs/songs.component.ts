@@ -59,7 +59,9 @@ export class SongsComponent implements OnInit, OnDestroy {
     });
     this.artistService.getArtistsClean().subscribe((res: Artist[]) => {
       this.cachedArtists = res;
+      console.log(this.cachedArtists);
       this.artists = this.cachedArtists;
+      console.log(this.artists);
     });
 
     // Returns object that will represent form and its controls to the form local var
@@ -145,6 +147,12 @@ export class SongsComponent implements OnInit, OnDestroy {
 
       this.selectedArtists = dbItem.item.artists;
 
+      this.songForm.controls['id'].setValue(dbItem.item.songId);
+      this.songForm.controls['title'].setValue(dbItem.item.title);
+      this.songForm.controls['youtubeID'].setValue(dbItem.item.youtubeID);
+      this.songForm.controls['genres'].setValue(this.selectedGenre.name);
+      this.songForm.controls['artists'].setValue(this.selectedArtists);
+
       this.checkSelectedArtists = [];
 
       dbItem.item.artists.forEach(a => {
@@ -152,12 +160,6 @@ export class SongsComponent implements OnInit, OnDestroy {
       });
 
       console.log(this.checkSelectedArtists);
-
-      this.songForm.controls['id'].setValue(dbItem.item.songId);
-      this.songForm.controls['title'].setValue(dbItem.item.title);
-      this.songForm.controls['youtubeID'].setValue(dbItem.item.youtubeID);
-      this.songForm.controls['genres'].setValue(this.selectedGenre.name);
-      this.songForm.controls['artists'].setValue(this.selectedArtists);
 
       this.titleInput.nativeElement.focus();
       this.titleInput.nativeElement.select();
@@ -200,16 +202,10 @@ export class SongsComponent implements OnInit, OnDestroy {
       }
     });
 
-    console.log(this.selectedArtists);
-
     this.artists = tmpArtists;
-
-    console.log(this.checkSelectedArtists);
   }
 
-  test(e: any) {
-    console.log(e);
-
+  dropdownToggle(e: any) {
     if (e === false) {
       this.filter.nativeElement.value = '';
       this.artists = this.cachedArtists;

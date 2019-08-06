@@ -45,8 +45,8 @@
 
       <div class="form-group">
         <mat-form-field>
-          <mat-select placeholder="Artists" formControlName="artists" multiple [value]="checkSelectedArtists"
-            (selectionChange)="onArtistsSelectionChange($event)" (openedChange)="test($event)">
+          <mat-select placeholder="Artists" formControlName="artists" [multiple]="true" [value]="checkSelectedArtists"
+            (selectionChange)="onArtistsSelectionChange($event)" (openedChange)="dropdownToggle($event)">
             <mat-select-trigger>
               {{ checkSelectedArtists ? checkSelectedArtists[0] : '' }}
               <span *ngIf="songForm.get('artists').value?.length > 1" class="selected-option-info">

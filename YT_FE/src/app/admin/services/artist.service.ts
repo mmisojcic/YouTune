@@ -8,6 +8,7 @@ import { map, catchError, finalize } from 'rxjs/operators';
 import { ArtistDTO } from 'src/app/DTOs/artist.dto';
 import { Artist } from 'src/app/models/artist.model';
 import { ArtistConverter } from 'src/app/converters/artist.converter';
+import { ArtistForSongConverter } from 'src/app/converters/artist-for-song.converter';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +16,19 @@ import { ArtistConverter } from 'src/app/converters/artist.converter';
 export class ArtistService {
   url = server.api.fullUrl(server.api.artists.base);
   artistConverter: ArtistConverter = new ArtistConverter();
+  artistForSongConverter: ArtistForSongConverter = new ArtistForSongConverter();
 
   constructor(
     private http: HttpClient,
     private spinnerService: SpinnerService
   ) {}
 
+  // no songs artist
   getArtistsClean(): Observable<Artist[]> {
     this.spinnerService.spinnerShow();
     return this.http.get(this.url).pipe(
       map((res: ArtistDTO[]) => {
-        return this.artistConverter.DTOtoModelList(res);
+        return this.artistForSongConverter.DTOtoModelList(res);
       }),
       catchError(err => {
         console.log('ERROR:::', err);
