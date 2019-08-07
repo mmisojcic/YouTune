@@ -159,8 +159,6 @@ export class SongsComponent implements OnInit, OnDestroy {
         this.checkSelectedArtists.push(a.name);
       });
 
-      console.log(this.checkSelectedArtists);
-
       this.titleInput.nativeElement.focus();
       this.titleInput.nativeElement.select();
     } else if (dbItem.action === Action.DELETE) {
@@ -188,7 +186,16 @@ export class SongsComponent implements OnInit, OnDestroy {
       });
     });
 
+    // data.value.forEach(dv => {
+    //   const artists = this.artists.filter(a => {
+    //     a.name === dv;
+    //   });
+
+    //   this.selectedArtists = artists;
+    // });
+
     console.log(this.selectedArtists);
+
     this.checkSelectedArtists = data.value;
   }
 
@@ -203,9 +210,12 @@ export class SongsComponent implements OnInit, OnDestroy {
     });
 
     this.artists = tmpArtists;
+
+    console.log(this.selectedArtists);
+    console.log(this.checkSelectedArtists);
   }
 
-  dropdownToggle(e: any) {
+  multiSelectToggle(e: boolean) {
     if (e === false) {
       this.filter.nativeElement.value = '';
       this.artists = this.cachedArtists;

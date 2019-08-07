@@ -1,5 +1,9 @@
 <div class="tab-content">
-  <yt-db-items-list class="tab-content_list" [title]="'Songs'" [dbItemsCached]="dbItems">
+  <yt-db-items-list
+    class="tab-content_list"
+    [title]="'Songs'"
+    [dbItemsCached]="dbItems"
+  >
   </yt-db-items-list>
   <mat-divider [vertical]="true"></mat-divider>
   <div class="tab-content_actions">
@@ -11,7 +15,13 @@
       </div>
       <div class="form-group">
         <mat-form-field class="full-width">
-          <input #title matInput type="text" placeholder="Title" formControlName="title" />
+          <input
+            #title
+            matInput
+            type="text"
+            placeholder="Title"
+            formControlName="title"
+          />
           <mat-error *ngIf="songForm.get('title').hasError('required')">
             Title is <strong>required</strong>
           </mat-error>
@@ -23,7 +33,13 @@
 
       <div class="form-group">
         <mat-form-field class="full-width">
-          <input #ytID matInput type="text" placeholder="YouTube ID" formControlName="youtubeID" />
+          <input
+            #ytID
+            matInput
+            type="text"
+            placeholder="YouTube ID"
+            formControlName="youtubeID"
+          />
           <mat-error *ngIf="songForm.get('youtubeID').hasError('required')">
             YouTube ID is <strong>required</strong>
           </mat-error>
@@ -32,47 +48,80 @@
 
       <div class="form-group">
         <mat-form-field>
-          <mat-select placeholder="Genres" formControlName="genres" [value]="selectedGenre.name"
-            (selectionChange)="onGenreSelectionChange($event)">
+          <mat-select
+            placeholder="Genres"
+            formControlName="genres"
+            [value]="selectedGenre.name"
+            (selectionChange)="onGenreSelectionChange($event)"
+          >
             <mat-option *ngFor="let genre of genres" [value]="genre.name">
               {{ genre.name }}
             </mat-option>
           </mat-select>
 
-          <mat-error *ngIf="songForm.get('genres').hasError('required')">Please choose a genre</mat-error>
+          <mat-error *ngIf="songForm.get('genres').hasError('required')"
+            >Please choose a genre</mat-error
+          >
         </mat-form-field>
       </div>
 
       <div class="form-group">
         <mat-form-field>
-          <mat-select placeholder="Artists" formControlName="artists" [multiple]="true" [value]="checkSelectedArtists"
-            (selectionChange)="onArtistsSelectionChange($event)" (openedChange)="dropdownToggle($event)">
+          <mat-select
+            placeholder="Artists"
+            formControlName="artists"
+            [multiple]="true"
+            [value]="checkSelectedArtists"
+            (selectionChange)="onArtistsSelectionChange($event)"
+            (openedChange)="multiSelectToggle($event)"
+          >
             <mat-select-trigger>
               {{ checkSelectedArtists ? checkSelectedArtists[0] : '' }}
-              <span *ngIf="songForm.get('artists').value?.length > 1" class="selected-option-info">
+              <span
+                *ngIf="songForm.get('artists').value?.length > 1"
+                class="selected-option-info"
+              >
                 (+{{ checkSelectedArtists.length - 1 }}
                 {{ checkSelectedArtists?.length === 2 ? 'other' : 'others' }})
               </span>
             </mat-select-trigger>
             <div class="search rounded">
               <i class="fas fa-search search_icon"></i>
-              <input placeholder="Filter" class="rounded" #filter (input)="onSearch(filter)" />
+              <input
+                placeholder="Filter"
+                class="rounded"
+                #filter
+                (input)="onSearch(filter)"
+              />
             </div>
             <mat-option *ngFor="let artist of artists" [value]="artist.name">
               {{ artist.name }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="songForm.get('artists').hasError('required')">Please choose an artists</mat-error>
+          <mat-error *ngIf="songForm.get('artists').hasError('required')"
+            >Please choose an artists</mat-error
+          >
         </mat-form-field>
       </div>
 
       <div class="form_buttons">
-        <button type="submit" mat-raised-button color="primary" matTooltip="Click the button to submit the form"
-          [disabled]="songForm.invalid">
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          matTooltip="Click the button to submit the form"
+          [disabled]="songForm.invalid"
+        >
           Save
         </button>
         <div class="margin-left-auto" *ngIf="id.value" #new [@ngIfFade]="new">
-          <button type="button" mat-raised-button color="primary" matTooltip="Add new song" (click)="onNew()">
+          <button
+            type="button"
+            mat-raised-button
+            color="primary"
+            matTooltip="Add new song"
+            (click)="onNew()"
+          >
             New
           </button>
         </div>
