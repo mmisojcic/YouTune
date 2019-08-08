@@ -85,6 +85,7 @@
                 {{ checkSelectedArtists?.length === 2 ? 'other' : 'others' }})
               </span>
             </mat-select-trigger>
+
             <div class="search rounded">
               <i class="fas fa-search search_icon"></i>
               <input
@@ -94,6 +95,7 @@
                 (input)="onSearch(filter)"
               />
             </div>
+
             <mat-option *ngFor="let artist of artists" [value]="artist.name">
               {{ artist.name }}
             </mat-option>

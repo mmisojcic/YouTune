@@ -66,6 +66,7 @@ export class SongsComponent implements OnInit, OnDestroy {
 
     // Returns object that will represent form and its controls to the form local var
     this.songForm = new FormGroup({
+      filter: new FormControl(),
       id: new FormControl({ value: null, disabled: true }),
       title: new FormControl(null, [
         Validators.required,
@@ -176,40 +177,26 @@ export class SongsComponent implements OnInit, OnDestroy {
   }
 
   onArtistsSelectionChange(data: any) {
-    this.selectedArtists = [];
+    let tmpSelectedArtists: Artist[] = [];
 
-    this.artists.forEach(a => {
-      data.value.forEach(v => {
-        if (v === a.name) {
-          this.selectedArtists.push(a);
+    data.value.forEach((value: string, i) => {
+      this.artists.forEach(a => {
+        if (value === a.name) {
+          tmpSelectedArtists.push(a);
         }
       });
     });
 
-    // data.value.forEach(dv => {
-    //   const artists = this.artists.filter(a => {
-    //     a.name === dv;
-    //   });
-
-    //   this.selectedArtists = artists;
-    // });
-
-    console.log(this.selectedArtists);
-
-    this.checkSelectedArtists = data.value;
+    this.selectedArtists = tmpSelectedArtists;
+    this.checkSelectedArtists = [...data.value];
   }
 
   onSearch(e: HTMLInputElement) {
     const inputRegExp = new RegExp(e.value.toLowerCase());
-    const tmpArtists: Artist[] = [];
 
-    this.cachedArtists.forEach(a => {
-      if (inputRegExp.test(a.name.toLowerCase())) {
-        tmpArtists.push(a);
-      }
+    this.artists = this.cachedArtists.filter(ca => {
+      return inputRegExp.test(ca.name.toLowerCase());
     });
-
-    this.artists = tmpArtists;
 
     console.log(this.selectedArtists);
     console.log(this.checkSelectedArtists);
