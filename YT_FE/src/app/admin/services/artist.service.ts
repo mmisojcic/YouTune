@@ -1,8 +1,8 @@
+import { ApiURLGeneratorService } from './../../shared/services/api-URL-generator.service';
 import { DbItem, Action } from './../models/db-item.model';
 import { SpinnerService } from '../../shared/services/spinner.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as server from '../../shared/config/api.config';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, finalize } from 'rxjs/operators';
 import { ArtistDTO } from 'src/app/DTOs/artist.dto';
@@ -14,19 +14,17 @@ import { ArtistForSongConverter } from 'src/app/converters/artist-for-song.conve
   providedIn: 'root'
 })
 export class ArtistService {
-  url = server.api.fullUrl(server.api.artists.base);
   artistConverter: ArtistConverter = new ArtistConverter();
   artistForSongConverter: ArtistForSongConverter = new ArtistForSongConverter();
 
-  constructor(
-    private http: HttpClient,
-    private spinnerService: SpinnerService
-  ) {}
+  constructor(private http: HttpClient, private spinnerService: SpinnerService, private apiURLGenerator: ApiURLGeneratorService) {}
 
   // no songs artist
   getArtistsClean(): Observable<Artist[]> {
+    const URL = this.apiURLGenerator.generateURL('getArtists');
+
     this.spinnerService.spinnerShow();
-    return this.http.get(this.url).pipe(
+    return this.http.get(URL).pipe(
       map((res: ArtistDTO[]) => {
         return this.artistForSongConverter.DTOtoModelList(res);
       }),
@@ -44,8 +42,10 @@ export class ArtistService {
 
   // get all Artists
   getArtists(): Observable<DbItem<Artist>[]> {
+    const URL = this.apiURLGenerator.generateURL('getArtists');
+
     this.spinnerService.spinnerShow();
-    return this.http.get(this.url).pipe(
+    return this.http.get(URL).pipe(
       map((res: ArtistDTO[]) => {
         console.log(res);
         return this.mapList(res);
@@ -62,9 +62,12 @@ export class ArtistService {
     );
   }
 
+  // save Artist
   saveArtist(model: Artist): Observable<DbItem<Artist>[]> {
-    const dto = this.artistConverter.modelToDTO(model);
-    return this.http.post(this.url, dto).pipe(
+    const URL = this.apiURLGenerator.generateURL('saveArtist');
+
+    const DTO = this.artistConverter.modelToDTO(model);
+    return this.http.post(URL, DTO).pipe(
       map((res: ArtistDTO[]) => {
         return this.mapList(res);
       }),
@@ -78,9 +81,12 @@ export class ArtistService {
     );
   }
 
+  // update Artist
   updateArtist(model: Artist): Observable<DbItem<Artist>[]> {
-    const dto = this.artistConverter.modelToDTO(model);
-    return this.http.put(this.url + '/' + model.artistId, dto).pipe(
+    const URL = this.apiURLGenerator.generateURL('updateArtist', model.artistId);
+    const DTO = this.artistConverter.modelToDTO(model);
+
+    return this.http.put(URL, DTO).pipe(
       map((res: ArtistDTO[]) => {
         return this.mapList(res);
       }),
@@ -94,8 +100,11 @@ export class ArtistService {
     );
   }
 
+  //delete Artist
   deleteArtist(id: number): Observable<DbItem<Artist>[]> {
-    return this.http.delete(this.url + '/' + id).pipe(
+    const URL = this.apiURLGenerator.generateURL('deleteArtist', id);
+
+    return this.http.delete(URL).pipe(
       map((res: ArtistDTO[]) => {
         return this.mapList(res);
       }),
@@ -109,10 +118,12 @@ export class ArtistService {
     );
   }
 
+  // delete list of Artists
   deleteArtists(artist: Artist[]): Observable<DbItem<Artist>[]> {
-    const dto = this.artistConverter.modelToDTOList(artist);
+    const URL = this.apiURLGenerator.generateURL('listDeleteArtists');
+    const DTO = this.artistConverter.modelToDTOList(artist);
 
-    return this.http.post(this.url + '/deleteList', dto).pipe(
+    return this.http.post(URL, DTO).pipe(
       map((res: ArtistDTO[]) => {
         return this.mapList(res);
       }),
@@ -127,11 +138,12 @@ export class ArtistService {
   }
 
   mapList(res: ArtistDTO[]) {
-    const artist = this.artistConverter.DTOtoModelList(res);
-    const dbItems: DbItem<Artist>[] = [];
-    artist.forEach(a => {
-      dbItems.push(new DbItem(a.name, Action.NONE, a));
+    const ARTISTS = this.artistConverter.DTOtoModelList(res);
+    const DB_ITEMS: DbItem<Artist>[] = [];
+
+    ARTISTS.forEach(a => {
+      DB_ITEMS.push(new DbItem(a.name, Action.NONE, a));
     });
-    return dbItems;
+    return DB_ITEMS;
   }
 }

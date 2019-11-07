@@ -1,0 +1,99 @@
+{
+    "envs": [
+        {
+            "name": "dev",
+            "active": true,
+            "server": "https://localhost",
+            "ports": [
+                {
+                    "name": "win",
+                    "active": true,
+                    "number": ":44318"
+                },
+                {
+                    "name": "linux",
+                    "active": false,
+                    "number": ":5001"
+                }
+            ],
+            "baseUrl": "/api"
+        },
+        {
+            "name": "prod",
+            "active": false,
+            "server": "https://www.facebook.com",
+            "ports": [],
+            "baseUrl": ""
+        }
+    ],
+    "apis": [
+        {
+            "name": "register",
+            "endpoint": "/Users/register"
+        },
+        {
+            "name": "login",
+            "endpoint": "/Users/login"
+        },
+        {
+            "name": "getGenres",
+            "endpoint": "/Genres"
+        },
+        {
+            "name": "saveGenre",
+            "endpoint": "/Genres"
+        },
+        {
+            "name": "updateGenre",
+            "endpoint": "/Genres/:id"
+        },
+        {
+            "name": "deleteGenre",
+            "endpoint": "/Genres/:id"
+        },
+        {
+            "name": "listDeleteGenres",
+            "endpoint": "/Genres/deleteList"
+        },
+        {
+            "name": "getArtists",
+            "endpoint": "/Artists"
+        },
+        {
+            "name": "saveArtist",
+            "endpoint": "/Artists"
+        },
+        {
+            "name": "updateArtist",
+            "endpoint": "/Artists/:id"
+        },
+        {
+            "name": "deleteArtist",
+            "endpoint": "/Artists/:id"
+        },
+        {
+            "name": "listDeleteArtists",
+            "endpoint": "/Artists/deleteList"
+        },
+        {
+            "name": "getSongs",
+            "endpoint": "/Songs"
+        },
+        {
+            "name": "saveSong",
+            "endpoint": "/Songs"
+        },
+        {
+            "name": "updateSong",
+            "endpoint": "/Songs/:id"
+        },
+        {
+            "name": "deleteSong",
+            "endpoint": "/Songs/:id"
+        },
+        {
+            "name": "listDeleteSongs",
+            "endpoint": "/Songs/deleteList"
+        }
+    ]
+}

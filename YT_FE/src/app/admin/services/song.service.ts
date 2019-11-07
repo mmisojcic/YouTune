@@ -1,24 +1,25 @@
 import { Song } from './../../models/song.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as server from '../../shared/config/api.config';
 import { DbItem, Action } from '../models/db-item.model';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, finalize } from 'rxjs/operators';
-import { SongDTO } from 'src/app/DTOs/song.dto';
+import { SongDTO } from 'src/app/DTOs/song.DTO';
 import { SongConverter } from 'src/app/converters/song.converter';
+import { ApiURLGeneratorService } from 'src/app/shared/services/api-URL-generator.service';
 @Injectable({
   providedIn: 'root'
 })
 export class SongService {
-  url = server.api.fullUrl(server.api.songs.base);
   songConverter: SongConverter = new SongConverter();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private apiURLGenerator: ApiURLGeneratorService) {}
 
   // get all songs
   getSongs(): Observable<DbItem<Song>[]> {
-    return this.http.get(this.url).pipe(
+    const URL = this.apiURLGenerator.generateURL('getSongs');
+
+    return this.http.get(URL).pipe(
       map((res: SongDTO[]) => {
         return this.mapList(res);
       }),
@@ -34,9 +35,11 @@ export class SongService {
   }
 
   saveSong(model: Song): Observable<DbItem<Song>[]> {
-    const dto = this.songConverter.modelToDTO(model);
-    console.log(dto, '.....OVDE.....');
-    return this.http.post(this.url, dto).pipe(
+    const URL = this.apiURLGenerator.generateURL('saveSong');
+    const DTO = this.songConverter.modelToDTO(model);
+
+    console.log(DTO, '.....OVDE.....');
+    return this.http.post(URL, DTO).pipe(
       map((res: SongDTO[]) => {
         return this.mapList(res);
       }),
@@ -51,9 +54,10 @@ export class SongService {
   }
 
   updateSong(model: Song): Observable<DbItem<Song>[]> {
-    const dto = this.songConverter.modelToDTO(model);
+    const URL = this.apiURLGenerator.generateURL('updateSong', model.songId);
+    const DTO = this.songConverter.modelToDTO(model);
 
-    return this.http.put(this.url + '/' + dto.songId, dto).pipe(
+    return this.http.put(URL, DTO).pipe(
       map((res: SongDTO[]) => {
         return this.mapList(res);
       }),
@@ -68,7 +72,9 @@ export class SongService {
   }
 
   deleteSong(id: number) {
-    return this.http.delete(this.url + '/' + id).pipe(
+    const URL = this.apiURLGenerator.generateURL('deleteSong', id);
+
+    return this.http.delete(URL).pipe(
       map((res: SongDTO[]) => {
         return this.mapList(res);
       }),
@@ -83,9 +89,10 @@ export class SongService {
   }
 
   deleteSongs(songs: Song[]) {
-    const dto = this.songConverter.modelToDTOList(songs);
+    const URL = this.apiURLGenerator.generateURL('listDeleteSongs');
+    const DTO = this.songConverter.modelToDTOList(songs);
 
-    return this.http.post(this.url + '/deleteList', dto).pipe(
+    return this.http.post(URL + '/deleteList', DTO).pipe(
       map((res: SongDTO[]) => {
         return this.mapList(res);
       }),

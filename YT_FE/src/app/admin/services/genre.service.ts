@@ -3,27 +3,25 @@ import { SpinnerService } from '../../shared/services/spinner.service';
 import { GenreConverter } from './../../converters/genre.converter';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as server from '../../shared/config/api.config';
 import { Genre } from 'src/app/models/genre.model';
 import { Observable, throwError } from 'rxjs';
-import { GenreDTO } from 'src/app/DTOs/genre.dto';
+import { GenreDTO } from 'src/app/DTOs/genre.DTO';
 import { map, catchError, finalize } from 'rxjs/operators';
+import { ApiURLGeneratorService } from 'src/app/shared/services/api-URL-generator.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GenreService {
-  url = server.api.fullUrl(server.api.genres.base);
   genreConverter: GenreConverter = new GenreConverter();
 
-  constructor(
-    private http: HttpClient,
-    private spinnerService: SpinnerService
-  ) {}
+  constructor(private http: HttpClient, private spinnerService: SpinnerService, private apiURLGenerator: ApiURLGeneratorService) {}
 
   getGenresClean(): Observable<Genre[]> {
+    const URL = this.apiURLGenerator.generateURL('getGenres');
+
     this.spinnerService.spinnerShow();
-    return this.http.get(this.url).pipe(
+    return this.http.get(URL).pipe(
       map((res: GenreDTO[]) => {
         return this.genreConverter.DTOtoModelList(res);
       }),
@@ -41,8 +39,10 @@ export class GenreService {
 
   // get all genres
   getGenres(): Observable<DbItem<Genre>[]> {
+    const URL = this.apiURLGenerator.generateURL('getGenres');
+
     this.spinnerService.spinnerShow();
-    return this.http.get(this.url).pipe(
+    return this.http.get(URL).pipe(
       map((res: GenreDTO[]) => {
         return this.mapList(res);
       }),
@@ -59,8 +59,10 @@ export class GenreService {
   }
 
   saveGenre(model: Genre): Observable<DbItem<Genre>[]> {
-    const dto = this.genreConverter.modelToDTO(model);
-    return this.http.post(this.url, dto).pipe(
+    const URL = this.apiURLGenerator.generateURL('saveGenre');
+    const DTO = this.genreConverter.modelToDTO(model);
+
+    return this.http.post(URL, DTO).pipe(
       map((res: GenreDTO[]) => {
         return this.mapList(res);
       }),
@@ -75,8 +77,10 @@ export class GenreService {
   }
 
   updateGenre(model: Genre): Observable<DbItem<Genre>[]> {
-    const dto = this.genreConverter.modelToDTO(model);
-    return this.http.put(this.url + '/' + model.genreId, dto).pipe(
+    const URL = this.apiURLGenerator.generateURL('updateGenre', model.genreId);
+    const DTO = this.genreConverter.modelToDTO(model);
+
+    return this.http.put(URL, DTO).pipe(
       map((res: GenreDTO[]) => {
         return this.mapList(res);
       }),
@@ -91,7 +95,9 @@ export class GenreService {
   }
 
   deleteGenre(id: number) {
-    return this.http.delete(this.url + '/' + id).pipe(
+    const URL = this.apiURLGenerator.generateURL('deleteGenre', id);
+
+    return this.http.delete(URL).pipe(
       map((res: GenreDTO[]) => {
         return this.mapList(res);
       }),
@@ -106,9 +112,10 @@ export class GenreService {
   }
 
   deleteGenres(genres: Genre[]) {
-    const dto = this.genreConverter.modelToDTOList(genres);
+    const URL = this.apiURLGenerator.generateURL('listDeleteGenres');
+    const DTO = this.genreConverter.modelToDTOList(genres);
 
-    return this.http.post(this.url + '/deleteList', dto).pipe(
+    return this.http.post(URL, DTO).pipe(
       map((res: GenreDTO[]) => {
         return this.mapList(res);
       }),

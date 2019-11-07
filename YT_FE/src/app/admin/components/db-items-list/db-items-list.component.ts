@@ -1,14 +1,7 @@
 import { DialogAction } from '../../../shared/models/confirm-dialog-actions.enum';
 import { ConfirmDialogComponent } from './../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DbItem } from './../../models/db-item.model';
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  ViewChild,
-  ElementRef
-} from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import { Genre } from 'src/app/models/genre.model';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
@@ -17,7 +10,6 @@ import { Subscription } from 'rxjs';
 import { Song } from 'src/app/models/song.model';
 import { MatDialog } from '@angular/material';
 import { Artist } from 'src/app/models/artist.model';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'yt-db-items-list',
@@ -39,17 +31,12 @@ export class DbItemsListComponent implements OnInit, OnChanges {
   sort = 'asc';
   actions = DialogAction;
 
-  constructor(
-    private dbItemsService: DbItemsService,
-    private dialog: MatDialog
-  ) {}
+  constructor(private dbItemsService: DbItemsService, private dialog: MatDialog) {}
 
   ngOnInit() {
-    this.deleteButtonSubscription = this.dbItemsService.deleteButtonEmitter.subscribe(
-      data => {
-        this.showDeleteButton = data;
-      }
-    );
+    this.deleteButtonSubscription = this.dbItemsService.deleteButtonEmitter.subscribe(data => {
+      this.showDeleteButton = data;
+    });
   }
 
   ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
@@ -129,10 +116,7 @@ export class DbItemsListComponent implements OnInit, OnChanges {
   openDialog(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title:
-          'Delete ' +
-          this.dbItemsService.markedDbItems.length.toString() +
-          ' items?'
+        title: 'Delete ' + this.dbItemsService.markedDbItems.length.toString() + ' items?'
       }
     });
 

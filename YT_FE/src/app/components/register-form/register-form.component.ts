@@ -3,7 +3,6 @@ import { SpinnerService } from '../../shared/services/spinner.service';
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { Register } from 'src/app/models/register.model';
-import { api } from '../../shared/config/api.config';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 import { Role } from 'src/app/models/role.model';
@@ -21,11 +20,7 @@ export class RegisterFormComponent implements OnInit {
 
   errorMessage: string;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private loginService: LoginService,
-    private spinnerService: SpinnerService
-  ) {}
+  constructor(private formBuilder: FormBuilder, private loginService: LoginService, private spinnerService: SpinnerService) {}
 
   onRegister() {
     // Filling register model with form data
@@ -39,16 +34,14 @@ export class RegisterFormComponent implements OnInit {
     this.spinnerService.spinnerShow();
 
     // sending request
-    this.loginService
-      .register(api.fullUrl(api.users.register()), this.registerInfo)
-      .subscribe(
-        res => {
-          console.log(res);
-        },
-        err => {
-          this.errorMessage = err;
-        }
-      );
+    this.loginService.register('register', this.registerInfo).subscribe(
+      res => {
+        console.log(res);
+      },
+      err => {
+        this.errorMessage = err;
+      }
+    );
   }
 
   ngOnInit() {

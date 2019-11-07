@@ -1,13 +1,8 @@
-<div class="list-header">
+<div class="list-header" #header [@ngIfFade]="header" *ngIf="dbItems?.length !== 0">
   <span class="list-header_title">List of all {{ title }}</span>
   <div class="search rounded">
     <i class="fas fa-search search_icon"></i>
-    <input
-      placeholder="Filter"
-      class="rounded"
-      #filter
-      (input)="onSearch(filter)"
-    />
+    <input placeholder="Filter" class="rounded" #filter (input)="onSearch(filter)" />
   </div>
   <div class="list-header_options">
     <mat-checkbox
@@ -30,25 +25,16 @@
     >
       <i class="fas fa-trash-alt fa-xs"></i>
     </span>
-    <yt-alphabetical-sort
-      (click)="onSort()"
-      [sort]="sort"
-    ></yt-alphabetical-sort>
+    <yt-alphabetical-sort (click)="onSort()" [sort]="sort"></yt-alphabetical-sort>
   </div>
 </div>
 
 <mat-divider></mat-divider>
 
 <div class="list">
+  <div class="absolute-center list-header_title" #header [@ngIfFade]="header" *ngIf="dbItems?.length === 0">add some data</div>
   <div *ngFor="let dbItem of dbItems; let i = index">
-    <yt-db-item
-      #item
-      [@ngIfFade]="item"
-      [checked]="checked"
-      [dbItem]="dbItem"
-      [index]="i"
-    >
-    </yt-db-item>
+    <yt-db-item #item [@ngIfFade]="item" [checked]="checked" [dbItem]="dbItem" [index]="i"> </yt-db-item>
   </div>
 
   <!-- <yt-spinner *ngIf="spin"></yt-spinner> -->

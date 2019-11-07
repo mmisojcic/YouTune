@@ -2,7 +2,6 @@ import { SpinnerService } from '../../shared/services/spinner.service';
 import { Login } from './../../models/login.model';
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
-import { api } from '../../shared/config/api.config';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { domFaderAnimation } from 'src/app/shared/animations/dom-fader.animation';
 
@@ -19,34 +18,25 @@ export class LoginFormComponent implements OnInit {
   spinning = this.spinnerService.spinning;
   errorMessage: string;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private loginService: LoginService,
-    private spinnerService: SpinnerService
-  ) {}
+  constructor(private formBuilder: FormBuilder, private loginService: LoginService, private spinnerService: SpinnerService) {}
 
   onLogin() {
     // Filling register model with form data
-    this.loginInfo = new Login(
-      this.loginFrom.controls['username'].value,
-      this.loginFrom.controls['password'].value
-    );
+    this.loginInfo = new Login(this.loginFrom.controls['username'].value, this.loginFrom.controls['password'].value);
 
     // trigger spinner
     this.spinnerService.spinnerShow();
 
     // sending request
-    this.loginService
-      .login(api.fullUrl(api.users.login()), this.loginInfo)
-      .subscribe(
-        res => {
-          console.log(res);
-        },
-        err => {
-          console.log(err);
-          this.errorMessage = err;
-        }
-      );
+    this.loginService.login('login', this.loginInfo).subscribe(
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+        this.errorMessage = err;
+      }
+    );
   }
 
   ngOnInit() {

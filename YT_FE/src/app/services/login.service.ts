@@ -1,3 +1,4 @@
+import { ApiURLGeneratorService } from '../shared/services/api-URL-generator.service';
 import { LoginConverter } from './../converters/login.converter';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -20,15 +21,14 @@ export class LoginService {
   loginConverter = new LoginConverter();
   userConverter = new UserConverter();
 
-  constructor(
-    private http: HttpClient,
-    private spinerService: SpinnerService
-  ) {}
+  constructor(private http: HttpClient, private spinerService: SpinnerService, private apiURLGenerator: ApiURLGeneratorService) {}
 
   // Registers new user
-  register(apiUrl: string, model: Register): Observable<User> {
-    const dto = this.registerConverter.modelToDTO(model);
-    return this.http.post(apiUrl, dto).pipe(
+  register(endpointName: string, model: Register): Observable<User> {
+    const DTO = this.registerConverter.modelToDTO(model);
+    const URL = this.apiURLGenerator.generateURL(endpointName);
+
+    return this.http.post(URL, DTO).pipe(
       map((res: UserDTO) => {
         return this.userConverter.DTOtoModel(res);
       }),
@@ -45,9 +45,11 @@ export class LoginService {
   }
 
   // Logs in user
-  login(apiUrl: string, model: Login): Observable<User> {
-    const dto = this.loginConverter.modelToDTO(model);
-    return this.http.post(apiUrl, dto).pipe(
+  login(endpointName: string, model: Login): Observable<User> {
+    const URL = this.apiURLGenerator.generateURL(endpointName);
+    const DTO = this.loginConverter.modelToDTO(model);
+
+    return this.http.post(URL, DTO).pipe(
       map((res: UserDTO) => {
         return this.userConverter.DTOtoModel(res);
       }),
