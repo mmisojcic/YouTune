@@ -1,10 +1,10 @@
 {
-  "folders": [
-    {
-      "path": "YT_FE"
-    },
-    {
-      "path": "YT_BE\\YouTune"
-    }
-  ]
+	"folders": [
+		{
+			"path": "YT_FE"
+		},
+		{
+			"path": "YT_BE"
+		}
+	]
 }
