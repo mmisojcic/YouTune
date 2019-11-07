@@ -4,16 +4,19 @@ import { Injectable } from '@angular/core';
 import { DbItem, Action } from '../models/db-item.model';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, finalize } from 'rxjs/operators';
-import { SongDTO } from 'src/app/DTOs/song.DTO';
-import { SongConverter } from 'src/app/converters/song.converter';
-import { ApiURLGeneratorService } from 'src/app/shared/services/api-URL-generator.service';
+import { SongDTO } from '../../DTOs/song.dto';
+import { SongConverter } from '../../converters/song.converter';
+import { ApiURLGeneratorService } from '../../shared/services/api-URL-generator.service';
 @Injectable({
   providedIn: 'root'
 })
 export class SongService {
   songConverter: SongConverter = new SongConverter();
 
-  constructor(private http: HttpClient, private apiURLGenerator: ApiURLGeneratorService) {}
+  constructor(
+    private http: HttpClient,
+    private apiURLGenerator: ApiURLGeneratorService
+  ) {}
 
   // get all songs
   getSongs(): Observable<DbItem<Song>[]> {

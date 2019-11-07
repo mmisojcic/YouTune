@@ -1,6 +1,12 @@
 import { GenreService } from './../../services/genre.service';
 import { Song } from 'src/app/models/song.model';
-import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  OnDestroy
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DbItem, Action } from '../../models/db-item.model';
@@ -62,29 +68,40 @@ export class SongsComponent implements OnInit, OnDestroy {
     this.songForm = new FormGroup({
       filter: new FormControl(),
       id: new FormControl({ value: null, disabled: true }),
-      title: new FormControl(null, [Validators.required, Validators.pattern(/^[A-Z a-z 0-9]{1,50}$/)]),
+      title: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(/^[A-Z a-z 0-9]{1,50}$/)
+      ]),
       youtubeID: new FormControl(null, [Validators.required]),
       genres: new FormControl(null, [Validators.required]),
       artists: new FormControl(null, [Validators.required])
     });
 
-    this.songSubscription = this.dbItemsService.dbItemEmitter.subscribe((dbItem: DbItem<Song>) => {
-      this.dbItemAction(dbItem);
-    });
-
-    this.songsSubscription = this.dbItemsService.dbItemsEmitter.subscribe((markedDbItems: DbItem<Song>[]) => {
-      let modelList;
-
-      if (this.dbItemsService.IS_SONG) {
-        console.log('song je');
-        modelList = this.dbItemsService.dbItemsToModelList<Song>(markedDbItems);
-        this.songService.deleteSongs(modelList).subscribe((res: DbItem<Song>[]) => {
-          this.dbItems = res;
-        });
-      } else {
-        console.log('nije');
+    this.songSubscription = this.dbItemsService.dbItemEmitter.subscribe(
+      (dbItem: DbItem<Song>) => {
+        this.dbItemAction(dbItem);
       }
-    });
+    );
+
+    this.songsSubscription = this.dbItemsService.dbItemsEmitter.subscribe(
+      (markedDbItems: DbItem<Song>[]) => {
+        let modelList;
+
+        if (this.dbItemsService.IS_SONG) {
+          console.log('song je');
+          modelList = this.dbItemsService.dbItemsToModelList<Song>(
+            markedDbItems
+          );
+          this.songService
+            .deleteSongs(modelList)
+            .subscribe((res: DbItem<Song>[]) => {
+              this.dbItems = res;
+            });
+        } else {
+          console.log('nije');
+        }
+      }
+    );
   }
 
   ngOnDestroy(): void {
@@ -105,9 +122,11 @@ export class SongsComponent implements OnInit, OnDestroy {
         this.dbItems = res;
       });
     } else {
-      this.songService.updateSong(this.song).subscribe((res: DbItem<Song>[]) => {
-        this.dbItems = res;
-      });
+      this.songService
+        .updateSong(this.song)
+        .subscribe((res: DbItem<Song>[]) => {
+          this.dbItems = res;
+        });
     }
 
     this.songForm.reset();
@@ -123,7 +142,9 @@ export class SongsComponent implements OnInit, OnDestroy {
 
   dbItemAction(dbItem: DbItem<Song>) {
     if (dbItem.action === Action.EDIT) {
-      this.selectedGenre = this.genres.find(g => g.genreId === dbItem.item.genre.genreId);
+      this.selectedGenre = this.genres.find(
+        g => g.genreId === dbItem.item.genre.genreId
+      );
 
       this.selectedArtists = dbItem.item.artists;
 
@@ -143,9 +164,11 @@ export class SongsComponent implements OnInit, OnDestroy {
       this.titleInput.nativeElement.select();
     } else if (dbItem.action === Action.DELETE) {
       this.songForm.reset();
-      this.songService.deleteSong(dbItem.item.songId).subscribe((res: DbItem<Song>[]) => {
-        this.dbItems = res;
-      });
+      this.songService
+        .deleteSong(dbItem.item.songId)
+        .subscribe((res: DbItem<Song>[]) => {
+          this.dbItems = res;
+        });
     }
   }
 
@@ -154,7 +177,7 @@ export class SongsComponent implements OnInit, OnDestroy {
   }
 
   onArtistsSelectionChange(data: any) {
-    let tmpSelectedArtists: Artist[] = [];
+    const tmpSelectedArtists: Artist[] = [];
 
     data.value.forEach((value: string, i) => {
       this.artists.forEach(a => {

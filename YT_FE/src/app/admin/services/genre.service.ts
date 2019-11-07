@@ -1,11 +1,11 @@
+import { Genre } from '../../models/genre.model';
+import { GenreDTO } from '../../DTOs/genre.dto';
 import { DbItem, Action } from './../models/db-item.model';
 import { SpinnerService } from '../../shared/services/spinner.service';
 import { GenreConverter } from './../../converters/genre.converter';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Genre } from 'src/app/models/genre.model';
 import { Observable, throwError } from 'rxjs';
-import { GenreDTO } from 'src/app/DTOs/genre.DTO';
 import { map, catchError, finalize } from 'rxjs/operators';
 import { ApiURLGeneratorService } from 'src/app/shared/services/api-URL-generator.service';
 
@@ -15,7 +15,11 @@ import { ApiURLGeneratorService } from 'src/app/shared/services/api-URL-generato
 export class GenreService {
   genreConverter: GenreConverter = new GenreConverter();
 
-  constructor(private http: HttpClient, private spinnerService: SpinnerService, private apiURLGenerator: ApiURLGeneratorService) {}
+  constructor(
+    private http: HttpClient,
+    private spinnerService: SpinnerService,
+    private apiURLGenerator: ApiURLGeneratorService
+  ) {}
 
   getGenresClean(): Observable<Genre[]> {
     const URL = this.apiURLGenerator.generateURL('getGenres');
