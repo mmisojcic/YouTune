@@ -6,9 +6,10 @@ using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+// using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -52,9 +53,7 @@ namespace YouTune
             services.AddSingleton(mapper);
 
 
-            services.AddDbContext<AppDbContext>(opt =>
-
-                opt.UseSqlServer(Configuration.GetConnectionString(win)));
+            services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString(linux)));
 
             services.AddCors(o => o.AddPolicy("AllowAll", builder =>
             {
@@ -63,11 +62,13 @@ namespace YouTune
                        .AllowAnyHeader();
             }));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddRazorPages();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -78,10 +79,14 @@ namespace YouTune
                 app.UseHsts();
             }
 
+            app.UseRouting();
             app.UseCors("AllowAll");
             app.UseHttpsRedirection();
 
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

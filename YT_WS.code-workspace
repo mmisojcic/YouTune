@@ -6,5 +6,8 @@
 		{
 			"path": "YT_BE"
 		}
-	]
+	],
+	"settings": {
+		"editor.wordWrapColumn": 120
+	}
 }

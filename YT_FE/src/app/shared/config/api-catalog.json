@@ -1,18 +1,16 @@
 {
-    "envs": [
-        {
+    "envs": [{
             "name": "dev",
             "active": true,
             "server": "https://localhost",
-            "ports": [
-                {
+            "ports": [{
                     "name": "win",
-                    "active": true,
+                    "active": false,
                     "number": ":44318"
                 },
                 {
                     "name": "linux",
-                    "active": false,
+                    "active": true,
                     "number": ":5001"
                 }
             ],
@@ -26,8 +24,7 @@
             "baseUrl": ""
         }
     ],
-    "apis": [
-        {
+    "apis": [{
             "name": "register",
             "endpoint": "/Users/register"
         },
@@ -45,11 +42,11 @@
         },
         {
             "name": "updateGenre",
-            "endpoint": "/Genres/:id"
+            "endpoint": "/Genres/:{pathParam}"
         },
         {
             "name": "deleteGenre",
-            "endpoint": "/Genres/:id"
+            "endpoint": "/Genres/:{pathParam}"
         },
         {
             "name": "listDeleteGenres",
@@ -65,11 +62,11 @@
         },
         {
             "name": "updateArtist",
-            "endpoint": "/Artists/:id"
+            "endpoint": "/Artists/:{pathParam}"
         },
         {
             "name": "deleteArtist",
-            "endpoint": "/Artists/:id"
+            "endpoint": "/Artists/:{pathParam}"
         },
         {
             "name": "listDeleteArtists",
@@ -85,15 +82,19 @@
         },
         {
             "name": "updateSong",
-            "endpoint": "/Songs/:id"
+            "endpoint": "/Songs/:{pathParam}"
         },
         {
             "name": "deleteSong",
-            "endpoint": "/Songs/:id"
+            "endpoint": "/Songs/:{pathParam}"
         },
         {
             "name": "listDeleteSongs",
             "endpoint": "/Songs/deleteList"
+        },
+        {
+            "name": "someshit",
+            "endpoint": "/ShitSOngs?{queryParams}"
         }
     ]
 }

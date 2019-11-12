@@ -1,21 +1,15 @@
-import { GenreService } from './../../services/genre.service';
-import { Song } from 'src/app/models/song.model';
-import {
-  Component,
-  OnInit,
-  ElementRef,
-  ViewChild,
-  OnDestroy
-} from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { DbItem, Action } from '../../models/db-item.model';
-import { SongService } from '../../services/song.service';
-import { DbItemsService } from '../../services/db-items.service';
-import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
-import { Genre } from 'src/app/models/genre.model';
 import { Artist } from 'src/app/models/artist.model';
+import { Genre } from 'src/app/models/genre.model';
+import { Song } from 'src/app/models/song.model';
+import { ngIfAnimation } from 'src/app/shared/animations/ngIf-fader.animation';
+import { Action, DbItem } from '../../models/db-item.model';
 import { ArtistService } from '../../services/artist.service';
+import { DbItemsService } from '../../services/db-items.service';
+import { SongService } from '../../services/song.service';
+import { GenreService } from './../../services/genre.service';
 
 @Component({
   selector: 'yt-songs',
@@ -46,7 +40,7 @@ export class SongsComponent implements OnInit, OnDestroy {
     private genreService: GenreService,
     private artistService: ArtistService,
     private dbItemsService: DbItemsService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.songService.getSongs().subscribe((res: DbItem<Song>[]) => {
@@ -177,22 +171,18 @@ export class SongsComponent implements OnInit, OnDestroy {
   }
 
   onArtistsSelectionChange(data: any) {
-    const tmpSelectedArtists: Artist[] = [];
+    const TMP_SELECTED_ARTISTS = [];
 
-    data.value.forEach((value: string, i) => {
-      this.artists.forEach(a => {
-        if (value === a.name) {
-          tmpSelectedArtists.push(a);
-        }
-      });
+    data.value.forEach(value => {
+      const tmpSelectedArtist = this.cachedArtists.find(artist => artist.name === value);
+      TMP_SELECTED_ARTISTS.push(tmpSelectedArtist);
     });
 
-    this.selectedArtists = tmpSelectedArtists;
-    this.checkSelectedArtists = data.value;
+    this.selectedArtists = [...this.selectedArtists.filter(sa => !TMP_SELECTED_ARTISTS.includes(sa)), ...TMP_SELECTED_ARTISTS];
+    console.log('CHECKED:::', this.selectedArtists);
 
-    console.log(this.selectedArtists);
-    console.log(this.checkSelectedArtists);
-    console.log(data);
+    this.checkSelectedArtists = this.selectedArtists.map(selectedArtist => selectedArtist.name);
+    console.log('DISPLAYED CHECKED:::', this.checkSelectedArtists);
   }
 
   onSearch(e: HTMLInputElement) {
@@ -201,9 +191,6 @@ export class SongsComponent implements OnInit, OnDestroy {
     this.artists = this.cachedArtists.filter(ca => {
       return inputRegExp.test(ca.name.toLowerCase());
     });
-
-    console.log(this.selectedArtists);
-    console.log(this.checkSelectedArtists);
   }
 
   multiSelectToggle(e: boolean) {
