@@ -53,7 +53,7 @@ namespace YouTune
             services.AddSingleton(mapper);
 
 
-            services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString(linux)));
+            services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString(win)));
 
             services.AddCors(o => o.AddPolicy("AllowAll", builder =>
             {

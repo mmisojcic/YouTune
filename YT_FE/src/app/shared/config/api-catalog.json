@@ -1,16 +1,18 @@
 {
-    "envs": [{
+    "envs": [
+        {
             "name": "dev",
             "active": true,
             "server": "https://localhost",
-            "ports": [{
+            "ports": [
+                {
                     "name": "win",
-                    "active": false,
+                    "active": true,
                     "number": ":44318"
                 },
                 {
                     "name": "linux",
-                    "active": true,
+                    "active": false,
                     "number": ":5001"
                 }
             ],
@@ -24,7 +26,8 @@
             "baseUrl": ""
         }
     ],
-    "apis": [{
+    "apis": [
+        {
             "name": "register",
             "endpoint": "/Users/register"
         },

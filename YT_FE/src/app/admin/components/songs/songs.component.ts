@@ -170,19 +170,13 @@ export class SongsComponent implements OnInit, OnDestroy {
     this.selectedGenre = this.genres.find(g => g.name === data.value);
   }
 
+  tmpChecked = [];
   onArtistsSelectionChange(data: any) {
-    const TMP_SELECTED_ARTISTS = [];
+    this.tmpChecked = data.value;
 
-    data.value.forEach(value => {
-      const tmpSelectedArtist = this.cachedArtists.find(artist => artist.name === value);
-      TMP_SELECTED_ARTISTS.push(tmpSelectedArtist);
+    data.value.forEach(element => {
+
     });
-
-    this.selectedArtists = [...this.selectedArtists.filter(sa => !TMP_SELECTED_ARTISTS.includes(sa)), ...TMP_SELECTED_ARTISTS];
-    console.log('CHECKED:::', this.selectedArtists);
-
-    this.checkSelectedArtists = this.selectedArtists.map(selectedArtist => selectedArtist.name);
-    console.log('DISPLAYED CHECKED:::', this.checkSelectedArtists);
   }
 
   onSearch(e: HTMLInputElement) {
@@ -191,6 +185,10 @@ export class SongsComponent implements OnInit, OnDestroy {
     this.artists = this.cachedArtists.filter(ca => {
       return inputRegExp.test(ca.name.toLowerCase());
     });
+
+    // TODO: set checkSelectedArtists again
+    this.checkSelectedArtists = [this.checkSelectedArtists, ...this.tmpChecked]
+    console.log(this.checkSelectedArtists, 'checked')
   }
 
   multiSelectToggle(e: boolean) {
