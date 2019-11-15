@@ -21,6 +21,7 @@ namespace YouTune.Services
             _mapper = mapper;
         }
 
+        
 
         // DELETE
         public async Task<IEnumerable<ArtistDTO>> Delete(long _id)
@@ -97,6 +98,22 @@ namespace YouTune.Services
                 return artistDTO;
             }
         }
+        // GET BY NAME
+        public IEnumerable<ArtistDTO> SearchByName(string queryString)
+        {
+            var artistsData = _context.Artists.AsEnumerable().Where(a => a.Name.ToLower().Contains(queryString.ToLower()));
+            var artistsDTO = new List<ArtistDTO>();
+
+            foreach (Artist a in artistsData)
+            {
+
+                var artistDTO = _mapper.Map<Artist, ArtistDTO>(a);
+                artistsDTO.Add(artistDTO);
+            }
+
+
+            return artistsDTO;
+        }
 
         // SAVE
         public async Task<IEnumerable<ArtistDTO>> Save(Artist _object)
@@ -106,6 +123,7 @@ namespace YouTune.Services
 
             return GetAll();
         }
+
 
 
         // UPDATE

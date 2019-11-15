@@ -32,10 +32,18 @@ namespace YouTune.Services
             }
             else
             {
-                _context.Genres.Remove(genreData);
-                await _context.SaveChangesAsync();
-
-                return GetAll();
+                //try
+                //{
+                //    _context.Genres.Remove(genreData);
+                //    await _context.SaveChangesAsync();
+                //    return GetAll();
+                //}
+                //catch (DbUpdateException)
+                //{
+                //    var x = "aaa";
+                //    return x;
+                //}
+                return null;
             }
         }
 
@@ -95,6 +103,11 @@ namespace YouTune.Services
             await _context.SaveChangesAsync();
 
             return GetAll();
+        }
+
+        public IEnumerable<GenreDTO> SearchByName(string queryString)
+        {
+            throw new NotImplementedException();
         }
 
 

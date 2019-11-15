@@ -43,7 +43,7 @@ namespace YouTune.Models
                 .HasForeignKey(ps => ps.PlaylistId);
 
 
-            // songs - artis many to many mapping mapping
+            // songs - artist many to many mapping mapping
             modelBuilder.Entity<ArtistSong>()
                 .HasKey(ars => new { ars.SongId, ars.ArtistId });
 

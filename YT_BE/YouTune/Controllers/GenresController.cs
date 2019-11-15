@@ -26,9 +26,9 @@ namespace YouTune.Controllers
 
         // GET: api/Genres
         [HttpGet]
-        public IEnumerable<GenreDTO> GetGenres()
+        public IActionResult GetGenres()
         {
-            return _genreService.GetAll();
+            return Ok(new Response(0, _genreService.GetAll(), ""));
         }
 
         // GET: api/Genres/5
@@ -61,7 +61,7 @@ namespace YouTune.Controllers
 
             var genresDTO = await  _genreService.Update(genre, id);
 
-            return Ok(genresDTO);
+            return Ok(new Response(0, genresDTO, ""));
         }
 
         // POST: api/Genres
@@ -75,28 +75,37 @@ namespace YouTune.Controllers
 
             var genresDTO = await _genreService.Save(genre);
 
-            return Ok(genresDTO);
+            return Ok(new Response(0, genresDTO, ""));
         }
 
         // DELETE: api/Genres/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGenre([FromRoute] long id)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            
+            var genreData = await _context.Genres.FindAsync(id);
 
-            var genres = await _genreService.Delete(id);
-
-            if (genres == null)
+            if (genreData == null)
             {
-                return NotFound();
+                return NotFound(new Response(0, null, "Id not found!"));
             }
-            else
-            {
-                return Ok(genres);
-            }
+          
+            try
+             {
+                _context.Genres.Remove(genreData);
+                await _context.SaveChangesAsync();
+                return Ok(new Response(0, _genreService.GetAll(), ""));
+             }
+             catch(DbUpdateException)
+             {
+                return Ok(new Response(0,null,"Can't delete! Some songs are related to this genre!"));
+             }
+            
         }
 
         // DELETE: api/Genres/deleteList
@@ -112,11 +121,11 @@ namespace YouTune.Controllers
 
             if (remainingGenres == null)
             {
-                return BadRequest();
+                return BadRequest((new Response(0, null, "")));
             }
             else
             {
-                return Ok(remainingGenres.ToList());
+                return Ok((new Response(0, remainingGenres.ToList(), "")));
             }
         }
 

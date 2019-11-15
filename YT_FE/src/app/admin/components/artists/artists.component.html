@@ -1,9 +1,6 @@
 <div class="tab-content">
-  <yt-db-items-list
-    class="tab-content_list"
-    [title]="'Artist'"
-    [dbItemsCached]="dbItems"
-  >
+  <div class="tab-content_side"></div>
+  <yt-db-items-list class="tab-content_side-list" [title]="'Artist'" [dbItemsCached]="dbItems">
   </yt-db-items-list>
   <mat-divider [vertical]="true"></mat-divider>
   <div class="tab-content_actions">
@@ -15,13 +12,7 @@
       </div>
       <div class="form-group">
         <mat-form-field class="full-width">
-          <input
-            #name
-            matInput
-            type="text"
-            placeholder="Name"
-            formControlName="name"
-          />
+          <input #name matInput type="text" placeholder="Name" formControlName="name" />
           <mat-error *ngIf="artistForm.get('name').hasError('required')">
             Name is <strong>required</strong>
           </mat-error>
@@ -32,23 +23,12 @@
       </div>
 
       <div class="form_buttons">
-        <button
-          type="submit"
-          mat-raised-button
-          color="primary"
-          matTooltip="Click the button to submit the form"
-          [disabled]="artistForm.invalid"
-        >
+        <button type="submit" mat-raised-button color="primary" matTooltip="Click the button to submit the form"
+          [disabled]="artistForm.invalid">
           Save
         </button>
         <div class="margin-left-auto" *ngIf="id.value" #new [@ngIfFade]="new">
-          <button
-            type="button"
-            mat-raised-button
-            color="primary"
-            matTooltip="Add new artist"
-            (click)="onNew()"
-          >
+          <button type="button" mat-raised-button color="primary" matTooltip="Add new artist" (click)="onNew()">
             New
           </button>
         </div>

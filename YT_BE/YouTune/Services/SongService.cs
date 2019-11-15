@@ -106,6 +106,11 @@ namespace YouTune.Services
             return GetAll();
         }
 
+        public IEnumerable<SongDTO> SearchByName(string queryString)
+        {
+            throw new NotImplementedException();
+        }
+
 
         // UPDATE
         public async Task<IEnumerable<SongDTO>> Update(Song _object, long _id)

@@ -1,3 +1,6 @@
+<div class="absolute-center list-header_title" #header [@ngIfFade]="header" *ngIf="dbItems?.length === 0">add some
+  data</div>
+
 <div class="list-header" #header [@ngIfFade]="header" *ngIf="dbItems?.length !== 0">
   <span class="list-header_title">List of all {{ title }}</span>
   <div class="search rounded">
@@ -5,24 +8,12 @@
     <input placeholder="Filter" class="rounded" #filter (input)="onSearch(filter)" />
   </div>
   <div class="list-header_options">
-    <mat-checkbox
-      color="primary"
-      class="list-header_options-selection"
-      [(ngModel)]="checked"
-      [labelPosition]="'after'"
-      [disabled]="dbItems?.length === 0"
-      (change)="onCheck()"
-    >
+    <mat-checkbox color="primary" class="list-header_options-selection" [(ngModel)]="checked" [labelPosition]="'after'"
+      [disabled]="dbItems?.length === 0" (change)="onCheck()">
       <i matRipple class="fas fa-tasks ml-2 "></i>
     </mat-checkbox>
-    <span
-      #deleteList
-      [@ngIfFade]="deleteList"
-      *ngIf="showDeleteButton"
-      matRipple
-      class="color-error text-color-white list-header_options-button rounded"
-      (click)="openDialog()"
-    >
+    <span #deleteList [@ngIfFade]="deleteList" *ngIf="showDeleteButton" matRipple
+      class="color-error text-color-white list-header_options-button rounded" (click)="openDialog()">
       <i class="fas fa-trash-alt fa-xs"></i>
     </span>
     <yt-alphabetical-sort (click)="onSort()" [sort]="sort"></yt-alphabetical-sort>
@@ -32,7 +23,7 @@
 <mat-divider></mat-divider>
 
 <div class="list">
-  <div class="absolute-center list-header_title" #header [@ngIfFade]="header" *ngIf="dbItems?.length === 0">add some data</div>
+
   <div *ngFor="let dbItem of dbItems; let i = index">
     <yt-db-item #item [@ngIfFade]="item" [checked]="checked" [dbItem]="dbItem" [index]="i"> </yt-db-item>
   </div>

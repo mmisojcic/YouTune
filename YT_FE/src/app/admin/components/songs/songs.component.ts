@@ -173,9 +173,14 @@ export class SongsComponent implements OnInit, OnDestroy {
   tmpChecked = [];
   onArtistsSelectionChange(data: any) {
     this.tmpChecked = data.value;
+    this.checkSelectedArtists = data.value;
 
-    data.value.forEach(element => {
-
+    this.checkSelectedArtists.forEach(artistName => {
+      if (this.selectedArtists.includes(this.artists.find(artist => artist.name === artistName))) {
+        // TODO:
+      } else {
+        this.selectedArtists.push(this.artists.find(artist => artist.name === artistName));
+      }
     });
   }
 
@@ -188,7 +193,7 @@ export class SongsComponent implements OnInit, OnDestroy {
 
     // TODO: set checkSelectedArtists again
     this.checkSelectedArtists = [this.checkSelectedArtists, ...this.tmpChecked]
-    console.log(this.checkSelectedArtists, 'checked')
+    console.log(this.checkSelectedArtists, 'checked');
   }
 
   multiSelectToggle(e: boolean) {

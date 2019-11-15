@@ -24,6 +24,28 @@ namespace YouTune.Controllers
             _artistService = artistService;
         }
 
+        // SEARCH: api/Artists/searchByName
+        [HttpGet("searchByName")]
+        public  IActionResult GetArtistsByName([FromQuery(Name = "name")] string name)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var artistSearchResult =  _artistService.SearchByName(name);
+
+            if (artistSearchResult == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(artistSearchResult.ToList());
+            }
+        }
+
+
         // GET: api/Artists
         [HttpGet]
         public IEnumerable<ArtistDTO> GetArtists()

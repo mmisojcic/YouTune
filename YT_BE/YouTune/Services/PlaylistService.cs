@@ -102,6 +102,11 @@ namespace YouTune.Services
             return await GetOne(_object.PlaylistId);
         }
 
+        public IEnumerable<PlaylistDTO> SearchByName(string queryString)
+        {
+            throw new NotImplementedException();
+        }
+
 
         // UPDATE
         public async Task<PlaylistDTO> Update(Playlist _object, long _id)

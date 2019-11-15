@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, finalize } from 'rxjs/operators';
 import { ApiURLGeneratorService } from 'src/app/shared/services/api-URL-generator.service';
+import { ServerResponse } from 'src/app/shared/models/response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +20,15 @@ export class GenreService {
     private http: HttpClient,
     private spinnerService: SpinnerService,
     private apiURLGenerator: ApiURLGeneratorService
-  ) {}
+  ) { }
 
   getGenresClean(): Observable<Genre[]> {
     const URL = this.apiURLGenerator.generateURL('getGenres');
 
     this.spinnerService.spinnerShow();
     return this.http.get(URL).pipe(
-      map((res: GenreDTO[]) => {
-        return this.genreConverter.DTOtoModelList(res);
+      map((res: ServerResponse<GenreDTO[]>) => {
+        return this.genreConverter.DTOtoModelList(res.payload);
       }),
       catchError(err => {
         console.log('ERROR:::', err);
@@ -47,8 +48,8 @@ export class GenreService {
 
     this.spinnerService.spinnerShow();
     return this.http.get(URL).pipe(
-      map((res: GenreDTO[]) => {
-        return this.mapList(res);
+      map((res: ServerResponse<GenreDTO[]>) => {
+        return this.mapList(res.payload);
       }),
       catchError(err => {
         console.log('ERROR:::', err);
@@ -67,8 +68,8 @@ export class GenreService {
     const DTO = this.genreConverter.modelToDTO(model);
 
     return this.http.post(URL, DTO).pipe(
-      map((res: GenreDTO[]) => {
-        return this.mapList(res);
+      map((res: ServerResponse<GenreDTO[]>) => {
+        return this.mapList(res.payload);
       }),
       catchError(err => {
         console.log('ERROR: ', err);
@@ -85,8 +86,8 @@ export class GenreService {
     const DTO = this.genreConverter.modelToDTO(model);
 
     return this.http.put(URL, DTO).pipe(
-      map((res: GenreDTO[]) => {
-        return this.mapList(res);
+      map((res: ServerResponse<GenreDTO[]>) => {
+        return this.mapList(res.payload);
       }),
       catchError(err => {
         console.log('ERROR: ', err);
@@ -102,8 +103,8 @@ export class GenreService {
     const URL = this.apiURLGenerator.generateURL('deleteGenre', id);
 
     return this.http.delete(URL).pipe(
-      map((res: GenreDTO[]) => {
-        return this.mapList(res);
+      map((res: ServerResponse<GenreDTO[]>) => {
+        return this.mapList(res.payload);
       }),
       catchError(err => {
         console.log('ERROR: ', err);
@@ -120,8 +121,8 @@ export class GenreService {
     const DTO = this.genreConverter.modelToDTOList(genres);
 
     return this.http.post(URL, DTO).pipe(
-      map((res: GenreDTO[]) => {
-        return this.mapList(res);
+      map((res: ServerResponse<GenreDTO[]>) => {
+        return this.mapList(res.payload);
       }),
       catchError(err => {
         console.log('ERROR: ', err);

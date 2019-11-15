@@ -99,6 +99,11 @@ namespace YouTune.Services
             return await GetOne(_object.ReportId);
         }
 
+        public IEnumerable<ReportDTO> SearchByName(string queryString)
+        {
+            throw new NotImplementedException();
+        }
+
         // UPDATE
         public async Task<ReportDTO> Update(Report _object, long _id)
         {

@@ -136,5 +136,10 @@ namespace YouTune.Services
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<UserDTO> SearchByName(string queryString)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
